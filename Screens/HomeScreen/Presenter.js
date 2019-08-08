@@ -35,7 +35,7 @@ const Footer = styled.View`
 	width: 100%;
 	height: 100px;
 `;
-const PercentBarWrapper = styled.View`
+const PercentBarWrapper = styled.TouchableOpacity`
 	width: ${width - 200};
 	height: 100px;
 	padding: 20px 0;
