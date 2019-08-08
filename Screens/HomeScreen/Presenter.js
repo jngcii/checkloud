@@ -1,7 +1,9 @@
 import React from "react";
-import { Animated, StyleSheet } from "react-native";
+import { Animated, Dimensions, StyleSheet } from "react-native";
 import styled from "styled-components";
 import PlanSwiper from "../../Components/PlanSwiper";
+
+const { width } = Dimensions.get("window");
 
 const Wrapper = styled.SafeAreaView`
 	width: 100%;
@@ -26,12 +28,26 @@ const PreviewBody = styled.View`
 
 const PaginationWrapper = styled.View`
 	width: 100%;
-	height: 30px;
+	height: 20px;
 `;
 
 const Footer = styled.View`
 	width: 100%;
 	height: 100px;
+`;
+const PercentBarWrapper = styled.View`
+	width: ${width - 200};
+	height: 100px;
+	padding: 20px 0;
+	position: absolute;
+	align-self: center;
+`;
+const PercentBarBtn = styled.View`
+	width: 100%;
+	height: 100%;
+	border-radius: 20px;
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+	background-color: ${props => props.theme.bgColor};
 `;
 const NavBtn = styled.TouchableOpacity`
 	width: 100%;
@@ -49,6 +65,12 @@ const Preview = () => (
 );
 
 const Pagination = () => <PaginationWrapper />;
+
+const PercentBar = () => (
+	<PercentBarWrapper>
+		<PercentBarBtn />
+	</PercentBarWrapper>
+);
 
 const Item = () => (
 	<Animated.View style={[styles.navStyle, styles.itemStyle]}>
@@ -69,6 +91,8 @@ export default () => (
 			<Pagination />
 
 			<Footer>
+				<PercentBar />
+
 				<Item />
 
 				<History />
