@@ -9,7 +9,15 @@ export default {
 
 	planTitleFontSize: 23,
 	dateFontSize: 11,
+	itemActFontSize: 18,
 
 	planTitleFontWeight: "700",
-	dateFontWeight: "500"
+	dateFontWeight: "500",
+	itemActFontWeight: "500",
+
+	itemActBox: `
+        width: 100%;
+        height: 50px;
+        flex-direction: row;
+    `
 };
