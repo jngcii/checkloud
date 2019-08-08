@@ -84,7 +84,7 @@ const History = () => (
 	</Animated.View>
 );
 
-export default () => (
+export default ({ addedItem, addedItemSgt, addedItemAct }) => (
 	<React.Fragment>
 		<Wrapper>
 			<Preview />
@@ -99,7 +99,11 @@ export default () => (
 			</Footer>
 		</Wrapper>
 
-		<PlanSwiper />
+		<PlanSwiper
+			addedItem={addedItem}
+			addedItemSgt={addedItemSgt}
+			addedItemAct={addedItemAct}
+		/>
 	</React.Fragment>
 );
 

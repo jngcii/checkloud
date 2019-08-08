@@ -6,6 +6,7 @@ import {
 } from "react-native-iphone-x-helper";
 import styled from "styled-components";
 import PlanBox from "../PlanBox";
+import PlanBoxNew from "../PlanBoxNew";
 
 const { height } = Dimensions.get("window");
 
@@ -26,10 +27,10 @@ const SwiperWrapper = styled.ScrollView.attrs({
 	flex-direction: row;
 `;
 
-export default () => (
+export default ({ addedItem, addedItemSgt }) => (
 	<Wrapper>
 		<SwiperWrapper>
-			<PlanBox />
+			<PlanBoxNew addedItem={addedItem} addedItemSgt={addedItemSgt} />
 			<PlanBox />
 			<PlanBox />
 			<PlanBox />
