@@ -6,6 +6,7 @@ const InputText = styled.TextInput.attrs({
 })`
 	width: 100%;
 	justify-content: center;
+	line-height: ${props => props.theme.itemActFontSize};
 	font-size: ${props => props.theme.itemActFontSize};
 	font-weight: ${props => props.theme.itemActFontWeight};
 	color: ${props => props.theme.blackColor};
@@ -36,7 +37,6 @@ export default ({
 		onSubmitEditing={onSubmitEditing}
 		onFocus={onFocus}
 		multiline={true}
-		textAlignVertical={textAlignVertical}
 		numberOfLines={3}
 	/>
 );
