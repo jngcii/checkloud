@@ -7,6 +7,7 @@ import {
 import styled from "styled-components";
 import PlanBox from "../PlanBox";
 import PlanBoxNew from "../PlanBoxNew";
+import NoPlan from "../NoPlan";
 
 const { height } = Dimensions.get("window");
 
@@ -27,13 +28,16 @@ const SwiperWrapper = styled.ScrollView.attrs({
 	flex-direction: row;
 `;
 
-export default ({ addedItem, addedItemSgt }) => (
+export default ({ plans, addedItem, addedItemSgt, scrollRef }) => (
 	<Wrapper>
-		<SwiperWrapper>
+		<SwiperWrapper ref={scrollRef}>
 			<PlanBoxNew addedItem={addedItem} addedItemSgt={addedItemSgt} />
-			<PlanBox />
-			<PlanBox />
-			<PlanBox />
+
+			{plans.length > 0 ? (
+				plans.map(p => <PlanBox key={p.id} plan={p} />)
+			) : (
+				<NoPlan />
+			)}
 		</SwiperWrapper>
 	</Wrapper>
 );

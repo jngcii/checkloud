@@ -31,7 +31,6 @@ export const typeDefs = `
 		itemActs: [ItemAct]
 		isUsed: Boolean!
         isActive: Boolean!
-        isDone: Boolean!
 		isMain: Boolean!
 	}
 
