@@ -12,13 +12,20 @@ const RemoveSpan = styled.TouchableOpacity`
 	align-items: center;
 	justify-content: center;
 `;
-const RemoveIcon = styled.Image.attrs({
-	source: require("../../assets/icons/minusIcon.png")
-})`
+const RemoveIcon = styled.View`
 	width: 20px;
 	height: 20px;
 	border-radius: 10px;
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+	background-color: ${props => props.theme.redColor};
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+	align-items: center;
+	justify-content: center;
+`;
+const Minus = styled.View`
+	width: 15px;
+	height: 4px;
+	border-radius: 2px;
+	background-color: ${props => props.theme.planBoxColor};
 `;
 
 const KeywordSpan = styled.View`
@@ -39,20 +46,24 @@ const DragTriggerSpan = styled.TouchableOpacity.attrs({
 })`
 	width: 50px;
 	height: 100%;
+	border-color: ${props => props.theme.borderColor};
+	border-bottom-width: 1px;
 	align-items: center;
 	justify-content: center;
 `;
 const DragTriggerIcon = styled.Image.attrs({
 	source: require("../../assets/icons/triggerIcon.png")
 })`
-	width: 25px;
-	height: 25px;
+	width: 23px;
+	height: 23px;
 `;
 
 export default ({ item, isActive, onRemoveItem, move, moveEnd }) => (
 	<BoxWrapper isActive={isActive}>
 		<RemoveSpan onPressOut={onRemoveItem}>
-			<RemoveIcon style={{ tintColor: "#f54278" }} />
+			<RemoveIcon>
+				<Minus />
+			</RemoveIcon>
 		</RemoveSpan>
 
 		<KeywordSpan>

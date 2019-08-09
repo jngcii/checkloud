@@ -7,6 +7,8 @@ export default {
 	bgColor: "#e6e6e6",
 	borderColor: "#efefef",
 
+	redColor: "#f54278",
+
 	planTitleFontSize: 23,
 	dateFontSize: 11,
 	itemActFontSize: 17,
