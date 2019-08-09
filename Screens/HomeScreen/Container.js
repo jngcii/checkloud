@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from "react";
 import { useQuery } from "react-apollo-hooks";
 import { GET_PLANS } from "../../API/queries/planQueries";
 import useArray from "../../Hooks/useArray";
+import useString from "../../Hooks/useString";
 import useBoolean from "../../Hooks/useBoolean";
 import locationAnimation from "../../Animations/locationAnimation";
 import Presenter from "./Presenter";
@@ -16,6 +17,7 @@ export default () => {
 	const addedItem = useArray([]);
 	const addedItemSgt = useArray([]);
 	const addedItemAct = useArray([]);
+	const pageIndex = useString(1);
 
 	const scrollRef = useRef(null);
 
@@ -42,6 +44,7 @@ export default () => {
 			addedItem={addedItem}
 			addedItemSgt={addedItemSgt}
 			addedItemAct={addedItemAct}
+			pageIndex={pageIndex}
 			scrollRef={scrollRef}
 			//animation
 			navY={navY}

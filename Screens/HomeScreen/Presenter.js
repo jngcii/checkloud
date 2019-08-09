@@ -35,11 +35,12 @@ const PaginationWrapper = styled.View`
 	justify-content: center;
 `;
 const Dot = styled.View`
-	width: 12px;
-	height: 12px;
-	border-radius: 6px;
+	width: ${props => (props.isNow ? 12 : 8)};
+	height: ${props => (props.isNow ? 12 : 8)};
+	border-radius: ${props => (props.isNow ? 6 : 4)};
 	margin: 0 5px;
-	background-color: ${props => props.theme.blackColor};
+	background-color: ${props =>
+		props.isNow ? props.theme.blackColor : props.theme.greyColor};
 `;
 
 const Footer = styled.View`
@@ -75,10 +76,16 @@ const Preview = () => (
 	</PreviewWrapper>
 );
 
-const Pagination = ({ plans }) => (
+const Pagination = ({ plans, pageIndex }) => (
 	<PaginationWrapper>
-		<Dot />
-		{plans.length > 0 ? plans.forEach(p => <Dot />) : <Dot />}
+		<Dot isNow={pageIndex.value == 0} />
+		{plans.length > 0 ? (
+			plans.forEach((_, index) => (
+				<Dot isNow={pageIndex.value == index + 1} />
+			))
+		) : (
+			<Dot isNow={pageIndex.value == 1} />
+		)}
 	</PaginationWrapper>
 );
 
@@ -107,6 +114,7 @@ export default ({
 	addedItem,
 	addedItemSgt,
 	addedItemAct,
+	pageIndex,
 	scrollRef,
 	//animation
 	navY,
@@ -115,7 +123,7 @@ export default ({
 	<React.Fragment>
 		<Wrapper>
 			<Preview />
-			<Pagination plans={plans} />
+			<Pagination plans={plans} pageIndex={pageIndex} />
 
 			<Footer>
 				<Animated.View
@@ -148,6 +156,7 @@ export default ({
 			addedItem={addedItem}
 			addedItemSgt={addedItemSgt}
 			addedItemAct={addedItemAct}
+			pageIndex={pageIndex}
 			scrollRef={scrollRef}
 		/>
 	</React.Fragment>
