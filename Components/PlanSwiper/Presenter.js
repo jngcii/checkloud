@@ -28,10 +28,26 @@ const SwiperWrapper = styled.ScrollView.attrs({
 	flex-direction: row;
 `;
 
-export default ({ plans, addedItem, addedItemSgt, scrollRef }) => (
+export default ({
+	plans,
+	isMaking,
+	addedItem,
+	addedItemSgt,
+	scrollRef,
+	//func
+	onSwipe
+}) => (
 	<Wrapper>
-		<SwiperWrapper ref={scrollRef}>
-			<PlanBoxNew addedItem={addedItem} addedItemSgt={addedItemSgt} />
+		<SwiperWrapper
+			ref={scrollRef}
+			onScroll={e => onSwipe(e)}
+			scrollEventThrottle={16}
+		>
+			<PlanBoxNew
+				isMaking={isMaking}
+				addedItem={addedItem}
+				addedItemSgt={addedItemSgt}
+			/>
 
 			{plans.length > 0 ? (
 				plans.map(p => <PlanBox key={p.id} plan={p} />)

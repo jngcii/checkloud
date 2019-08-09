@@ -101,11 +101,14 @@ const History = () => (
 );
 
 export default ({
+	//state
 	plans,
+	isMaking,
 	addedItem,
 	addedItemSgt,
 	addedItemAct,
 	scrollRef,
+	//animation
 	navY,
 	pickerY
 }) => (
@@ -141,6 +144,7 @@ export default ({
 
 		<PlanSwiper
 			plans={plans}
+			isMaking={isMaking}
 			addedItem={addedItem}
 			addedItemSgt={addedItemSgt}
 			addedItemAct={addedItemAct}
