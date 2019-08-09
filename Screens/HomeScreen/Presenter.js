@@ -29,6 +29,16 @@ const PreviewBody = styled.View`
 const PaginationWrapper = styled.View`
 	width: 100%;
 	height: 20px;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+`;
+const Dot = styled.View`
+	width: 12px;
+	height: 12px;
+	border-radius: 6px;
+	margin: 0 5px;
+	background-color: ${props => props.theme.blackColor};
 `;
 
 const Footer = styled.View`
@@ -64,7 +74,12 @@ const Preview = () => (
 	</PreviewWrapper>
 );
 
-const Pagination = () => <PaginationWrapper />;
+const Pagination = ({ plans }) => (
+	<PaginationWrapper>
+		<Dot />
+		{plans.length > 0 ? plans.forEach(p => <Dot />) : <Dot />}
+	</PaginationWrapper>
+);
 
 const PercentBar = () => (
 	<PercentBarWrapper>
@@ -94,7 +109,7 @@ export default ({
 	<React.Fragment>
 		<Wrapper>
 			<Preview />
-			<Pagination />
+			<Pagination plans={plans} />
 
 			<Footer>
 				<PercentBar />
