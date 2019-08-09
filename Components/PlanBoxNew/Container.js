@@ -1,5 +1,6 @@
 import React from "react";
 import useInput from "../../Hooks/useInput";
+import { easeIO } from "../../Animations/layoutAnimations";
 import Presenter from "./Presenter";
 
 export default ({ addedItem, addedItemSgt }) => {
@@ -15,11 +16,15 @@ export default ({ addedItem, addedItemSgt }) => {
 		addedItemSgt.add(newItem);
 
 		newKeyword.onChange("");
+
+		easeIO();
 	};
 
 	const onRemoveItem = item => {
 		addedItem.remove(item);
 		addedItemSgt.remove(item);
+
+		easeIO();
 	};
 
 	return (
