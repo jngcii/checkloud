@@ -2,6 +2,7 @@ import React from "react";
 import { Animated, Dimensions, StyleSheet } from "react-native";
 import styled from "styled-components";
 import PlanSwiper from "../../Components/PlanSwiper";
+import ItemPicker from "../../Components/ItemPicker";
 
 const { width } = Dimensions.get("window");
 
@@ -56,15 +57,15 @@ const PercentBarBtn = styled.View`
 	width: 100%;
 	height: 100%;
 	border-radius: 20px;
-	box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
 	background-color: ${props => props.theme.bgColor};
+	${props => props.theme.navShadow};
 `;
 const NavBtn = styled.TouchableOpacity`
 	width: 100%;
 	height: 100%;
 	border-radius: 20px;
-	box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
 	background-color: ${props => props.theme.navBtnColor};
+	${props => props.theme.navShadow};
 `;
 
 const Preview = () => (
@@ -88,13 +89,13 @@ const PercentBar = () => (
 );
 
 const Item = () => (
-	<Animated.View style={[styles.navStyle, styles.itemStyle]}>
+	<Animated.View style={[styles.navBtnStyle, styles.itemStyle]}>
 		<NavBtn />
 	</Animated.View>
 );
 
 const History = () => (
-	<Animated.View style={[styles.navStyle, styles.historyStyle]}>
+	<Animated.View style={[styles.navBtnStyle, styles.historyStyle]}>
 		<NavBtn />
 	</Animated.View>
 );
@@ -104,7 +105,9 @@ export default ({
 	addedItem,
 	addedItemSgt,
 	addedItemAct,
-	scrollRef
+	scrollRef,
+	navY,
+	pickerY
 }) => (
 	<React.Fragment>
 		<Wrapper>
@@ -112,11 +115,27 @@ export default ({
 			<Pagination plans={plans} />
 
 			<Footer>
-				<PercentBar />
+				<Animated.View
+					style={[
+						styles.navStyle,
+						{ transform: [{ translateY: navY.location.y }] }
+					]}
+				>
+					<PercentBar />
 
-				<Item />
+					<Item />
 
-				<History />
+					<History />
+				</Animated.View>
+
+				<Animated.View
+					style={[
+						styles.pickerStyle,
+						{ transform: [{ translateY: pickerY.location.y }] }
+					]}
+				>
+					<ItemPicker />
+				</Animated.View>
 			</Footer>
 		</Wrapper>
 
@@ -132,6 +151,17 @@ export default ({
 
 const styles = StyleSheet.create({
 	navStyle: {
+		width: "100%",
+		height: "100%",
+		position: "absolute"
+	},
+	pickerStyle: {
+		width: "100%",
+		height: "100%",
+		padding: 20,
+		position: "absolute"
+	},
+	navBtnStyle: {
 		width: 100,
 		height: 100,
 		padding: 20,

@@ -17,9 +17,13 @@ export default {
 	dateFontWeight: "400",
 	itemActFontWeight: "500",
 
+	navShadow: `
+		box-shadow: 0 0 3px rgba(0,0,0,0.4);
+	`,
+
 	itemActBox: `
         width: 100%;
         height: 50px;
         flex-direction: row;
-    `
+	`
 };
