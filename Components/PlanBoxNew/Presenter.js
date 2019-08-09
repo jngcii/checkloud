@@ -72,7 +72,7 @@ const AddIconSpan = styled.View`
 	align-items: center;
 	justify-content: center;
 `;
-const AddIconIcon = styled.Image.attrs({
+const AddIcon = styled.Image.attrs({
 	source: require("../../assets/icons/plusIcon.png")
 })`
 	width: 16px;
@@ -88,7 +88,7 @@ const InputWrapper = styled.View`
 const AddItem = ({ newKeyword }) => (
 	<ItemInputBox>
 		<AddIconSpan>
-			<AddIconIcon style={{ tintColor: "#ddd" }} />
+			<AddIcon style={{ tintColor: "#ddd" }} />
 		</AddIconSpan>
 
 		<InputWrapper>
