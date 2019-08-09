@@ -9,10 +9,10 @@ export default {
 
 	planTitleFontSize: 23,
 	dateFontSize: 11,
-	itemActFontSize: 18,
+	itemActFontSize: 17,
 
 	planTitleFontWeight: "700",
-	dateFontWeight: "500",
+	dateFontWeight: "400",
 	itemActFontWeight: "500",
 
 	itemActBox: `

@@ -6,7 +6,6 @@ const InputText = styled.TextInput.attrs({
 })`
 	width: 100%;
 	justify-content: center;
-	line-height: ${props => props.theme.itemActFontSize};
 	font-size: ${props => props.theme.itemActFontSize};
 	font-weight: ${props => props.theme.itemActFontWeight};
 	color: ${props => props.theme.blackColor};
@@ -17,11 +16,7 @@ export default ({
 	placeholder = "",
 	value = "",
 	onChange,
-	type = "text",
-	required = true,
-	autoCapitalize = "none",
-	autoCorrect = false,
-	onSubmitEditing = null,
+	onSubmitEditing,
 	onFocus = null
 }) => (
 	<InputText
@@ -29,14 +24,16 @@ export default ({
 		placeholder={placeholder}
 		value={value}
 		onChangeText={onChange}
-		type={type}
-		required={required}
-		autoCapitalize={autoCapitalize}
-		autoCorrect={autoCorrect}
+		type={"text"}
+		required={true}
+		autoCapitalize={"none"}
+		autoCorrect={false}
 		returnKeyType={"next"}
 		onSubmitEditing={onSubmitEditing}
 		onFocus={onFocus}
-		multiline={true}
-		numberOfLines={3}
+		blurOnSubmit={false}
+		style={{ textAlignVertical: "center" }}
+		// multiline={true}
+		// numberOfLines={3}
 	/>
 );

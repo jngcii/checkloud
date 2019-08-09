@@ -1,8 +1,10 @@
 import React from "react";
 import { Dimensions } from "react-native";
 import styled from "styled-components";
-import InputItemActText from "../InputItemActText";
+import DraggableFlatList from "react-native-draggable-flatlist";
 import InputTitleText from "../InputTitleText";
+import InputItemActText from "../InputItemActText";
+import ItemMakingBox from "../ItemMakingBox";
 
 const { width } = Dimensions.get("window");
 
@@ -62,6 +64,9 @@ const DateText = styled.Text`
 const Body = styled.View`
 	flex: 1;
 	width: 100%;
+	border-bottom-left-radius: 50px;
+	border-bottom-right-radius: 50px;
+	overflow: hidden;
 `;
 const ItemInputBox = styled.View`
 	${props => props.theme.itemActBox};
@@ -85,7 +90,7 @@ const InputWrapper = styled.View`
 	justify-content: center;
 `;
 
-const AddItem = ({ newKeyword }) => (
+const AddItem = ({ newKeyword, onAddItem }) => (
 	<ItemInputBox>
 		<AddIconSpan>
 			<AddIcon style={{ tintColor: "#ddd" }} />
@@ -94,14 +99,22 @@ const AddItem = ({ newKeyword }) => (
 		<InputWrapper>
 			<InputItemActText
 				{...newKeyword}
-				placeholder={"새로운 키워드를 선택/입력하세요."}
+				placeholder={"새로운 목록을 선택/입력하세요."}
 				onFocus={null}
+				onSubmitEditing={onAddItem}
 			/>
 		</InputWrapper>
 	</ItemInputBox>
 );
 
-export default ({ addedItem, newTitle, newKeyword }) => (
+export default ({
+	addedItem,
+	newTitle,
+	newKeyword,
+	// func
+	onAddItem,
+	onRemoveItem
+}) => (
 	<Wrapper>
 		<PlanBox>
 			<Header>
@@ -126,7 +139,28 @@ export default ({ addedItem, newTitle, newKeyword }) => (
 			</Header>
 
 			<Body>
-				<AddItem newKeyword={newKeyword} />
+				<DraggableFlatList
+					style={{ flex: 1, marginBottom: 20 }}
+					data={addedItem.array}
+					renderItem={({ index, item, isActive, move, moveEnd }) => (
+						<ItemMakingBox
+							item={item}
+							isActive={isActive}
+							// func
+							onRemoveItem={() => onRemoveItem(item)}
+							move={move}
+							moveEnd={moveEnd}
+						/>
+					)}
+					ListFooterComponent={
+						<AddItem
+							newKeyword={newKeyword}
+							// func
+							onAddItem={onAddItem}
+						/>
+					}
+					onMoveEnd={({ data }) => addedItem.setArray(data)}
+				/>
 			</Body>
 		</PlanBox>
 	</Wrapper>

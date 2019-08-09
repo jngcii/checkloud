@@ -19,14 +19,14 @@ export default defaultArray => {
 
 	const remove = i => {
 		const idx = array.indexOf(i);
-		if (idx != -1) {
-			array.splice(idx, 1);
 
-			setArray([...array]);
+		if (idx == -1) return false;
 
-			return true;
-		}
-		return false;
+		array.splice(idx, 1);
+
+		setArray([...array]);
+
+		return true;
 	};
 
 	const removeBehindAll = i => {
