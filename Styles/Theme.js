@@ -16,6 +16,7 @@ export default {
 	percentageFontSize: 40,
 	percentBarFontSize: 14,
 	memoFontSize: 14,
+	itemHeaderFontSize: 24,
 
 	planTitleFontWeight: "700",
 	dateFontWeight: "400",
@@ -23,6 +24,7 @@ export default {
 	percentageFontWeight: "800",
 	percentBarFontWeight: "700",
 	memoFontWeight: "400",
+	itemHeaderFontWeight: "500",
 
 	navShadow: `
 		box-shadow: 0 0 3px rgba(0,0,0,0.4);

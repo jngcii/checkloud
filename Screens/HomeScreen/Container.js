@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { Dimensions, PanResponder } from "react-native";
+import { Dimensions } from "react-native";
 import {
 	getBottomSpace,
 	getStatusBarHeight

@@ -140,7 +140,7 @@ const Item = ({ screen, itemShape, onPressItemNav }) => (
 	>
 		<NavBtn onPressOut={onPressItemNav} disabled={screen.value == "item"}>
 			{screen.value == "item" ? (
-				<ItemScreen />
+				<ItemScreen screen={screen} itemShape={itemShape} />
 			) : (
 				<ItemIcon style={{ tintColor: "#555" }} />
 			)}
@@ -162,7 +162,7 @@ const History = ({ screen, historyShape, onPressHistoryNav }) => (
 			disabled={screen.value == "history"}
 		>
 			{screen.value == "history" ? (
-				<HistoryScreen />
+				<HistoryScreen screen={screen} historyShape={historyShape} />
 			) : (
 				<HistoryIcon style={{ tintColor: "#555" }} />
 			)}
