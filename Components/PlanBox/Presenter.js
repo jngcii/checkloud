@@ -13,6 +13,7 @@ const Wrapper = styled.View`
 	width: ${width};
 	height: 100%;
 	align-items: center;
+	overflow: hidden;
 `;
 const PlanBox = styled.SafeAreaView`
 	width: 95%;
@@ -108,6 +109,18 @@ const InputWrapper = styled.View`
 	justify-content: center;
 `;
 
+const PercentageText = styled.Text`
+	position: absolute;
+	font-family: Courier;
+	font-size: ${props => props.theme.percentageFontSize};
+	font-weight: ${props => props.theme.percentageFontWeight};
+	font-style: italic;
+	color: ${props => props.color};
+	bottom: 30px;
+	right: 10px;
+	opacity: 0.5;
+`;
+
 const AddItem = ({ newKeyword, onAddItem }) => (
 	<ItemInputBox>
 		<AddIconSpan>
@@ -130,7 +143,6 @@ export default ({
 	isEditing,
 	items,
 	newKeyword,
-	detailVisible,
 	// func
 	onAddItem,
 	onRemoveItem
@@ -175,7 +187,6 @@ export default ({
 							item={item}
 							isEditing={isEditing.value == plan.id}
 							isActive={isActive}
-							detailVisible={detailVisible}
 							// func
 							onRemoveItem={() => onRemoveItem(item)}
 							move={move}
@@ -193,6 +204,10 @@ export default ({
 					}
 					onMoveEnd={({ data }) => items.setArray(data)}
 				/>
+
+				<PercentageText color={plan.itemActs[0].color}>
+					65%
+				</PercentageText>
 			</Body>
 		</PlanBox>
 	</Wrapper>

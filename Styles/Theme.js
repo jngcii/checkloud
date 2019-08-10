@@ -6,16 +6,23 @@ export default {
 	planBoxColor: "#f6f6f6",
 	bgColor: "#e6e6e6",
 	borderColor: "#efefef",
+	memoColor: "#eaeaea",
 
 	redColor: "#f54278",
 
 	planTitleFontSize: 23,
 	dateFontSize: 11,
 	itemActFontSize: 17,
+	percentageFontSize: 40,
+	percentBarFontSize: 14,
+	memoFontSize: 14,
 
 	planTitleFontWeight: "700",
 	dateFontWeight: "400",
 	itemActFontWeight: "500",
+	percentageFontWeight: "800",
+	percentBarFontWeight: "700",
+	memoFontWeight: "400",
 
 	navShadow: `
 		box-shadow: 0 0 3px rgba(0,0,0,0.4);

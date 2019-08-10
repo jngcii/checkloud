@@ -60,6 +60,21 @@ const PercentBarBtn = styled.View`
 	border-radius: 20px;
 	background-color: ${props => props.theme.bgColor};
 	${props => props.theme.navShadow};
+	align-items: center;
+	justify-content: center;
+`;
+const GarbageIcon = styled.Image.attrs({
+	source: require("../../assets/icons/garbageIcon.png")
+})`
+	width: 25px;
+	height: 25px;
+	margin-bottom: 5px;
+`;
+const PercentBarText = styled.Text`
+	font-size: ${props => props.theme.percentBarFontSize};
+	font-weight: ${props => props.theme.percentBarFontWeight};
+	color: ${props => props.theme.whiteColor};
+	text-shadow: 0 0 7px rgba(0, 0, 0, 0.2);
 `;
 const NavBtn = styled.TouchableOpacity`
 	width: 100%;
@@ -91,7 +106,10 @@ const Pagination = ({ plans, pageIndex }) => (
 
 const PercentBar = () => (
 	<PercentBarWrapper>
-		<PercentBarBtn />
+		<PercentBarBtn>
+			<GarbageIcon style={{ tintColor: "#fff" }} />
+			<PercentBarText>체크리스트 종료</PercentBarText>
+		</PercentBarBtn>
 	</PercentBarWrapper>
 );
 
