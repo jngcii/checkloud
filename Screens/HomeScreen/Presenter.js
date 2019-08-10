@@ -11,7 +11,7 @@ const Wrapper = styled.SafeAreaView`
 	height: 100%;
 	align-items: center;
 	justify-content: flex-end;
-	background-color: ${props => props.theme.bgColor};
+	${props => props.screen.value != "plan" && `z-index: 5;`};
 `;
 
 const PreviewWrapper = styled.View`
@@ -113,21 +113,36 @@ const PercentBar = () => (
 	</PercentBarWrapper>
 );
 
-const Item = () => (
-	<Animated.View style={[styles.navBtnStyle, styles.itemStyle]}>
-		<NavBtn />
+const Item = ({ screen, itemShape, onPressItemNav }) => (
+	<Animated.View
+		style={[
+			{ width: itemShape.width, height: itemShape.height },
+			styles.navBtnStyle,
+			styles.itemStyle,
+			screen.value == "item" && { zIndex: 2 }
+		]}
+	>
+		<NavBtn onPressOut={onPressItemNav} />
 	</Animated.View>
 );
 
-const History = () => (
-	<Animated.View style={[styles.navBtnStyle, styles.historyStyle]}>
-		<NavBtn />
+const History = ({ screen, historyShape, onPressHistoryNav }) => (
+	<Animated.View
+		style={[
+			{ width: historyShape.width, height: historyShape.height },
+			styles.navBtnStyle,
+			styles.historyStyle,
+			screen.value == "history" && { zIndex: 2 }
+		]}
+	>
+		<NavBtn onPressOut={onPressHistoryNav} />
 	</Animated.View>
 );
 
 export default ({
-	//state
+	// state
 	plans,
+	screen,
 	isMaking,
 	isEditing,
 	addedItem,
@@ -135,13 +150,18 @@ export default ({
 	addedItemAct,
 	pageIndex,
 	scrollRef,
-	//animation
+	// animation
 	navY,
-	pickerY
+	pickerY,
+	itemShape,
+	historyShape,
+	// func
+	onPressItemNav,
+	onPressHistoryNav
 }) => (
 	<React.Fragment>
-		<Wrapper>
-			<Preview />
+		<Wrapper screen={screen}>
+			{screen.value == "plan" && <Preview />}
 			<Pagination plans={plans} pageIndex={pageIndex} />
 
 			<Footer>
@@ -153,9 +173,19 @@ export default ({
 				>
 					<PercentBar />
 
-					<Item />
+					<Item
+						screen={screen}
+						itemShape={itemShape}
+						// func
+						onPressItemNav={onPressItemNav}
+					/>
 
-					<History />
+					<History
+						screen={screen}
+						historyShape={historyShape}
+						// func
+						onPressHistoryNav={onPressHistoryNav}
+					/>
 				</Animated.View>
 
 				<Animated.View
@@ -186,7 +216,8 @@ const styles = StyleSheet.create({
 	navStyle: {
 		width: "100%",
 		height: "100%",
-		position: "absolute"
+		position: "absolute",
+		justifyContent: "flex-end"
 	},
 	pickerStyle: {
 		width: "100%",
@@ -195,8 +226,6 @@ const styles = StyleSheet.create({
 		position: "absolute"
 	},
 	navBtnStyle: {
-		width: 100,
-		height: 100,
 		padding: 20,
 		position: "absolute"
 	},

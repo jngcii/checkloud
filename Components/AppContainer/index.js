@@ -1,5 +1,12 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import HomeScreen from "../../Screens/HomeScreen";
+
+const Wrapper = styled.View`
+	width: 100%;
+	height: 100%;
+	background-color: ${props => props.theme.bgColor};
+`;
 
 export default () => {
 	const [loading, setLoading] = useState(true);
@@ -8,5 +15,9 @@ export default () => {
 
 	if (loading) return null;
 
-	return <HomeScreen />;
+	return (
+		<Wrapper>
+			<HomeScreen />
+		</Wrapper>
+	);
 };
