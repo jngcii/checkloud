@@ -4,6 +4,7 @@ import styled from "styled-components";
 const Wrapper = styled.View`
 	width: 100%;
 	flex-direction: row;
+	opacity: ${props => (props.isActive ? 0.4 : 1)};
 `;
 
 const LeftSpan = styled.View`
@@ -29,6 +30,13 @@ const Checked = styled.TouchableOpacity.attrs({
 	border-radius: 8px;
 	background-color: ${props => props.color};
 	position: absolute;
+`;
+const RemoveIcon = styled.TouchableOpacity`
+	${props => props.theme.removeIcon};
+	position: absolute;
+`;
+const Minus = styled.View`
+	${props => props.theme.minus};
 `;
 
 const RightSpan = styled.View`
@@ -63,12 +71,30 @@ const ShowDetailSpan = styled.TouchableOpacity`
 	align-items: center;
 	justify-content: center;
 `;
+const DragTriggerIcon = styled.Image.attrs({
+	source: require("../../assets/icons/triggerIcon.png")
+})`
+	${props => props.theme.dragTriggerIcon};
+`;
 
-export default ({ item }) => (
-	<Wrapper>
+export default ({
+	item,
+	isEditing,
+	isActive,
+	detailVisible,
+	onRemoveItem,
+	move,
+	moveEnd
+}) => (
+	<Wrapper isActive={isActive}>
 		<LeftSpan>
 			<CheckBox />
-			{item.isChecked && <Checked />}
+			{!isEditing && item.isChecked && <Checked />}
+			{isEditing && (
+				<RemoveIcon onPressOut={onRemoveItem}>
+					<Minus />
+				</RemoveIcon>
+			)}
 		</LeftSpan>
 
 		<RightSpan>
@@ -82,7 +108,17 @@ export default ({ item }) => (
 				{item.parentId && item.parentId != "a" && <ParentWrapper />}
 			</ContentSpan>
 
-			<ShowDetailSpan />
+			{isEditing ? (
+				<ShowDetailSpan onLongPress={move} onPressOut={moveEnd}>
+					<DragTriggerIcon style={{ tintColor: "#ccc" }} />
+				</ShowDetailSpan>
+			) : (
+				<ShowDetailSpan
+					onPressOut={() =>
+						detailVisible.setValue(!detailVisible.value)
+					}
+				/>
+			)}
 		</RightSpan>
 	</Wrapper>
 );

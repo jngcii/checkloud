@@ -42,7 +42,7 @@ const PlusSpan = styled.TouchableOpacity`
 `;
 const PlusIcon = styled.Image``;
 const TitleSpan = styled.View`
-	flex: 1;
+	max-width: ${width - 130};
 	height: 100%;
 	justify-content: center;
 `;
@@ -51,9 +51,24 @@ const Title = styled.Text`
 	font-weight: ${props => props.theme.planTitleFontWeight};
 	color: ${props => props.theme.blackColor};
 `;
+const EditSpan = styled.TouchableOpacity`
+	width: 30px;
+	height: 100%;
+	margin-left: 5px;
+	align-items: center;
+	justify-content: center;
+`;
+const EditIcon = styled.Image.attrs({
+	source: require("../../assets/icons/gearIcon.png")
+})`
+	width: 18px;
+	height: 18px;
+`;
+
 const DrawSpan = styled.View`
 	width: 50px;
 	height: 100%;
+	justify-content: flex-end;
 `;
 const DateWrapper = styled.View`
 	width: 100%;
@@ -110,7 +125,16 @@ const AddItem = ({ newKeyword, onAddItem }) => (
 	</ItemInputBox>
 );
 
-export default ({ plan, isMaking, items, newKeyword, onAddItem }) => (
+export default ({
+	plan,
+	isEditing,
+	items,
+	newKeyword,
+	detailVisible,
+	// func
+	onAddItem,
+	onRemoveItem
+}) => (
 	<Wrapper>
 		<PlanBox>
 			<Header>
@@ -122,6 +146,14 @@ export default ({ plan, isMaking, items, newKeyword, onAddItem }) => (
 					<TitleSpan>
 						<Title>{plan.title}</Title>
 					</TitleSpan>
+
+					{!isEditing.value && (
+						<EditSpan
+							onPressOut={() => isEditing.setValue(plan.id)}
+						>
+							<EditIcon style={{ tintColor: "#ddd" }} />
+						</EditSpan>
+					)}
 
 					<DrawSpan />
 				</TitleWrapper>
@@ -141,7 +173,9 @@ export default ({ plan, isMaking, items, newKeyword, onAddItem }) => (
 					renderItem={({ index, item, isActive, move, moveEnd }) => (
 						<ItemActBox
 							item={item}
+							isEditing={isEditing.value == plan.id}
 							isActive={isActive}
+							detailVisible={detailVisible}
 							// func
 							onRemoveItem={() => onRemoveItem(item)}
 							move={move}
@@ -149,7 +183,7 @@ export default ({ plan, isMaking, items, newKeyword, onAddItem }) => (
 						/>
 					)}
 					ListFooterComponent={
-						isMaking.value && (
+						isEditing.value && (
 							<AddItem
 								newKeyword={newKeyword}
 								// func

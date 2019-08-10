@@ -7,6 +7,7 @@ const { width } = Dimensions.get("window");
 export default ({
 	plans,
 	isMaking,
+	isEditing,
 	addedItem,
 	addedItemSgt,
 	addedItemAct,
@@ -34,12 +35,8 @@ export default ({
 	};
 
 	useEffect(() => {
-		console.log(pageIndex.value);
-	}, [pageIndex]);
-
-	useEffect(() => {
 		setTimeout(() =>
-			scrollRef.current.scrollTo({ x: width, animated: false })
+			scrollRef.current.scrollTo({ x: width, animated: true })
 		);
 	}, [scrollRef.current]);
 
@@ -47,8 +44,10 @@ export default ({
 		<Presenter
 			plans={plans}
 			isMaking={isMaking}
+			isEditing={isEditing}
 			addedItem={addedItem}
 			addedItemSgt={addedItemSgt}
+			pageIndex={pageIndex}
 			scrollRef={scrollRef}
 			//func
 			onSwipe={onSwipe}

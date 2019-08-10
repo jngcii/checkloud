@@ -111,6 +111,7 @@ export default ({
 	//state
 	plans,
 	isMaking,
+	isEditing,
 	addedItem,
 	addedItemSgt,
 	addedItemAct,
@@ -153,6 +154,7 @@ export default ({
 		<PlanSwiper
 			plans={plans}
 			isMaking={isMaking}
+			isEditing={isEditing}
 			addedItem={addedItem}
 			addedItemSgt={addedItemSgt}
 			addedItemAct={addedItemAct}

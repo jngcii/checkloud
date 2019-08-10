@@ -14,6 +14,7 @@ export default () => {
 	} = useQuery(GET_PLANS);
 
 	const isMaking = useBoolean(false);
+	const isEditing = useString(null);
 	const addedItem = useArray([]);
 	const addedItemSgt = useArray([]);
 	const addedItemAct = useArray([]);
@@ -25,14 +26,14 @@ export default () => {
 	const pickerY = locationAnimation(0, 150);
 
 	useEffect(() => {
-		if (isMaking.value) {
+		if (isMaking.value || isEditing.value) {
 			navY.changeLocation({ toY: 150 });
 			pickerY.changeLocation({ toY: 0 });
 		} else {
 			navY.changeLocation({ toY: 0 });
 			pickerY.changeLocation({ toY: 150 });
 		}
-	}, [isMaking.value]);
+	}, [isMaking.value, isEditing.value]);
 
 	if (loadingPlans) return null;
 
@@ -41,6 +42,7 @@ export default () => {
 			//state
 			plans={plans}
 			isMaking={isMaking}
+			isEditing={isEditing}
 			addedItem={addedItem}
 			addedItemSgt={addedItemSgt}
 			addedItemAct={addedItemAct}

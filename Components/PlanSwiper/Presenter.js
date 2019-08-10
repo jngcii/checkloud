@@ -31,8 +31,10 @@ const SwiperWrapper = styled.ScrollView.attrs({
 export default ({
 	plans,
 	isMaking,
+	isEditing,
 	addedItem,
 	addedItemSgt,
+	pageIndex,
 	scrollRef,
 	//func
 	onSwipe
@@ -43,11 +45,20 @@ export default ({
 			onScroll={e => onSwipe(e)}
 			scrollEventThrottle={16}
 		>
-			<PlanBoxNew addedItem={addedItem} addedItemSgt={addedItemSgt} />
+			<PlanBoxNew
+				isMaking={isMaking}
+				addedItem={addedItem}
+				addedItemSgt={addedItemSgt}
+			/>
 
 			{plans.length > 0 ? (
 				plans.map(p => (
-					<PlanBox key={p.id} plan={p} isMaking={isMaking} />
+					<PlanBox
+						key={p.id}
+						plan={p}
+						isEditing={isEditing}
+						pageIndex={pageIndex}
+					/>
 				))
 			) : (
 				<NoPlan />
