@@ -6,20 +6,24 @@ export const GET_PLANS = gql`
 			id
 			title
 			startAt
-			repeat
 			itemActs @client {
 				id
 				keyword
 				color
 				isChecked
 				parentId
-				childKeywords
+				childIds
 				finishedTime
 				memo
 			}
-			isUsed
 			isActive
 			isMain
 		}
+	}
+`;
+
+export const ADD_PLAN = gql`
+	mutation addPlan($title: String!, $itemActs: [ItemAct!]!) {
+		addPlan(title: $title, itemActs: $itemActs) @client
 	}
 `;

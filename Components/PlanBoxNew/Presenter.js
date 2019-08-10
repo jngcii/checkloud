@@ -45,7 +45,7 @@ const TitleSpan = styled.View`
 	height: 100%;
 	justify-content: center;
 `;
-const DrawSpan = styled.View`
+const DrawSpan = styled.TouchableOpacity`
 	width: 50px;
 	height: 100%;
 `;
@@ -113,7 +113,8 @@ export default ({
 	newKeyword,
 	// func
 	onAddItem,
-	onRemoveItem
+	onRemoveItem,
+	onCreatePlan
 }) => (
 	<Wrapper>
 		<PlanBox>
@@ -130,7 +131,7 @@ export default ({
 						/>
 					</TitleSpan>
 
-					<DrawSpan />
+					<DrawSpan onPressOut={onCreatePlan} />
 				</TitleWrapper>
 
 				<DateWrapper>
