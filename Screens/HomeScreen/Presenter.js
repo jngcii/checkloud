@@ -80,8 +80,8 @@ const Pagination = ({ plans, pageIndex }) => (
 	<PaginationWrapper>
 		<Dot isNow={pageIndex.value == 0} />
 		{plans.length > 0 ? (
-			plans.forEach((_, index) => (
-				<Dot isNow={pageIndex.value == index + 1} />
+			plans.map((_, index) => (
+				<Dot key={index} isNow={pageIndex.value == index + 1} />
 			))
 		) : (
 			<Dot isNow={pageIndex.value == 1} />

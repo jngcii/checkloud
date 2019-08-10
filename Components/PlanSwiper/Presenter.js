@@ -43,14 +43,12 @@ export default ({
 			onScroll={e => onSwipe(e)}
 			scrollEventThrottle={16}
 		>
-			<PlanBoxNew
-				isMaking={isMaking}
-				addedItem={addedItem}
-				addedItemSgt={addedItemSgt}
-			/>
+			<PlanBoxNew addedItem={addedItem} addedItemSgt={addedItemSgt} />
 
 			{plans.length > 0 ? (
-				plans.map(p => <PlanBox key={p.id} plan={p} />)
+				plans.map(p => (
+					<PlanBox key={p.id} plan={p} isMaking={isMaking} />
+				))
 			) : (
 				<NoPlan />
 			)}
