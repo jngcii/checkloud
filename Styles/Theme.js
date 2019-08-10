@@ -25,5 +25,26 @@ export default {
         width: 100%;
         height: 50px;
         flex-direction: row;
+	`,
+
+	removeIcon: `
+		width: 20px;
+		height: 20px;
+		border-radius: 10px;
+		background-color: "#f54278";
+		box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+		align-items: center;
+		justify-content: center;
+	`,
+	minus: `
+		width: 15px;
+		height: 4px;
+		border-radius: 2px;
+		background-color: "#f6f6f6";
+	`,
+
+	dragTriggerIcon: `
+		width: 22px;
+		height: 22px;
 	`
 };

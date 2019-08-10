@@ -13,19 +13,10 @@ const RemoveSpan = styled.TouchableOpacity`
 	justify-content: center;
 `;
 const RemoveIcon = styled.View`
-	width: 20px;
-	height: 20px;
-	border-radius: 10px;
-	background-color: ${props => props.theme.redColor};
-	box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
-	align-items: center;
-	justify-content: center;
+	${props => props.theme.removeIcon};
 `;
 const Minus = styled.View`
-	width: 15px;
-	height: 4px;
-	border-radius: 2px;
-	background-color: ${props => props.theme.planBoxColor};
+	${props => props.theme.minus};
 `;
 
 const KeywordSpan = styled.View`
@@ -54,8 +45,7 @@ const DragTriggerSpan = styled.TouchableOpacity.attrs({
 const DragTriggerIcon = styled.Image.attrs({
 	source: require("../../assets/icons/triggerIcon.png")
 })`
-	width: 23px;
-	height: 23px;
+	${props => props.theme.dragTriggerIcon};
 `;
 
 export default ({ item, isActive, onRemoveItem, move, moveEnd }) => (
