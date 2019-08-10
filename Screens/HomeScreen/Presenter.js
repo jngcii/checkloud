@@ -3,6 +3,8 @@ import { Animated, Dimensions, StyleSheet } from "react-native";
 import styled from "styled-components";
 import PlanSwiper from "../../Components/PlanSwiper";
 import ItemPicker from "../../Components/ItemPicker";
+import ItemScreen from "../ItemScreen";
+import HistoryScreen from "../HistoryScreen";
 
 const { width } = Dimensions.get("window");
 
@@ -82,6 +84,20 @@ const NavBtn = styled.TouchableOpacity`
 	border-radius: 20px;
 	background-color: ${props => props.theme.navBtnColor};
 	${props => props.theme.navShadow};
+	align-items: center;
+	justify-content: center;
+`;
+const ItemIcon = styled.Image.attrs({
+	source: require("../../assets/icons/listIcon.png")
+})`
+	width: 36px;
+	height: 36px;
+`;
+const HistoryIcon = styled.Image.attrs({
+	source: require("../../assets/icons/clockIcon.png")
+})`
+	width: 36px;
+	height: 36px;
 `;
 
 const Preview = () => (
@@ -122,7 +138,13 @@ const Item = ({ screen, itemShape, onPressItemNav }) => (
 			screen.value == "item" && { zIndex: 2 }
 		]}
 	>
-		<NavBtn onPressOut={onPressItemNav} />
+		<NavBtn onPressOut={onPressItemNav} disabled={screen.value == "item"}>
+			{screen.value == "item" ? (
+				<ItemScreen />
+			) : (
+				<ItemIcon style={{ tintColor: "#555" }} />
+			)}
+		</NavBtn>
 	</Animated.View>
 );
 
@@ -135,7 +157,16 @@ const History = ({ screen, historyShape, onPressHistoryNav }) => (
 			screen.value == "history" && { zIndex: 2 }
 		]}
 	>
-		<NavBtn onPressOut={onPressHistoryNav} />
+		<NavBtn
+			onPressOut={onPressHistoryNav}
+			disabled={screen.value == "history"}
+		>
+			{screen.value == "history" ? (
+				<HistoryScreen />
+			) : (
+				<HistoryIcon style={{ tintColor: "#555" }} />
+			)}
+		</NavBtn>
 	</Animated.View>
 );
 
