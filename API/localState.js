@@ -68,7 +68,7 @@ export const typeDefs = `
 
 export const resolvers = {
 	Query: {
-		item: (_, { id }, { cache }) => {
+		item: async (_, { id }, { cache }) => {
 			const itemId = cache.config.dataIdFromObject({
 				__typename: "Item",
 				id

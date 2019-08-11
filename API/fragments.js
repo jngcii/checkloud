@@ -4,7 +4,7 @@ import gql from "graphql-tag";
 // Item Fragments
 
 export const ITEM_FRAGMENT = gql`
-	fragment ItemPars on Item {
+	fragment ItemParts on Item {
 		id
 		keyword
 		color
