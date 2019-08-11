@@ -1,4 +1,5 @@
 import uuidv1 from "uuid/v1";
+import { ITEM_FRAGMENT } from "./fragments";
 import { GET_ITEM_ACTS } from "./queries/itemQueries";
 import { GET_PLANS } from "./queries/planQueries";
 import { saveItemActs, savePlans } from "./offline";
@@ -66,7 +67,21 @@ export const typeDefs = `
 `;
 
 export const resolvers = {
-	Query: {},
+	Query: {
+		item: (_, { id }, { cache }) => {
+			const itemId = cache.config.dataIdFromObject({
+				__typename: "Item",
+				id
+			});
+
+			const item = cache.readFragment({
+				fragment: ITEM_FRAGMENT,
+				id: itemId
+			});
+
+			return item;
+		}
+	},
 
 	Mutation: {
 		// add Mutation

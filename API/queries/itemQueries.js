@@ -1,5 +1,29 @@
 import gql from "graphql-tag";
 
+export const GET_ITEMS = gql`
+	{
+		items @client {
+			id
+			keyword
+			color
+			parentId
+			childIds
+		}
+	}
+`;
+
+export const GET_ITEM = gql`
+	query item($id: String!) {
+		item(id: $id) @client {
+			id
+			keyword
+			color
+			parentId
+			childIds
+		}
+	}
+`;
+
 export const GET_ITEM_ACTS = gql`
 	{
 		itemActs @client {
