@@ -29,7 +29,7 @@ export default () => {
 	const addedItemAct = useArray([]);
 	const pageIndex = useString(1);
 
-	const scrollRef = useRef(null);
+	const swipeRef = useRef(null);
 
 	const navY = locationAnimation(0, 0);
 	const pickerY = locationAnimation(0, 150);
@@ -98,7 +98,7 @@ export default () => {
 			addedItemSgt={addedItemSgt}
 			addedItemAct={addedItemAct}
 			pageIndex={pageIndex}
-			scrollRef={scrollRef}
+			swipeRef={swipeRef}
 			// animation
 			navY={navY}
 			pickerY={pickerY}

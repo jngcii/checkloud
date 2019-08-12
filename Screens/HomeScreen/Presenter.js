@@ -180,7 +180,7 @@ export default ({
 	addedItemSgt,
 	addedItemAct,
 	pageIndex,
-	scrollRef,
+	swipeRef,
 	// animation
 	navY,
 	pickerY,
@@ -238,7 +238,7 @@ export default ({
 			addedItemSgt={addedItemSgt}
 			addedItemAct={addedItemAct}
 			pageIndex={pageIndex}
-			scrollRef={scrollRef}
+			swipeRef={swipeRef}
 		/>
 	</React.Fragment>
 );

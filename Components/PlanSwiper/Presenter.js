@@ -35,13 +35,13 @@ export default ({
 	addedItem,
 	addedItemSgt,
 	pageIndex,
-	scrollRef,
+	swipeRef,
 	//func
 	onSwipe
 }) => (
 	<Wrapper>
 		<SwiperWrapper
-			ref={scrollRef}
+			ref={swipeRef}
 			onScroll={e => onSwipe(e)}
 			scrollEventThrottle={16}
 		>

@@ -12,7 +12,7 @@ export default ({
 	addedItemSgt,
 	addedItemAct,
 	pageIndex,
-	scrollRef
+	swipeRef
 }) => {
 	const onSwipe = e => {
 		const { x } = e.nativeEvent.contentOffset;
@@ -36,9 +36,9 @@ export default ({
 
 	useEffect(() => {
 		setTimeout(() =>
-			scrollRef.current.scrollTo({ x: width, animated: true })
+			swipeRef.current.scrollTo({ x: width, animated: true })
 		);
-	}, [scrollRef.current]);
+	}, [swipeRef.current]);
 
 	return (
 		<Presenter
@@ -48,7 +48,7 @@ export default ({
 			addedItem={addedItem}
 			addedItemSgt={addedItemSgt}
 			pageIndex={pageIndex}
-			scrollRef={scrollRef}
+			swipeRef={swipeRef}
 			//func
 			onSwipe={onSwipe}
 		/>
