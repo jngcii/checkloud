@@ -8,12 +8,15 @@ import HistoryScreen from "../HistoryScreen";
 
 const { width } = Dimensions.get("window");
 
-const Wrapper = styled.SafeAreaView`
+const Wrapper = styled.View`
 	width: 100%;
-	height: 100%;
+	flex: 1;
 	align-items: center;
 	justify-content: flex-end;
-	${props => props.screen.value != "plan" && `z-index: 5;`};
+`;
+const WrapperBottom = styled.SafeAreaView`
+	width: 100%;
+	justify-content: flex-end;
 `;
 
 const PreviewWrapper = styled.View`
@@ -194,7 +197,20 @@ export default ({
 		<Wrapper screen={screen}>
 			{screen.value == "plan" && <Preview />}
 			<Pagination plans={plans} pageIndex={pageIndex} />
+		</Wrapper>
 
+		<PlanSwiper
+			plans={plans}
+			isMaking={isMaking}
+			isEditing={isEditing}
+			addedItem={addedItem}
+			addedItemSgt={addedItemSgt}
+			addedItemAct={addedItemAct}
+			pageIndex={pageIndex}
+			swipeRef={swipeRef}
+		/>
+
+		<WrapperBottom>
 			<Footer>
 				<Animated.View
 					style={[
@@ -228,18 +244,7 @@ export default ({
 					<ItemPicker />
 				</Animated.View>
 			</Footer>
-		</Wrapper>
-
-		<PlanSwiper
-			plans={plans}
-			isMaking={isMaking}
-			isEditing={isEditing}
-			addedItem={addedItem}
-			addedItemSgt={addedItemSgt}
-			addedItemAct={addedItemAct}
-			pageIndex={pageIndex}
-			swipeRef={swipeRef}
-		/>
+		</WrapperBottom>
 	</React.Fragment>
 );
 
@@ -254,7 +259,8 @@ const styles = StyleSheet.create({
 		width: "100%",
 		height: "100%",
 		padding: 20,
-		position: "absolute"
+		position: "absolute",
+		justifyContent: "flex-end"
 	},
 	navBtnStyle: {
 		padding: 20,
