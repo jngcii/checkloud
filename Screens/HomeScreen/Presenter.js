@@ -83,7 +83,7 @@ const NavBtn = styled.TouchableOpacity`
 	height: 100%;
 	border-radius: 20px;
 	background-color: ${props => props.theme.navBtnColor};
-	${props => props.theme.navShadow};
+	${props => !props.disabled && props.theme.navShadow};
 	align-items: center;
 	justify-content: center;
 `;

@@ -54,7 +54,10 @@ const KeywordWrapper = styled.View`
 	height: ${props => (props.hasParent ? 30 : 50)};
 	justify-content: center;
 `;
-const Keyword = styled.Text`
+const Keyword = styled.Text.attrs({
+	numberOfLines: 2
+})`
+	line-height: 30px;
 	font-size: ${props => props.theme.itemActFontSize};
 	font-weight: ${props => props.theme.itemActFontWeight};
 	color: ${props => props.theme.blackColor};
@@ -141,7 +144,9 @@ export default ({
 				<KeywordWrapper
 					hasParent={item.parentId && item.parentId != "a"}
 				>
-					<Keyword>{item.keyword}</Keyword>
+					<Keyword style={{ textAlignVertical: "center" }}>
+						{item.keyword}
+					</Keyword>
 				</KeywordWrapper>
 
 				{item.parentId && item.parentId != "a" && <ParentWrapper />}

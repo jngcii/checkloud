@@ -4,13 +4,14 @@ import {
 	getBottomSpace,
 	getStatusBarHeight
 } from "react-native-iphone-x-helper";
-import { useQuery } from "react-apollo-hooks";
-import { GET_ITEMS } from "../../API/queries/itemQueries";
+import { useQuery, useMutation } from "react-apollo-hooks";
+import { GET_ITEMS, ADD_ITEM } from "../../API/queries/itemQueries";
 import useInput from "../../Hooks/useInput";
 import useString from "../../Hooks/useString";
 import useObject from "../../Hooks/useObject";
 import shapeAnimation from "../../Animations/shapeAnimation";
 import locationAnimation from "../../Animations/locationAnimation";
+import { easeIO } from "../../Animations/layoutAnimations";
 import Colors from "../../Components/Colors";
 import Presenter from "./Presenter";
 
@@ -21,6 +22,8 @@ export default ({ screen, itemShape, floor = 0, itemId = "a" }) => {
 		data: { items },
 		loading: loadingItems
 	} = useQuery(GET_ITEMS);
+
+	const [addItemMutation] = useMutation(ADD_ITEM);
 
 	const item = items.filter(i => i.id == itemId)[0];
 
@@ -74,6 +77,26 @@ export default ({ screen, itemShape, floor = 0, itemId = "a" }) => {
 		}
 	});
 
+	const onSaveItem = async () => {
+		if (newKeyword.value == "") return;
+		else {
+			const {
+				data: { addItem }
+			} = await addItemMutation({
+				variables: {
+					keyword: newKeyword.value,
+					color: newColor.value,
+					parentId: item.id
+				}
+			});
+
+			if (addItem) {
+				newKeyword.onChange("");
+				easeIO();
+			}
+		}
+	};
+
 	useEffect(() => {
 		if (stack.value && newKeyword.value != "") newKeyword.onChange("");
 	}, [stack]);
@@ -107,15 +130,17 @@ export default ({ screen, itemShape, floor = 0, itemId = "a" }) => {
 			// props
 			floor={floor}
 			stack={stack}
-			//state
+			// state
 			item={item}
 			childItems={childItems}
 			newKeyword={newKeyword}
 			newColor={newColor}
 			panResponder={panResponder}
-			// func
+			// animation
 			stackShape={stackShape}
 			colorsX={colorsX}
+			// func
+			onSaveItem={onSaveItem}
 		/>
 	);
 };

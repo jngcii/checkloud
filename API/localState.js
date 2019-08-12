@@ -20,7 +20,7 @@ export const typeDefs = `
     }
 
     type Mutation {
-        addItem(keyword: String!, color: String! parentId: String): [Item]
+        addItem(keyword: String!, color: String! parentId: String): Boolean
         addItemActs(itemActs: [ItemAct]): [ItemAct]
         addPlan(title: String!, itemActs: [ItemAct!]!): Boolean!
     }
@@ -95,20 +95,20 @@ export const resolvers = {
 				keyword,
 				color,
 				parentId,
-				childId: []
+				childIds: []
 			};
 
-			const idOfParent = cache.config.dataIdFromObject({
+			const idOfParent = await cache.config.dataIdFromObject({
 				__typename: "Item",
 				id: parentId
 			});
 
-			const parentItem = cache.readFragment({
+			const parentItem = await cache.readFragment({
 				fragment: ITEM_FRAGMENT,
 				id: idOfParent
 			});
 
-			parentItem.chlidIds.push(newItem.id);
+			parentItem.childIds.push(newItem.id);
 
 			cache.writeFragment({
 				fragment: ITEM_FRAGMENT,
@@ -127,9 +127,10 @@ export const resolvers = {
 					}
 				});
 				await saveItems(cache);
-				return newItem;
+
+				return true;
 			} catch {
-				return null;
+				return false;
 			}
 		},
 

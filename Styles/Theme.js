@@ -7,6 +7,7 @@ export default {
 	bgColor: "#e6e6e6",
 	borderColor: "#efefef",
 	memoColor: "#eaeaea",
+	submitBtnColor: "#ccc",
 
 	redColor: "#f54278",
 

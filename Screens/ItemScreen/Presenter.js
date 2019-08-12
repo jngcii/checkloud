@@ -11,9 +11,30 @@ const Wrapper = styled.KeyboardAvoidingView`
 	width: 100%;
 	height: 100%;
 	border-radius: 20px;
-	overflow: hidden;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+	background-color: ${props =>
+		props.stack ? props.theme.bgColor : props.theme.planBoxColor};
 `;
-const Header = styled.View`
+
+const ControlBar = styled.View`
+	width: 50%;
+	height: 25px;
+	position: absolute;
+	align-self: center;
+	align-items: center;
+	justify-content: center;
+`;
+const Handler = styled.View`
+	width: 50px;
+	height: 6px;
+	border-radius: 3px;
+	background-color: #555;
+	opacity: 0.3;
+`;
+
+const Header = styled.TouchableOpacity.attrs({
+	activeOpacity: 1
+})`
 	width: 100%;
 	height: 50px;
 	padding: 5px 25px;
@@ -24,17 +45,25 @@ const Title = styled.Text`
 	font-size: ${props => props.theme.itemHeaderFontSize};
 	font-weight: ${props => props.theme.itemHeaderFontWeight};
 	color: ${props => props.theme.blackColor};
+	opacity: ${props => (props.stack ? 0.5 : 1)};
 `;
-
 const Body = styled.View`
 	flex: 1;
 	width: 100%;
+	align-items: center;
 `;
 const Childs = styled.View`
 	flex: 1;
 	width: 100%;
 	justify-content: flex-end;
 `;
+
+const ChildsItems = styled.ScrollView`
+	flex: 1;
+	width: 100%;
+	padding-top: 5px;
+`;
+
 const Color = styled.TouchableOpacity`
 	width: ${props => (props.picked ? 26 : 20)};
 	height: ${props => (props.picked ? 26 : 20)};
@@ -47,7 +76,6 @@ const NewKeywordWrapper = styled.View`
 	width: 100%;
 	height: 60px;
 	padding: 10px 20px;
-	background-color: ${props => props.theme.planBoxColor};
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
@@ -57,8 +85,19 @@ const InputSpan = styled.View`
 	height: 100%;
 `;
 const SubmitSpan = styled.TouchableOpacity`
-	width: 60px;
-	height: 100%;
+	width: 45px;
+	height: 28px;
+	border-radius: 10px;
+	align-items: center;
+	justify-content: center;
+	background-color: ${props => props.theme.submitBtnColor};
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+`;
+const SubmitIcon = styled.Image.attrs({
+	source: require("../../assets/icons/saveIcon.png")
+})`
+	width: 15px;
+	height: 15px;
 `;
 
 const Stack = ({ floor, stack, stackShape }) => (
@@ -106,9 +145,11 @@ export default ({
 	newKeyword,
 	newColor,
 	panResponder,
-	// func
+	// animation
 	stackShape,
-	colorsX
+	colorsX,
+	// fun
+	onSaveItem
 }) => (
 	<Wrapper
 		behavior="padding"
@@ -116,14 +157,14 @@ export default ({
 		enabled={!stack.value}
 		stack={stack.value}
 	>
-		{item.id == "a" ? (
-			<Header {...panResponder.panHandlers}>
-				<Title>Category</Title>
-			</Header>
-		) : (
-			<Header>
-				<Title>{item.keyword}</Title>
-			</Header>
+		<Header onPress={() => stack.setValue(null)}>
+			<Title stack={stack.value}>{item.keyword}</Title>
+		</Header>
+
+		{item.id == "a" && (
+			<ControlBar {...panResponder.panHandlers}>
+				<Handler />
+			</ControlBar>
 		)}
 
 		<Body>
@@ -131,9 +172,11 @@ export default ({
 				<Stack floor={floor} stack={stack} stackShape={stackShape} />
 			) : (
 				<Childs>
-					{childItems.map(i => (
-						<ItemBox key={i.id} item={i} />
-					))}
+					<ChildsItems>
+						{childItems.map(i => (
+							<ItemBox key={i.id} item={i} stack={stack} />
+						))}
+					</ChildsItems>
 
 					{item.id == "a" && (
 						<ColorGroup newColor={newColor} colorsX={colorsX} />
@@ -147,7 +190,14 @@ export default ({
 							/>
 						</InputSpan>
 
-						<SubmitSpan />
+						{newKeyword.value != "" && (
+							<SubmitSpan
+								color={newColor.value}
+								onPressOut={onSaveItem}
+							>
+								<SubmitIcon style={{ tintColor: "#f6f6f6" }} />
+							</SubmitSpan>
+						)}
 					</NewKeywordWrapper>
 				</Childs>
 			)}
