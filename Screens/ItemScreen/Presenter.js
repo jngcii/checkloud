@@ -2,6 +2,7 @@ import React from "react";
 import { Animated, StyleSheet } from "react-native";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import styled from "styled-components";
+import DraggableFlatList from "react-native-draggable-flatlist";
 import Container from "./Container";
 import ItemBox from "../../Components/ItemBox";
 import Colors from "../../Components/Colors";
@@ -173,10 +174,34 @@ export default ({
 			) : (
 				<Childs>
 					<ChildsItems>
+						<DraggableFlatList />
 						{childItems.map(i => (
 							<ItemBox key={i.id} item={i} stack={stack} />
 						))}
 					</ChildsItems>
+
+					<DraggableFlatList
+						style={{ flex: 1, width: "100%", marginTop: 5 }}
+						data={childItems}
+						keyExtractor={item => item.id}
+						renderItem={({
+							index,
+							item,
+							isActive,
+							move,
+							moveEnd
+						}) => (
+							<ItemBox
+								item={item}
+								stack={stack}
+								isActive={isActive}
+								// func
+								move={move}
+								moveEnd={moveEnd}
+							/>
+						)}
+						onMoveEnd={({ data }) => addedItem.setArray(data)}
+					/>
 
 					{item.id == "a" && (
 						<ColorGroup newColor={newColor} colorsX={colorsX} />

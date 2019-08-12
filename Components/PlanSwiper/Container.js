@@ -43,7 +43,6 @@ export default ({
 	return (
 		<Presenter
 			plans={plans}
-			isMaking={isMaking}
 			isEditing={isEditing}
 			addedItem={addedItem}
 			addedItemSgt={addedItemSgt}

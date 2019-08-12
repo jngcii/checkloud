@@ -1,4 +1,5 @@
 import React from "react";
+import { Dimensions } from "react-native";
 import { useMutation } from "react-apollo-hooks";
 import { ADD_ITEM_ACTS } from "../../API/queries/itemQueries";
 import { ADD_PLAN } from "../../API/queries/planQueries";
@@ -6,7 +7,9 @@ import useInput from "../../Hooks/useInput";
 import { easeIO } from "../../Animations/layoutAnimations";
 import Presenter from "./Presenter";
 
-export default ({ addedItem, addedItemSgt }) => {
+const { width } = Dimensions.get("window");
+
+export default ({ swipeRef, addedItem, addedItemSgt }) => {
 	const [addItemActsMutation] = useMutation(ADD_ITEM_ACTS);
 	const [addPlanMutation] = useMutation(ADD_PLAN);
 
@@ -60,7 +63,14 @@ export default ({ addedItem, addedItemSgt }) => {
 			}
 		});
 
-		console.log(addPlan);
+		if (addPlan) {
+			newTitle.onChange("");
+			addedItem.setArray([]);
+			addedItemSgt.setArray([]);
+			swipeRef.current.scrollTo({ x: width, animated: true });
+
+			easeIO();
+		}
 	};
 
 	return (

@@ -141,8 +141,9 @@ export default ({
 
 			<Body>
 				<DraggableFlatList
-					style={{ flex: 1, marginBottom: 20 }}
+					style={{ flex: 1 }}
 					data={addedItem.array}
+					keyExtractor={(_, index) => index}
 					renderItem={({ index, item, isActive, move, moveEnd }) => (
 						<ItemActBox
 							item={item}

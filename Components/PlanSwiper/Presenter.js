@@ -30,7 +30,6 @@ const SwiperWrapper = styled.ScrollView.attrs({
 
 export default ({
 	plans,
-	isMaking,
 	isEditing,
 	addedItem,
 	addedItemSgt,
@@ -46,7 +45,7 @@ export default ({
 			scrollEventThrottle={16}
 		>
 			<PlanBoxNew
-				isMaking={isMaking}
+				swipeRef={swipeRef}
 				addedItem={addedItem}
 				addedItemSgt={addedItemSgt}
 			/>
