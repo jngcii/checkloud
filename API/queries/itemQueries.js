@@ -39,6 +39,18 @@ export const GET_ITEM_ACTS = gql`
 	}
 `;
 
+export const ADD_ITEM = gql`
+	mutation addItem($keyword: String!, Color: String!, parentId: String){
+		addItem (keyword: $keyword: color: $color: parentId: $parentId)@client {
+			id
+			keyword
+			color
+			parentId
+			childIds
+		}
+	}
+`;
+
 export const ADD_ITEM_ACTS = gql`
 	mutation addItemActs($itemActs: [ItemAct]) {
 		addItemActs(itemActs: $itemActs) @client {

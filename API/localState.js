@@ -1,8 +1,8 @@
 import uuidv1 from "uuid/v1";
 import { ITEM_FRAGMENT } from "./fragments";
-import { GET_ITEM_ACTS } from "./queries/itemQueries";
+import { GET_ITEMS, GET_ITEM_ACTS } from "./queries/itemQueries";
 import { GET_PLANS } from "./queries/planQueries";
-import { saveItemActs, savePlans } from "./offline";
+import { saveItems, saveItemActs, savePlans } from "./offline";
 
 export const typeDefs = `
     type Query {
@@ -20,6 +20,7 @@ export const typeDefs = `
     }
 
     type Mutation {
+        addItem(keyword: String!, color: String! parentId: String): [Item]
         addItemActs(itemActs: [ItemAct]): [ItemAct]
         addPlan(title: String!, itemActs: [ItemAct!]!): Boolean!
     }
@@ -86,6 +87,51 @@ export const resolvers = {
 	Mutation: {
 		// add Mutation
 		// ******************************************************************
+
+		addItem: async (_, { keyword, color, parentId }, { cache }) => {
+			const newItem = {
+				__typename: "Item",
+				id: uuidv1(),
+				keyword,
+				color,
+				parentId,
+				childId: []
+			};
+
+			const idOfParent = cache.config.dataIdFromObject({
+				__typename: "Item",
+				id: parentId
+			});
+
+			const parentItem = cache.readFragment({
+				fragment: ITEM_FRAGMENT,
+				id: idOfParent
+			});
+
+			parentItem.chlidIds.push(newItem.id);
+
+			cache.writeFragment({
+				fragment: ITEM_FRAGMENT,
+				id: idOfParent,
+				data: {
+					...parentItem
+				}
+			});
+
+			const { items } = await cache.readQuery({ query: GET_ITEMS });
+
+			try {
+				await cache.writeData({
+					data: {
+						items: [newItem, ...items]
+					}
+				});
+				await saveItems(cache);
+				return newItem;
+			} catch {
+				return null;
+			}
+		},
 
 		addItemActs: async (_, { itemActs: itemActsNew }, { cache }) => {
 			let newItemActs = [];
