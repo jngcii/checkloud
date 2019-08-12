@@ -173,13 +173,6 @@ export default ({
 				<Stack floor={floor} stack={stack} stackShape={stackShape} />
 			) : (
 				<Childs>
-					<ChildsItems>
-						<DraggableFlatList />
-						{childItems.map(i => (
-							<ItemBox key={i.id} item={i} stack={stack} />
-						))}
-					</ChildsItems>
-
 					<DraggableFlatList
 						style={{ flex: 1, width: "100%", marginTop: 5 }}
 						data={childItems}
