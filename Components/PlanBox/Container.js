@@ -4,7 +4,7 @@ import useInput from "../../Hooks/useInput";
 import { easeIO } from "../../Animations/layoutAnimations";
 import Presenter from "./Presenter";
 
-export default ({ plan, isEditing, pageIndex }) => {
+export default ({ plan, isEditing, itemsVisible, pageIndex }) => {
 	const items = useArray(plan.itemActs);
 	const newKeyword = useInput("");
 
@@ -29,6 +29,7 @@ export default ({ plan, isEditing, pageIndex }) => {
 		<Presenter
 			plan={plan}
 			isEditing={isEditing}
+			itemsVisible={itemsVisible}
 			items={items}
 			newKeyword={newKeyword}
 			// func

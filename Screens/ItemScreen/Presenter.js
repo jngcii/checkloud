@@ -176,7 +176,7 @@ export default ({
 					<DraggableFlatList
 						style={{ flex: 1, width: "100%", marginTop: 5 }}
 						data={childItems}
-						keyExtractor={item => item.id}
+						keyExtractor={(_, index) => `item - ${index}`}
 						renderItem={({
 							index,
 							item,

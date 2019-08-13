@@ -11,6 +11,7 @@ export default ({
 	addedItem,
 	addedItemSgt,
 	addedItemAct,
+	itemsVisible,
 	pageIndex,
 	swipeRef
 }) => {
@@ -46,6 +47,7 @@ export default ({
 			isEditing={isEditing}
 			addedItem={addedItem}
 			addedItemSgt={addedItemSgt}
+			itemsVisible={itemsVisible}
 			pageIndex={pageIndex}
 			swipeRef={swipeRef}
 			//func

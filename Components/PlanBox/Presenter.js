@@ -121,7 +121,7 @@ const PercentageText = styled.Text`
 	opacity: 0.5;
 `;
 
-const AddItem = ({ newKeyword, onAddItem }) => (
+const AddItem = ({ itemsVisible, newKeyword, onAddItem }) => (
 	<ItemInputBox>
 		<AddIconSpan>
 			<AddIcon style={{ tintColor: "#ddd" }} />
@@ -131,7 +131,7 @@ const AddItem = ({ newKeyword, onAddItem }) => (
 			<InputItemActText
 				{...newKeyword}
 				placeholder={"새로운 목록을 선택/입력하세요."}
-				onFocus={null}
+				onFocus={() => itemsVisible.setValue(false)}
 				onSubmitEditing={onAddItem}
 			/>
 		</InputWrapper>
@@ -141,6 +141,7 @@ const AddItem = ({ newKeyword, onAddItem }) => (
 export default ({
 	plan,
 	isEditing,
+	itemsVisible,
 	items,
 	newKeyword,
 	// func
@@ -182,7 +183,7 @@ export default ({
 				<DraggableFlatList
 					style={{ flex: 1 }}
 					data={items.array}
-					keyExtractor={(_, index) => index}
+					keyExtractor={(_, index) => `item - ${index}`}
 					renderItem={({ index, item, isActive, move, moveEnd }) => (
 						<ItemActBox
 							item={item}
@@ -197,6 +198,7 @@ export default ({
 					ListFooterComponent={
 						isEditing.value && (
 							<AddItem
+								itemsVisible={itemsVisible}
 								newKeyword={newKeyword}
 								// func
 								onAddItem={onAddItem}
@@ -204,6 +206,7 @@ export default ({
 						)
 					}
 					onMoveEnd={({ data }) => items.setArray(data)}
+					onMomentumScrollBegin={() => itemsVisible.setValue(false)}
 				/>
 
 				<PercentageText color={plan.itemActs[0].color}>

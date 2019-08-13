@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 const Wrapper = styled.View`
 	width: 100%;
-	height: 70px;
-	padding: 10px;
+	height: 60px;
+	padding: 5px 10px;
 `;
 
 const Box = styled.TouchableOpacity`

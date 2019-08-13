@@ -51,7 +51,7 @@ const ContentSpan = styled.View`
 `;
 const KeywordWrapper = styled.View`
 	width: 100%;
-	height: ${props => (props.hasParent ? 30 : 50)};
+	height: ${props => (props.hasParent ? 32 : 50)};
 	justify-content: center;
 `;
 const Keyword = styled.Text.attrs({
@@ -64,7 +64,7 @@ const Keyword = styled.Text.attrs({
 `;
 const ParentWrapper = styled.View`
 	width: 100%;
-	height: 20px;
+	height: 18px;
 `;
 
 const MemoBox = styled.View`

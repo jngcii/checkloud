@@ -33,6 +33,7 @@ export default ({
 	isEditing,
 	addedItem,
 	addedItemSgt,
+	itemsVisible,
 	pageIndex,
 	swipeRef,
 	//func
@@ -48,6 +49,7 @@ export default ({
 				swipeRef={swipeRef}
 				addedItem={addedItem}
 				addedItemSgt={addedItemSgt}
+				itemsVisible={itemsVisible}
 			/>
 
 			{plans.length > 0 ? (
@@ -56,6 +58,7 @@ export default ({
 						key={p.id}
 						plan={p}
 						isEditing={isEditing}
+						itemsVisible={itemsVisible}
 						pageIndex={pageIndex}
 					/>
 				))

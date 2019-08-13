@@ -15,7 +15,8 @@ export default ({
 	placeholder = "",
 	value = "",
 	onChange,
-	onSubmitEditing = null
+	onSubmitEditing = null,
+	onFocus = null
 }) => (
 	<InputText
 		placeholder={placeholder}
@@ -26,5 +27,6 @@ export default ({
 		autoCorrect={false}
 		returnKeyType={"done"}
 		onSubmitEditing={onSubmitEditing}
+		onFocus={onFocus}
 	/>
 );

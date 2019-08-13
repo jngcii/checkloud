@@ -27,6 +27,7 @@ export default () => {
 	const addedItem = useArray([]);
 	const addedItemSgt = useArray([]);
 	const addedItemAct = useArray([]);
+	const itemsVisible = useBoolean(false);
 	const pageIndex = useString(1);
 
 	const swipeRef = useRef(null);
@@ -97,6 +98,7 @@ export default () => {
 			addedItem={addedItem}
 			addedItemSgt={addedItemSgt}
 			addedItemAct={addedItemAct}
+			itemsVisible={itemsVisible}
 			pageIndex={pageIndex}
 			swipeRef={swipeRef}
 			// animation

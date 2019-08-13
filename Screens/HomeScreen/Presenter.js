@@ -182,6 +182,7 @@ export default ({
 	addedItem,
 	addedItemSgt,
 	addedItemAct,
+	itemsVisible,
 	pageIndex,
 	swipeRef,
 	// animation
@@ -206,6 +207,7 @@ export default ({
 			addedItem={addedItem}
 			addedItemSgt={addedItemSgt}
 			addedItemAct={addedItemAct}
+			itemsVisible={itemsVisible}
 			pageIndex={pageIndex}
 			swipeRef={swipeRef}
 		/>
@@ -241,7 +243,10 @@ export default ({
 						{ transform: [{ translateY: pickerY.location.y }] }
 					]}
 				>
-					<ItemPicker />
+					<ItemPicker
+						itemsVisible={itemsVisible}
+						addedItem={addedItem}
+					/>
 				</Animated.View>
 			</Footer>
 		</WrapperBottom>

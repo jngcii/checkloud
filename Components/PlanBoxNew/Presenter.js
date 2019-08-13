@@ -90,7 +90,7 @@ const InputWrapper = styled.View`
 	justify-content: center;
 `;
 
-const AddItem = ({ newKeyword, onAddItem }) => (
+const AddItem = ({ itemsVisible, newKeyword, onAddItem }) => (
 	<ItemInputBox>
 		<AddIconSpan>
 			<AddIcon style={{ tintColor: "#ddd" }} />
@@ -100,7 +100,7 @@ const AddItem = ({ newKeyword, onAddItem }) => (
 			<InputItemActText
 				{...newKeyword}
 				placeholder={"새로운 목록을 선택/입력하세요."}
-				onFocus={null}
+				onFocus={() => itemsVisible.setValue(false)}
 				onSubmitEditing={onAddItem}
 			/>
 		</InputWrapper>
@@ -109,6 +109,7 @@ const AddItem = ({ newKeyword, onAddItem }) => (
 
 export default ({
 	addedItem,
+	itemsVisible,
 	newTitle,
 	newKeyword,
 	// func
@@ -128,6 +129,7 @@ export default ({
 						<InputTitleText
 							{...newTitle}
 							placeholder={"이름 없는 플랜"}
+							onFocus={() => itemsVisible.setValue(false)}
 						/>
 					</TitleSpan>
 
@@ -143,7 +145,7 @@ export default ({
 				<DraggableFlatList
 					style={{ flex: 1 }}
 					data={addedItem.array}
-					keyExtractor={(_, index) => index}
+					keyExtractor={(_, index) => `item - ${index}`}
 					renderItem={({ index, item, isActive, move, moveEnd }) => (
 						<ItemActBox
 							item={item}
@@ -157,12 +159,14 @@ export default ({
 					)}
 					ListFooterComponent={
 						<AddItem
+							itemsVisible={itemsVisible}
 							newKeyword={newKeyword}
 							// func
 							onAddItem={onAddItem}
 						/>
 					}
 					onMoveEnd={({ data }) => addedItem.setArray(data)}
+					onMomentumScrollBegin={() => itemsVisible.setValue(false)}
 				/>
 			</Body>
 		</PlanBox>
