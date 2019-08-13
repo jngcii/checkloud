@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import ParentItems from "../ParentItems";
 
 const Wrapper = styled.View`
 	width: 100%;
@@ -65,6 +66,13 @@ const Keyword = styled.Text.attrs({
 const ParentWrapper = styled.View`
 	width: 100%;
 	height: 18px;
+	flex-direction: row;
+	align-items: center;
+`;
+const ParentKeyword = styled.Text`
+	font-size: ${props => props.theme.usedItemFontSize};
+	font-weight: ${props => props.theme.usedItemFontWeight};
+	color: ${props => props.theme.greyColor};
 `;
 
 const MemoBox = styled.View`
@@ -119,6 +127,7 @@ const Memo = ({ color }) => (
 
 export default ({
 	item,
+	parentKeywords,
 	isEditing,
 	isActive,
 	detailVisible,
@@ -149,7 +158,9 @@ export default ({
 					</Keyword>
 				</KeywordWrapper>
 
-				{item.parentId && item.parentId != "a" && <ParentWrapper />}
+				{item.parentId && item.parentId != "a" && (
+					<ParentItems id={item.parentId} />
+				)}
 
 				{detailVisible.value && <Memo color={item.color} />}
 			</ContentSpan>

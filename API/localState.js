@@ -81,6 +81,41 @@ export const resolvers = {
 			});
 
 			return item;
+		},
+
+		parentKeywords: async (_, { id: itemId }, { cache }) => {
+			let parentKeywords = [];
+
+			console.log(itemId, "item");
+
+			let id = cache.config.dataIdFromObject({
+				__typename: "Item",
+				id: itemId
+			});
+
+			let item = cache.readFragment({
+				fragment: ITEM_FRAGMENT,
+				id
+			});
+
+			if (item.id !== "a") parentKeywords.unshift(item.keyword);
+
+			while (item && item.parentId !== "a") {
+				id = cache.config.dataIdFromObject({
+					__typename: "Item",
+					id: item.parentId
+				});
+
+				item = cache.readFragment({
+					fragment: ITEM_FRAGMENT,
+					id
+				});
+
+				if (item) {
+					parentKeywords.unshift(item.keyword);
+				}
+			}
+			return parentKeywords;
 		}
 	},
 

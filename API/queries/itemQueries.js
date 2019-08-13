@@ -39,6 +39,12 @@ export const GET_ITEM_ACTS = gql`
 	}
 `;
 
+export const GET_PARENT_KEYWORDS = gql`
+	query parentKeywords($id: String!) {
+		parentKeywords(id: $id) @client
+	}
+`;
+
 export const ADD_ITEM = gql`
 	mutation addItem($keyword: String!, $color: String!, $parentId: String) {
 		addItem(keyword: $keyword, color: $color, parentId: $parentId) @client
