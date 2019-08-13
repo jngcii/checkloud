@@ -70,6 +70,7 @@ const Body = styled.View`
 `;
 const ItemInputBox = styled.View`
 	${props => props.theme.itemActBox};
+	margin-bottom: 200px;
 `;
 const AddIconSpan = styled.View`
 	width: 50px;
@@ -112,6 +113,7 @@ export default ({
 	itemsVisible,
 	newTitle,
 	newKeyword,
+	scrollRef,
 	// func
 	onAddItem,
 	onRemoveItem,
@@ -143,6 +145,7 @@ export default ({
 
 			<Body>
 				<DraggableFlatList
+					ref={scrollRef}
 					style={{ flex: 1 }}
 					data={addedItem.array}
 					keyExtractor={(_, index) => `item - ${index}`}

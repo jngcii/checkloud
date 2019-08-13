@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import useArray from "../../Hooks/useArray";
 import useInput from "../../Hooks/useInput";
 import { easeIO } from "../../Animations/layoutAnimations";
@@ -7,6 +7,8 @@ import Presenter from "./Presenter";
 export default ({ plan, isEditing, itemsVisible, pageIndex }) => {
 	const items = useArray(plan.itemActs);
 	const newKeyword = useInput("");
+
+	const scrollRef = useRef(null);
 
 	const onAddItem = () => {
 		// func
@@ -25,6 +27,10 @@ export default ({ plan, isEditing, itemsVisible, pageIndex }) => {
 		easeIO();
 	}, [pageIndex.value]);
 
+	useEffect(() => {
+		items.setArray(plan.itemActs);
+	}, [plan]);
+
 	return (
 		<Presenter
 			plan={plan}
@@ -32,6 +38,7 @@ export default ({ plan, isEditing, itemsVisible, pageIndex }) => {
 			itemsVisible={itemsVisible}
 			items={items}
 			newKeyword={newKeyword}
+			scrollRef={scrollRef}
 			// func
 			onAddItem={onAddItem}
 			onRemoveItem={onRemoveItem}

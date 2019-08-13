@@ -89,6 +89,7 @@ const Body = styled.View`
 `;
 const ItemInputBox = styled.View`
 	${props => props.theme.itemActBox};
+	margin-bottom: 200px;
 `;
 const AddIconSpan = styled.View`
 	width: 50px;
@@ -144,6 +145,7 @@ export default ({
 	itemsVisible,
 	items,
 	newKeyword,
+	scrollRef,
 	// func
 	onAddItem,
 	onRemoveItem
@@ -181,6 +183,7 @@ export default ({
 
 			<Body>
 				<DraggableFlatList
+					ref={scrollRef}
 					style={{ flex: 1 }}
 					data={items.array}
 					keyExtractor={(_, index) => `item - ${index}`}
@@ -209,9 +212,16 @@ export default ({
 					onMomentumScrollBegin={() => itemsVisible.setValue(false)}
 				/>
 
-				<PercentageText color={plan.itemActs[0].color}>
-					65%
-				</PercentageText>
+				{!isEditing.value && (
+					<PercentageText color={plan.itemActs[0].color}>
+						{Math.round(
+							(items.array.filter(i => i.isChecked).length /
+								items.array.length) *
+								100
+						)}
+						%
+					</PercentageText>
+				)}
 			</Body>
 		</PlanBox>
 	</Wrapper>

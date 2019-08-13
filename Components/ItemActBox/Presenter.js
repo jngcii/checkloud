@@ -26,10 +26,11 @@ const CheckBox = styled.TouchableOpacity.attrs({
 const Checked = styled.TouchableOpacity.attrs({
 	activeOpacity: 1
 })`
-	width: 16px;
-	height: 16px;
-	border-radius: 8px;
+	width: 20px;
+	height: 20px;
+	border-radius: 10px;
 	background-color: ${props => props.color};
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 	position: absolute;
 `;
 const RemoveIcon = styled.TouchableOpacity`
@@ -62,17 +63,6 @@ const Keyword = styled.Text.attrs({
 	font-size: ${props => props.theme.itemActFontSize};
 	font-weight: ${props => props.theme.itemActFontWeight};
 	color: ${props => props.theme.blackColor};
-`;
-const ParentWrapper = styled.View`
-	width: 100%;
-	height: 18px;
-	flex-direction: row;
-	align-items: center;
-`;
-const ParentKeyword = styled.Text`
-	font-size: ${props => props.theme.usedItemFontSize};
-	font-weight: ${props => props.theme.usedItemFontWeight};
-	color: ${props => props.theme.greyColor};
 `;
 
 const MemoBox = styled.View`
@@ -127,24 +117,28 @@ const Memo = ({ color }) => (
 
 export default ({
 	item,
-	parentKeywords,
 	isEditing,
 	isActive,
 	detailVisible,
 	// func
 	onPressDetail,
+	onCheckItem,
 	onRemoveItem,
 	move,
 	moveEnd
 }) => (
 	<Wrapper isActive={isActive}>
 		<LeftSpan>
-			<CheckBox />
-			{!isEditing && item.isChecked && <Checked />}
-			{isEditing && (
+			{isEditing ? (
 				<RemoveIcon onPressOut={onRemoveItem}>
 					<Minus />
 				</RemoveIcon>
+			) : (
+				<CheckBox onPressOut={onCheckItem} />
+			)}
+
+			{!isEditing && item.isChecked && (
+				<Checked onPressOut={onCheckItem} color={item.color} />
 			)}
 		</LeftSpan>
 

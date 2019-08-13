@@ -65,3 +65,9 @@ export const ADD_ITEM_ACTS = gql`
 		}
 	}
 `;
+
+export const CHECK_ITEM = gql`
+	mutation checkItem($id: String!) {
+		checkItem(id: $id) @client
+	}
+`;

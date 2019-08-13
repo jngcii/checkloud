@@ -1,5 +1,5 @@
 import uuidv1 from "uuid/v1";
-import { ITEM_FRAGMENT } from "./fragments";
+import { ITEM_FRAGMENT, ITEM_ACT_FRAGMENT } from "./fragments";
 import { GET_ITEMS, GET_ITEM_ACTS } from "./queries/itemQueries";
 import { GET_PLANS } from "./queries/planQueries";
 import { saveItems, saveItemActs, savePlans } from "./offline";
@@ -22,7 +22,8 @@ export const typeDefs = `
     type Mutation {
         addItem(keyword: String!, color: String! parentId: String): Boolean
         addItemActs(itemActs: [ItemAct]): [ItemAct]
-        addPlan(title: String!, itemActs: [ItemAct!]!): Boolean!
+		addPlan(title: String!, itemActs: [ItemAct!]!): Boolean!
+		checkItem(id: String!): Boolean!
     }
 
 	type History {
@@ -237,6 +238,52 @@ export const resolvers = {
 
 				return true;
 			} catch {
+				return false;
+			}
+		},
+
+		checkItem: async (_, { id }, { cache }) => {
+			const today = new Date();
+
+			const year = today.getFullYear();
+			const month = today.getMonth();
+			const date = today.getDate();
+			const hour = today.getHours();
+			const minute = today.getMinutes();
+			const second = today.getSeconds();
+
+			const itemId = await cache.config.dataIdFromObject({
+				__typename: "ItemAct",
+				id
+			});
+
+			const itemAct = await cache.readFragment({
+				fragment: ITEM_ACT_FRAGMENT,
+				id: itemId
+			});
+
+			const updatedItem = {
+				...itemAct,
+				isChecked: itemAct.isChecked ? false : true,
+				finishedTime: itemAct.isChecked
+					? null
+					: [year, month, date, hour, minute, second]
+			};
+
+			cache.writeFragment({
+				id: itemId,
+				fragment: ITEM_ACT_FRAGMENT,
+				data: { ...updatedItem }
+			});
+
+			try {
+				const res = await saveItemActs(cache);
+				if (res) {
+					await savePlans(cache);
+					return true;
+				}
+			} catch (error) {
+				console.error(error);
 				return false;
 			}
 		}

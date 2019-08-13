@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Dimensions } from "react-native";
 import { useMutation } from "react-apollo-hooks";
 import { ADD_ITEM_ACTS } from "../../API/queries/itemQueries";
@@ -15,6 +15,8 @@ export default ({ swipeRef, addedItem, addedItemSgt, itemsVisible }) => {
 
 	const newTitle = useInput("");
 	const newKeyword = useInput("");
+
+	const scrollRef = useRef(null);
 
 	const onAddItem = () => {
 		if (newKeyword.value == "") return;
@@ -34,6 +36,8 @@ export default ({ swipeRef, addedItem, addedItemSgt, itemsVisible }) => {
 		addedItemSgt.add(newItem);
 
 		newKeyword.onChange("");
+
+		scrollRef.current.scroll(60);
 
 		easeIO();
 	};
@@ -79,6 +83,7 @@ export default ({ swipeRef, addedItem, addedItemSgt, itemsVisible }) => {
 			itemsVisible={itemsVisible}
 			newTitle={newTitle}
 			newKeyword={newKeyword}
+			scrollRef={scrollRef}
 			// func
 			onAddItem={onAddItem}
 			onRemoveItem={onRemoveItem}
