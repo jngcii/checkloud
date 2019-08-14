@@ -59,12 +59,23 @@ const EditIcon = styled.Image.attrs({
 	width: 18px;
 	height: 18px;
 `;
-
-const DrawSpan = styled.View`
-	width: 50px;
-	height: 100%;
-	justify-content: flex-end;
+const Spacing = styled.View`
+	flex: 1;
 `;
+const DrawSpan = styled.View`
+	width: 60px;
+	height: 100%;
+	right: 0;
+	align-items: center;
+	justify-content: center;
+`;
+const SubmitBtn = styled.Text`
+	font-size: ${props => props.theme.itemActFontSize};
+	font-weight: ${props => props.theme.itemActFontWeight};
+	color: ${props => props.theme.doneBtnColor};
+	text-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+`;
+
 const DateWrapper = styled.View`
 	width: 100%;
 	height: 20px;
@@ -187,7 +198,15 @@ export default ({
 						</EditSpan>
 					)}
 
-					<DrawSpan />
+					<Spacing />
+
+					<DrawSpan>
+						{isEditing.value && items.count > 0 && (
+							<SubmitBtn color={items.array[0].color}>
+								Done
+							</SubmitBtn>
+						)}
+					</DrawSpan>
 				</TitleWrapper>
 
 				<DateWrapper>

@@ -46,6 +46,13 @@ const DrawSpan = styled.TouchableOpacity`
 	align-items: center;
 	justify-content: center;
 `;
+const SubmitIcon = styled.Image.attrs({
+	source: require("../../assets/icons/submitIcon.png")
+})`
+	width: 30px;
+	height: 30px;
+`;
+
 const DateWrapper = styled.View`
 	width: 100%;
 	height: 20px;
@@ -86,13 +93,6 @@ const InputWrapper = styled.View`
 	flex: 1;
 	height: 100%;
 	justify-content: center;
-`;
-
-const SubmitIcon = styled.Image.attrs({
-	source: require("../../assets/icons/submitIcon.png")
-})`
-	width: 30px;
-	height: 30px;
 `;
 
 const ControlBarWrapper = styled.View`

@@ -10,6 +10,7 @@ export default {
 	submitBtnColor: "#ccc",
 
 	redColor: "#f54278",
+	doneBtnColor: "#4285d6",
 
 	planTitleFontSize: 23,
 	dateFontSize: 11,
