@@ -35,6 +35,7 @@ export default ({
 	itemsVisible,
 	pageIndex,
 	swipeRef,
+	scrollEnabled,
 	//animation
 	swiperY,
 	panResponder,
@@ -46,12 +47,14 @@ export default ({
 			ref={swipeRef}
 			onScroll={e => onSwipe(e)}
 			scrollEventThrottle={16}
+			scrollEnabled={scrollEnabled.value}
 		>
 			<PlanBoxNew
 				swipeRef={swipeRef}
 				addedItem={addedItem}
 				addedItemSgt={addedItemSgt}
 				itemsVisible={itemsVisible}
+				scrollEnabled={scrollEnabled}
 				swiperY={swiperY}
 				panResponder={panResponder}
 			/>
@@ -63,6 +66,7 @@ export default ({
 						plan={p}
 						isEditing={isEditing}
 						itemsVisible={itemsVisible}
+						scrollEnabled={scrollEnabled}
 						pageIndex={pageIndex}
 						swiperY={swiperY}
 						panResponder={panResponder}

@@ -164,6 +164,7 @@ export default ({
 	plan,
 	isEditing,
 	itemsVisible,
+	scrollEnabled,
 	items,
 	newKeyword,
 	scrollRef,
@@ -225,6 +226,7 @@ export default ({
 					style={{ flex: 1 }}
 					data={items.array}
 					keyExtractor={(_, index) => `item - ${index}`}
+					showsVerticalScrollIndicator={false}
 					renderItem={({ index, item, isActive, move, moveEnd }) => (
 						<ItemActBox
 							item={item}
@@ -246,7 +248,11 @@ export default ({
 							/>
 						)
 					}
-					onMoveEnd={({ data }) => items.setArray(data)}
+					onMoveBegin={() => scrollEnabled.setValue(false)}
+					onMoveEnd={({ data }) => {
+						items.setArray(data);
+						scrollEnabled.setValue(true);
+					}}
 					onMomentumScrollBegin={() => itemsVisible.setValue(false)}
 					onContentSizeChange={onContentSizeChange}
 				/>

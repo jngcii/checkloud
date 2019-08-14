@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Dimensions, PanResponder } from "react-native";
+import useBoolean from "../../Hooks/useBoolean";
 import locationAnimation from "../../Animations/locationAnimation";
 import Presenter from "./Presenter";
 
@@ -16,12 +17,16 @@ export default ({
 	pageIndex,
 	swipeRef
 }) => {
+	const scrollEnabled = useBoolean(true);
+
 	const swiperY = locationAnimation();
 
 	const panResponder = PanResponder.create({
 		onStartShouldSetPanResponder: () => true,
 
 		onPanResponderMove: (_, gestureState) => {
+			scrollEnabled.setValue(false);
+
 			if (!listVisible.value) {
 				if (gestureState.dy <= 0)
 					swiperY.location.setValue({ y: gestureState.dy });
@@ -33,6 +38,8 @@ export default ({
 		},
 
 		onPanResponderRelease: (_, gestureState) => {
+			scrollEnabled.setValue(true);
+
 			if (!listVisible.value) {
 				if (gestureState.dy < -15) {
 					swiperY.changeLocation({ toY: -230, duration: 100 });
@@ -79,6 +86,11 @@ export default ({
 		);
 	}, [swipeRef.current]);
 
+	useEffect(() => {
+		if (listVisible.value && scrollEnabled.value)
+			scrollEnabled.setValue(false);
+	}, [listVisible]);
+
 	return (
 		<Presenter
 			plans={plans}
@@ -88,6 +100,7 @@ export default ({
 			itemsVisible={itemsVisible}
 			pageIndex={pageIndex}
 			swipeRef={swipeRef}
+			scrollEnabled={scrollEnabled}
 			//animation
 			swiperY={swiperY}
 			panResponder={panResponder}

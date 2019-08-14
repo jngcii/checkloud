@@ -11,6 +11,7 @@ export default ({
 	plan,
 	isEditing,
 	itemsVisible,
+	scrollEnabled,
 	pageIndex,
 	swiperY,
 	panResponder
@@ -60,6 +61,7 @@ export default ({
 			plan={plan}
 			isEditing={isEditing}
 			itemsVisible={itemsVisible}
+			scrollEnabled={scrollEnabled}
 			items={items}
 			newKeyword={newKeyword}
 			scrollRef={scrollRef}

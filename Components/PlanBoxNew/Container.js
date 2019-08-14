@@ -14,6 +14,7 @@ export default ({
 	addedItem,
 	addedItemSgt,
 	itemsVisible,
+	scrollEnabled,
 	swiperY,
 	panResponder
 }) => {
@@ -98,6 +99,7 @@ export default ({
 		<Presenter
 			addedItem={addedItem}
 			itemsVisible={itemsVisible}
+			scrollEnabled={scrollEnabled}
 			newTitle={newTitle}
 			newKeyword={newKeyword}
 			scrollRef={scrollRef}

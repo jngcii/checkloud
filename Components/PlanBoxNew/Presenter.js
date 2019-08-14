@@ -131,6 +131,7 @@ const AddItem = ({ newKeyword, onAddItem, onFocusItem }) => (
 export default ({
 	addedItem,
 	itemsVisible,
+	scrollEnabled,
 	newTitle,
 	newKeyword,
 	scrollRef,
@@ -182,6 +183,7 @@ export default ({
 					style={{ flex: 1 }}
 					data={addedItem.array}
 					keyExtractor={(_, index) => `item - ${index}`}
+					showsVerticalScrollIndicator={false}
 					renderItem={({ index, item, isActive, move, moveEnd }) => (
 						<ItemActBox
 							item={item}
@@ -201,7 +203,11 @@ export default ({
 							onFocusItem={onFocusItem}
 						/>
 					}
-					onMoveEnd={({ data }) => addedItem.setArray(data)}
+					onMoveBegin={() => scrollEnabled.setValue(false)}
+					onMoveEnd={({ data }) => {
+						addedItem.setArray(data);
+						scrollEnabled.setValue(true);
+					}}
 					onMomentumScrollBegin={() => itemsVisible.setValue(false)}
 					onContentSizeChange={onContentSizeChange}
 				/>
