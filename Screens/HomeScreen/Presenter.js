@@ -217,15 +217,14 @@ export default ({
 	addedItem,
 	addedItemSgt,
 	itemsVisible,
+	listVisible,
 	pageIndex,
 	swipeRef,
 	// animation
-	swiperY,
 	navY,
 	pickerY,
 	itemShape,
 	historyShape,
-	panResponder,
 	// func
 	onPressPercentBar,
 	onPressItemNav,
@@ -244,10 +243,9 @@ export default ({
 			addedItem={addedItem}
 			addedItemSgt={addedItemSgt}
 			itemsVisible={itemsVisible}
+			listVisible={listVisible}
 			pageIndex={pageIndex}
 			swipeRef={swipeRef}
-			swiperY={swiperY}
-			panResponder={panResponder}
 		/>
 
 		<WrapperBottom>

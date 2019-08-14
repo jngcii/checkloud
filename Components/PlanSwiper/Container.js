@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { Dimensions } from "react-native";
+import { Dimensions, PanResponder } from "react-native";
+import locationAnimation from "../../Animations/locationAnimation";
 import Presenter from "./Presenter";
 
 const { width } = Dimensions.get("window");
@@ -11,11 +12,47 @@ export default ({
 	addedItem,
 	addedItemSgt,
 	itemsVisible,
+	listVisible,
 	pageIndex,
-	swipeRef,
-	swiperY,
-	panResponder
+	swipeRef
 }) => {
+	const swiperY = locationAnimation();
+
+	const panResponder = PanResponder.create({
+		onStartShouldSetPanResponder: () => true,
+
+		onPanResponderMove: (_, gestureState) => {
+			if (!listVisible.value) {
+				if (gestureState.dy <= 0)
+					swiperY.location.setValue({ y: gestureState.dy });
+			} else {
+				if (gestureState.dy < 230) {
+					swiperY.location.setValue({ y: gestureState.dy - 230 });
+				}
+			}
+		},
+
+		onPanResponderRelease: (_, gestureState) => {
+			if (!listVisible.value) {
+				if (gestureState.dy < -15) {
+					swiperY.changeLocation({ toY: -230, duration: 100 });
+					listVisible.setValue(true);
+				} else {
+					swiperY.changeLocation({ toY: 0, duration: 100 });
+					listVisible.setValue(false);
+				}
+			} else {
+				if (gestureState.dy > 15) {
+					swiperY.changeLocation({ toY: 0, duration: 100 });
+					listVisible.setValue(false);
+				} else {
+					swiperY.changeLocation({ toY: -230, duration: 100 });
+					listVisible.setValue(true);
+				}
+			}
+		}
+	});
+
 	const onSwipe = e => {
 		const { x } = e.nativeEvent.contentOffset;
 
