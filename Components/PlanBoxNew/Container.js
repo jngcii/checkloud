@@ -7,7 +7,7 @@ import useInput from "../../Hooks/useInput";
 import { easeIO } from "../../Animations/layoutAnimations";
 import Presenter from "./Presenter";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 export default ({
 	swipeRef,
@@ -83,6 +83,17 @@ export default ({
 		}
 	};
 
+	const onContentSizeChange = () => {
+		scrollRef.current.scroll(height);
+		easeIO();
+	};
+
+	const onFocusItem = () => {
+		itemsVisible.setValue(false);
+		scrollRef.current.scroll(height);
+		easeIO();
+	};
+
 	return (
 		<Presenter
 			addedItem={addedItem}
@@ -96,6 +107,8 @@ export default ({
 			onAddItem={onAddItem}
 			onRemoveItem={onRemoveItem}
 			onCreatePlan={onCreatePlan}
+			onContentSizeChange={onContentSizeChange}
+			onFocusItem={onFocusItem}
 		/>
 	);
 };

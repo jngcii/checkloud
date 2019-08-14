@@ -1,8 +1,11 @@
 import React, { useRef, useEffect } from "react";
+import { Dimensions } from "react-native";
 import useArray from "../../Hooks/useArray";
 import useInput from "../../Hooks/useInput";
 import { easeIO } from "../../Animations/layoutAnimations";
 import Presenter from "./Presenter";
+
+const { height } = Dimensions.get("window");
 
 export default ({
 	plan,
@@ -25,6 +28,17 @@ export default ({
 
 	const onRemoveItem = i => {
 		items.remove(i);
+		easeIO();
+	};
+
+	const onContentSizeChange = () => {
+		scrollRef.current.scroll(height);
+		easeIO();
+	};
+
+	const onFocusItem = () => {
+		itemsVisible.setValue(false);
+		scrollRef.current.scroll(height);
 		easeIO();
 	};
 
@@ -54,6 +68,8 @@ export default ({
 			// func
 			onAddItem={onAddItem}
 			onRemoveItem={onRemoveItem}
+			onContentSizeChange={onContentSizeChange}
+			onFocusItem={onFocusItem}
 		/>
 	);
 };

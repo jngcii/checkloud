@@ -143,7 +143,7 @@ const ControlBar = styled.View`
 	background-color: rgba(0, 0, 0, 0.4);
 `;
 
-const AddItem = ({ itemsVisible, newKeyword, onAddItem }) => (
+const AddItem = ({ newKeyword, onAddItem, onFocusItem }) => (
 	<ItemInputBox>
 		<AddIconSpan>
 			<AddIcon style={{ tintColor: "#ddd" }} />
@@ -153,7 +153,7 @@ const AddItem = ({ itemsVisible, newKeyword, onAddItem }) => (
 			<InputItemActText
 				{...newKeyword}
 				placeholder={"새로운 목록을 선택/입력하세요."}
-				onFocus={() => itemsVisible.setValue(false)}
+				onFocus={onFocusItem}
 				onSubmitEditing={onAddItem}
 			/>
 		</InputWrapper>
@@ -171,7 +171,9 @@ export default ({
 	panResponder,
 	// func
 	onAddItem,
-	onRemoveItem
+	onRemoveItem,
+	onContentSizeChange,
+	onFocusItem
 }) => (
 	<Animated.View
 		style={[
@@ -237,15 +239,16 @@ export default ({
 					ListFooterComponent={
 						isEditing.value && (
 							<AddItem
-								itemsVisible={itemsVisible}
 								newKeyword={newKeyword}
 								// func
 								onAddItem={onAddItem}
+								onFocusItem={onFocusItem}
 							/>
 						)
 					}
 					onMoveEnd={({ data }) => items.setArray(data)}
 					onMomentumScrollBegin={() => itemsVisible.setValue(false)}
+					onContentSizeChange={onContentSizeChange}
 				/>
 
 				{!isEditing.value && (
