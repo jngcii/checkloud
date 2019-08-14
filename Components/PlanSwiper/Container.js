@@ -10,10 +10,11 @@ export default ({
 	isEditing,
 	addedItem,
 	addedItemSgt,
-	addedItemAct,
 	itemsVisible,
 	pageIndex,
-	swipeRef
+	swipeRef,
+	swiperY,
+	panResponder
 }) => {
 	const onSwipe = e => {
 		const { x } = e.nativeEvent.contentOffset;
@@ -50,6 +51,9 @@ export default ({
 			itemsVisible={itemsVisible}
 			pageIndex={pageIndex}
 			swipeRef={swipeRef}
+			//animation
+			swiperY={swiperY}
+			panResponder={panResponder}
 			//func
 			onSwipe={onSwipe}
 		/>

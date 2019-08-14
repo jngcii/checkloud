@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions } from "react-native";
+import { Animated, Dimensions, StyleSheet } from "react-native";
 import {
 	getBottomSpace,
 	getStatusBarHeight
@@ -17,7 +17,6 @@ const Wrapper = styled.View`
 	position: absolute;
 `;
 
-// 이게 swiper 혹은 scrollView가 돼야 한다.
 const SwiperWrapper = styled.ScrollView.attrs({
 	horizontal: true,
 	pagingEnabled: true,
@@ -36,6 +35,9 @@ export default ({
 	itemsVisible,
 	pageIndex,
 	swipeRef,
+	//animation
+	swiperY,
+	panResponder,
 	//func
 	onSwipe
 }) => (
@@ -50,6 +52,8 @@ export default ({
 				addedItem={addedItem}
 				addedItemSgt={addedItemSgt}
 				itemsVisible={itemsVisible}
+				swiperY={swiperY}
+				panResponder={panResponder}
 			/>
 
 			{plans.length > 0 ? (
@@ -60,10 +64,12 @@ export default ({
 						isEditing={isEditing}
 						itemsVisible={itemsVisible}
 						pageIndex={pageIndex}
+						swiperY={swiperY}
+						panResponder={panResponder}
 					/>
 				))
 			) : (
-				<NoPlan />
+				<NoPlan swiperY={swiperY} panResponder={panResponder} />
 			)}
 		</SwiperWrapper>
 	</Wrapper>

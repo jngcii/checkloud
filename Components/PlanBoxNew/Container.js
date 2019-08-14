@@ -9,7 +9,14 @@ import Presenter from "./Presenter";
 
 const { width } = Dimensions.get("window");
 
-export default ({ swipeRef, addedItem, addedItemSgt, itemsVisible }) => {
+export default ({
+	swipeRef,
+	addedItem,
+	addedItemSgt,
+	itemsVisible,
+	swiperY,
+	panResponder
+}) => {
 	const [addItemActsMutation] = useMutation(ADD_ITEM_ACTS);
 	const [addPlanMutation] = useMutation(ADD_PLAN);
 
@@ -83,6 +90,8 @@ export default ({ swipeRef, addedItem, addedItemSgt, itemsVisible }) => {
 			newTitle={newTitle}
 			newKeyword={newKeyword}
 			scrollRef={scrollRef}
+			swiperY={swiperY}
+			panResponder={panResponder}
 			// func
 			onAddItem={onAddItem}
 			onRemoveItem={onRemoveItem}

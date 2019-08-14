@@ -1,19 +1,13 @@
 import React from "react";
-import { Dimensions } from "react-native";
+import { Animated, Dimensions, StyleSheet } from "react-native";
 import styled from "styled-components";
 import DraggableFlatList from "react-native-draggable-flatlist";
-import { easeIO } from "../../Animations/layoutAnimations";
 import InputTitleText from "../InputTitleText";
 import InputItemActText from "../InputItemActText";
 import ItemActBox from "../ItemActBox";
 
 const { width } = Dimensions.get("window");
 
-const Wrapper = styled.View`
-	width: ${width};
-	height: 100%;
-	align-items: center;
-`;
 const PlanBox = styled.SafeAreaView`
 	width: 95%;
 	height: 98%;
@@ -101,6 +95,22 @@ const SubmitIcon = styled.Image.attrs({
 	height: 30px;
 `;
 
+const ControlBarWrapper = styled.View`
+	position: absolute;
+	bottom: 0;
+	align-self: center;
+	align-items: center;
+	justify-content: center;
+	width: 50%;
+	height: 50px;
+`;
+const ControlBar = styled.View`
+	width: 50px;
+	height: 6px;
+	border-radius: 3px;
+	background-color: rgba(0, 0, 0, 0.4);
+`;
+
 const AddItem = ({ itemsVisible, newKeyword, onAddItem }) => (
 	<ItemInputBox>
 		<AddIconSpan>
@@ -124,12 +134,19 @@ export default ({
 	newTitle,
 	newKeyword,
 	scrollRef,
+	swiperY,
+	panResponder,
 	// func
 	onAddItem,
 	onRemoveItem,
 	onCreatePlan
 }) => (
-	<Wrapper>
+	<Animated.View
+		style={[
+			styles.wrapperStyle,
+			{ transform: [{ translateY: swiperY.location.y }] }
+		]}
+	>
 		<PlanBox>
 			<Header>
 				<TitleWrapper>
@@ -186,6 +203,19 @@ export default ({
 					onMomentumScrollBegin={() => itemsVisible.setValue(false)}
 				/>
 			</Body>
+
+			<ControlBarWrapper {...panResponder.panHandlers}>
+				<ControlBar />
+			</ControlBarWrapper>
 		</PlanBox>
-	</Wrapper>
+	</Animated.View>
 );
+
+const styles = StyleSheet.create({
+	wrapperStyle: {
+		width,
+		height: "100%",
+		alignItems: "center",
+		overflow: "hidden"
+	}
+});

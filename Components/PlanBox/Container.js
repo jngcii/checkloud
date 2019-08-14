@@ -4,7 +4,14 @@ import useInput from "../../Hooks/useInput";
 import { easeIO } from "../../Animations/layoutAnimations";
 import Presenter from "./Presenter";
 
-export default ({ plan, isEditing, itemsVisible, pageIndex }) => {
+export default ({
+	plan,
+	isEditing,
+	itemsVisible,
+	pageIndex,
+	swiperY,
+	panResponder
+}) => {
 	const items = useArray(plan.itemActs);
 	const newKeyword = useInput("");
 
@@ -42,6 +49,8 @@ export default ({ plan, isEditing, itemsVisible, pageIndex }) => {
 			items={items}
 			newKeyword={newKeyword}
 			scrollRef={scrollRef}
+			swiperY={swiperY}
+			panResponder={panResponder}
 			// func
 			onAddItem={onAddItem}
 			onRemoveItem={onRemoveItem}
