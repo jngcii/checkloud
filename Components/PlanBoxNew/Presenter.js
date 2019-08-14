@@ -2,6 +2,7 @@ import React from "react";
 import { Dimensions } from "react-native";
 import styled from "styled-components";
 import DraggableFlatList from "react-native-draggable-flatlist";
+import { easeIO } from "../../Animations/layoutAnimations";
 import InputTitleText from "../InputTitleText";
 import InputItemActText from "../InputItemActText";
 import ItemActBox from "../ItemActBox";
@@ -46,8 +47,10 @@ const TitleSpan = styled.View`
 	justify-content: center;
 `;
 const DrawSpan = styled.TouchableOpacity`
-	width: 50px;
+	width: 60px;
 	height: 100%;
+	align-items: center;
+	justify-content: center;
 `;
 const DateWrapper = styled.View`
 	width: 100%;
@@ -89,6 +92,13 @@ const InputWrapper = styled.View`
 	flex: 1;
 	height: 100%;
 	justify-content: center;
+`;
+
+const SubmitIcon = styled.Image.attrs({
+	source: require("../../assets/icons/submitIcon.png")
+})`
+	width: 30px;
+	height: 30px;
 `;
 
 const AddItem = ({ itemsVisible, newKeyword, onAddItem }) => (
@@ -135,7 +145,11 @@ export default ({
 						/>
 					</TitleSpan>
 
-					<DrawSpan onPressOut={onCreatePlan} />
+					{addedItem.count > 0 && (
+						<DrawSpan onPressOut={onCreatePlan}>
+							<SubmitIcon style={{ tintColor: "#ccc" }} />
+						</DrawSpan>
+					)}
 				</TitleWrapper>
 
 				<DateWrapper>

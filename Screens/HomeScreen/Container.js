@@ -4,8 +4,8 @@ import {
 	getBottomSpace,
 	getStatusBarHeight
 } from "react-native-iphone-x-helper";
-import { useQuery } from "react-apollo-hooks";
-import { GET_PLANS } from "../../API/queries/planQueries";
+import { useQuery, useMutation } from "react-apollo-hooks";
+import { GET_PLANS, DEACTIVATE_PLAN } from "../../API/queries/planQueries";
 import useArray from "../../Hooks/useArray";
 import useString from "../../Hooks/useString";
 import useBoolean from "../../Hooks/useBoolean";
@@ -20,6 +20,10 @@ export default () => {
 		data: { plans },
 		loading: loadingPlans
 	} = useQuery(GET_PLANS);
+
+	const [deactivatePlanMutation] = useMutation(DEACTIVATE_PLAN);
+
+	const activePlans = plans.filter(p => p.isActive);
 
 	const screen = useString("plan");
 	const isMaking = useBoolean(false);
@@ -36,6 +40,10 @@ export default () => {
 	const pickerY = locationAnimation(0, 150);
 	const itemShape = shapeAnimation(100, 100);
 	const historyShape = shapeAnimation(100, 100);
+
+	const onPressPercentBar = id => {
+		deactivatePlanMutation({ variables: { id } });
+	};
 
 	const onPressItemNav = () => {
 		screen.setValue("item");
@@ -91,7 +99,7 @@ export default () => {
 	return (
 		<Presenter
 			// state
-			plans={plans}
+			plans={activePlans}
 			screen={screen}
 			isMaking={isMaking}
 			isEditing={isEditing}
@@ -107,6 +115,7 @@ export default () => {
 			itemShape={itemShape}
 			historyShape={historyShape}
 			// func
+			onPressPercentBar={onPressPercentBar}
 			onPressItemNav={onPressItemNav}
 			onPressHistoryNav={onPressHistoryNav}
 		/>

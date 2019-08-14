@@ -22,15 +22,18 @@ export default ({ plan, isEditing, itemsVisible, pageIndex }) => {
 	};
 
 	useEffect(() => {
-		if (isEditing.value) isEditing.setValue(null);
-		if (plan.itemActs != items.array) items.setArray(plan.itemActs);
+		if (plan) {
+			if (isEditing.value) isEditing.setValue(null);
+			if (plan.itemActs != items.array) items.setArray(plan.itemActs);
+		}
 		easeIO();
 	}, [pageIndex.value]);
 
 	useEffect(() => {
-		items.setArray(plan.itemActs);
+		if (plan && plan.itemActs) items.setArray(plan.itemActs);
 	}, [plan]);
 
+	if (!plan || !plan.itemActs) return null;
 	return (
 		<Presenter
 			plan={plan}

@@ -1,5 +1,5 @@
 import uuidv1 from "uuid/v1";
-import { ITEM_FRAGMENT, ITEM_ACT_FRAGMENT } from "./fragments";
+import { ITEM_FRAGMENT, ITEM_ACT_FRAGMENT, PLAN_FRAGMENT } from "./fragments";
 import { GET_ITEMS, GET_ITEM_ACTS } from "./queries/itemQueries";
 import { GET_PLANS } from "./queries/planQueries";
 import { saveItems, saveItemActs, savePlans } from "./offline";
@@ -23,6 +23,7 @@ export const typeDefs = `
         addItem(keyword: String!, color: String! parentId: String): Boolean
         addItemActs(itemActs: [ItemAct]): [ItemAct]
 		addPlan(title: String!, itemActs: [ItemAct!]!): Boolean!
+		deactivatePlan(id: String!): Boolean
 		checkItem(id: String!): Boolean!
     }
 
@@ -236,6 +237,36 @@ export const resolvers = {
 				});
 				await savePlans(cache);
 
+				return true;
+			} catch {
+				return false;
+			}
+		},
+
+		deactivatePlan: async (_, { id }, { cache }) => {
+			const planId = await cache.config.dataIdFromObject({
+				__typename: "Plan",
+				id
+			});
+
+			const plan = await cache.readFragment({
+				fragment: PLAN_FRAGMENT,
+				id: planId
+			});
+
+			const updatedPlan = {
+				...plan,
+				isActive: false
+			};
+
+			cache.writeFragment({
+				id: planId,
+				fragment: PLAN_FRAGMENT,
+				data: { ...updatedPlan }
+			});
+
+			try {
+				await savePlans(cache);
 				return true;
 			} catch {
 				return false;

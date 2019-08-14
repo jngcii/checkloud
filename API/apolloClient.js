@@ -52,7 +52,7 @@ AsyncStorage.getItem("items", (_, result) => {
 						__typename: "Item",
 						id: "a",
 						keyword: "Category",
-						color: "#000",
+						color: "#333",
 						parentId: null,
 						childIds: []
 					}

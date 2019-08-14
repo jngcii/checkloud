@@ -27,3 +27,9 @@ export const ADD_PLAN = gql`
 		addPlan(title: $title, itemActs: $itemActs) @client
 	}
 `;
+
+export const DEACTIVATE_PLAN = gql`
+	mutation deactivatePlan($id: String!) {
+		deactivatePlan(id: $id) @client
+	}
+`;

@@ -25,3 +25,23 @@ export const ITEM_ACT_FRAGMENT = gql`
 		memo
 	}
 `;
+
+export const PLAN_FRAGMENT = gql`
+	fragment PlanParts on Plan {
+		id
+		title
+		startAt
+		itemActs {
+			id
+			keyword
+			color
+			isChecked
+			parentId
+			childIds
+			finishedTime
+			memo
+		}
+		isActive
+		isMain
+	}
+`;

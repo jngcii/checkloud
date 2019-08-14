@@ -20,6 +20,7 @@ export default ({ item, isEditing, isActive, onRemoveItem, move, moveEnd }) => {
 			variables: { id: item.id },
 			awaitRefetchQueries: true
 		});
+		easeIO();
 	};
 
 	useEffect(() => {

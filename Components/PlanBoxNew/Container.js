@@ -24,7 +24,7 @@ export default ({ swipeRef, addedItem, addedItemSgt, itemsVisible }) => {
 		const newItem = {
 			id: "a",
 			keyword: newKeyword.value,
-			color: "#000",
+			color: "#333",
 			isChecked: false,
 			parentId: null,
 			childIds: [],
@@ -38,7 +38,6 @@ export default ({ swipeRef, addedItem, addedItemSgt, itemsVisible }) => {
 		newKeyword.onChange("");
 
 		scrollRef.current.scroll(60);
-
 		easeIO();
 	};
 
@@ -62,7 +61,7 @@ export default ({ swipeRef, addedItem, addedItemSgt, itemsVisible }) => {
 			data: { addPlan }
 		} = await addPlanMutation({
 			variables: {
-				title: newTitle.value,
+				title: newTitle.value == "" ? "이름없는 플랜" : newTitle.value,
 				itemActs: addItemActs
 			}
 		});

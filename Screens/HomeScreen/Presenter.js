@@ -52,21 +52,34 @@ const Footer = styled.View`
 	width: 100%;
 	height: 100px;
 `;
-const PercentBarWrapper = styled.TouchableOpacity`
+const PercentBarWrapper = styled.View`
 	width: ${width - 200};
 	height: 100px;
 	padding: 20px 0;
 	position: absolute;
 	align-self: center;
 `;
-const PercentBarBtn = styled.View`
+const PercentBarBtn = styled.TouchableOpacity`
 	width: 100%;
 	height: 100%;
 	border-radius: 20px;
 	background-color: ${props => props.theme.bgColor};
 	${props => props.theme.navShadow};
+`;
+const PercentInnerContainer = styled.View`
+	width: 100%;
+	height: 100%;
+	border-radius: 20px;
 	align-items: center;
 	justify-content: center;
+	overflow: hidden;
+`;
+const ProgressBar = styled.View`
+	position: absolute;
+	align-self: flex-start;
+	height: 100%;
+	width: ${props => props.width};
+	background-color: ${props => props.color};
 `;
 const GarbageIcon = styled.Image.attrs({
 	source: require("../../assets/icons/garbageIcon.png")
@@ -123,14 +136,36 @@ const Pagination = ({ plans, pageIndex }) => (
 	</PaginationWrapper>
 );
 
-const PercentBar = () => (
-	<PercentBarWrapper>
-		<PercentBarBtn>
-			<GarbageIcon style={{ tintColor: "#fff" }} />
-			<PercentBarText>체크리스트 종료</PercentBarText>
-		</PercentBarBtn>
-	</PercentBarWrapper>
-);
+const PercentBar = ({ plans, pageIndex, onPressPercentBar }) => {
+	let plan;
+	let p = 1;
+	let planColor = "#333";
+
+	const PERCENT_WIDTH = width - 200;
+
+	if (plans.length > 0 && pageIndex.value != 0) {
+		plan = plans[pageIndex.value - 1];
+		if (plan && plan.itemActs) {
+			p =
+				plan.itemActs.filter(i => i.isChecked).length /
+				plan.itemActs.length;
+			planColor = plan.itemActs[0].color;
+		}
+	}
+
+	return (
+		<PercentBarWrapper>
+			<PercentBarBtn onPressOut={() => onPressPercentBar(plan.id)}>
+				<PercentInnerContainer>
+					<ProgressBar width={PERCENT_WIDTH * p} color={planColor} />
+
+					<GarbageIcon style={{ tintColor: "#fff" }} />
+					<PercentBarText>체크리스트 종료</PercentBarText>
+				</PercentInnerContainer>
+			</PercentBarBtn>
+		</PercentBarWrapper>
+	);
+};
 
 const Item = ({ screen, itemShape, onPressItemNav }) => (
 	<Animated.View
@@ -191,6 +226,7 @@ export default ({
 	itemShape,
 	historyShape,
 	// func
+	onPressPercentBar,
 	onPressItemNav,
 	onPressHistoryNav
 }) => (
@@ -220,7 +256,12 @@ export default ({
 						{ transform: [{ translateY: navY.location.y }] }
 					]}
 				>
-					<PercentBar />
+					<PercentBar
+						plans={plans}
+						pageIndex={pageIndex}
+						// func
+						onPressPercentBar={onPressPercentBar}
+					/>
 
 					<Item
 						screen={screen}
