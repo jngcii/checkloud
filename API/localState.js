@@ -14,7 +14,8 @@ export const typeDefs = `
         items: [Item]
         item(id: String!): Item
         itemSgts: [ItemSgt]
-        itemActs: [ItemAct]		
+		itemActs: [ItemAct]	
+		itemAct(id: String!): ItemAct	
         
         parentKeywords(id: String!): [String]
     }

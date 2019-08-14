@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ParentItems from "../ParentItems";
+import ChildItem from "../ChildItem";
 
 const Wrapper = styled.View`
 	width: 100%;
@@ -63,6 +64,14 @@ const Keyword = styled.Text.attrs({
 	font-size: ${props => props.theme.itemActFontSize};
 	font-weight: ${props => props.theme.itemActFontWeight};
 	color: ${props => props.theme.blackColor};
+`;
+
+const ChildItems = styled.View`
+	width: 100%;
+	height: ${props => props.height};
+	justify-content: center;
+	margin-bottom: 10px;
+	margin-top: ${props => (props.hasParent ? 10 : 0)};
 `;
 
 const MemoBox = styled.View`
@@ -154,6 +163,17 @@ export default ({
 
 				{item.parentId && item.parentId != "a" && (
 					<ParentItems id={item.parentId} />
+				)}
+
+				{detailVisible.value && (
+					<ChildItems
+						height={25 * item.childIds.length}
+						hasParent={item.parentId && item.parentId != "a"}
+					>
+						{item.childIds.map(i => (
+							<ChildItem key={i} id={i} />
+						))}
+					</ChildItems>
 				)}
 
 				{detailVisible.value && <Memo color={item.color} />}
