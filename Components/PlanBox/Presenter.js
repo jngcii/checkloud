@@ -13,7 +13,6 @@ const Wrapper = styled.View`
 	width: ${width};
 	height: 100%;
 	align-items: center;
-	overflow: hidden;
 `;
 
 const PlanBox = styled.SafeAreaView`
@@ -98,6 +97,9 @@ const DateText = styled.Text`
 const Body = styled.View`
 	flex: 1;
 	width: 100%;
+	border-bottom-left-radius: 50px;
+	border-bottom-right-radius: 50px;
+	overflow: hidden;
 `;
 const ItemInputBox = styled.View`
 	${props => props.theme.itemActBox};

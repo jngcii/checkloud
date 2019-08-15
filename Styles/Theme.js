@@ -5,6 +5,7 @@ export default {
 	navBtnColor: "#f6f6f6",
 	planBoxColor: "#f6f6f6",
 	bgColor: "#e6e6e6",
+	bgColorT: "rgba(230,230,230,0.8)",
 	borderColor: "#efefef",
 	memoColor: "#eaeaea",
 	submitBtnColor: "#ccc",

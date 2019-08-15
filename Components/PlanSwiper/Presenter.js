@@ -5,9 +5,9 @@ import styled from "styled-components";
 import PlanBox from "../PlanBox";
 import PlanBoxNew from "../PlanBoxNew";
 import NoPlan from "../NoPlan";
-import PlanBoxPreview from "../../Components/PlanBoxPreview";
+import PlanBoxPreview from "../PlanBoxPreview";
 
-const { height } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const Wrapper = styled.View`
 	width: 100%;
@@ -42,6 +42,7 @@ const PreviewWrapper = styled.View`
 const PreviewHeader = styled.View`
 	width: 100%;
 	height: 20px;
+	align-items: center;
 	justify-content: center;
 	padding: 0 30px;
 `;
@@ -56,6 +57,23 @@ const PreviewBody = styled.View`
 	padding: 0 20px;
 	padding-bottom: 15px;
 `;
+const ShadowLeft = styled.View`
+	left: 0;
+	width: 25px;
+	height: 100%;
+	position: absolute;
+	background-color: ${props => props.theme.bgColor};
+	box-shadow: 15px 0 8px rgba(230, 230, 230, 0.5);
+`;
+const ShadowRight = styled.View`
+	right: 0;
+	width: 25px;
+	height: 100%;
+	position: absolute;
+	background-color: ${props => props.theme.bgColor};
+	box-shadow: -15px 0 8px rgba(230, 230, 230, 0.5);
+`;
+
 const PreviewContainer = styled.ScrollView.attrs({
 	horizontal: true,
 	showsHorizontalScrollIndicator: false
@@ -72,8 +90,14 @@ const Preview = ({ plans }) => (
 
 		<PreviewBody>
 			<PreviewContainer
-				contentOffset={{ x: 50 }}
-				contentInset={{ left: 50, right: 50 }}
+				contentOffset={{ x: (width - 180) / 2 }}
+				contentInset={{
+					left: (width - 180) / 2,
+					right: (width - 180) / 2
+				}}
+				snapToInterval={140}
+				decelerationRate={"fast"}
+				snapToAlignment={"center"}
 			>
 				<PlanBoxPreview />
 
@@ -83,6 +107,9 @@ const Preview = ({ plans }) => (
 					<PlanBoxPreview />
 				)}
 			</PreviewContainer>
+
+			<ShadowLeft />
+			<ShadowRight />
 		</PreviewBody>
 	</PreviewWrapper>
 );

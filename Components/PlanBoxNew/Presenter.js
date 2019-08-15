@@ -12,7 +12,6 @@ const Wrapper = styled.View`
 	width: ${width};
 	height: 100%;
 	align-items: center;
-	overflow: hidden;
 `;
 
 const PlanBox = styled.SafeAreaView`
