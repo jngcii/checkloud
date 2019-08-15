@@ -9,27 +9,14 @@ import HistoryScreen from "../HistoryScreen";
 const { width } = Dimensions.get("window");
 
 const Wrapper = styled.View`
-	width: 100%;
 	flex: 1;
+	width: 100%;
 	align-items: center;
 	justify-content: flex-end;
 `;
 const WrapperBottom = styled.SafeAreaView`
 	width: 100%;
 	justify-content: flex-end;
-`;
-
-const PreviewWrapper = styled.View`
-	width: 100%;
-	height: 230px;
-`;
-const PreviewHeader = styled.View`
-	width: 100%;
-	height: 30px;
-`;
-const PreviewBody = styled.View`
-	flex: 1;
-	width: 100%;
 `;
 
 const PaginationWrapper = styled.View`
@@ -115,13 +102,6 @@ const HistoryIcon = styled.Image.attrs({
 	width: 36px;
 	height: 36px;
 `;
-
-const Preview = () => (
-	<PreviewWrapper>
-		<PreviewHeader />
-		<PreviewBody />
-	</PreviewWrapper>
-);
 
 const Pagination = ({ plans, pageIndex }) => (
 	<PaginationWrapper>
@@ -232,7 +212,6 @@ export default ({
 }) => (
 	<React.Fragment>
 		<Wrapper screen={screen}>
-			{screen.value == "plan" && <Preview />}
 			<Pagination plans={plans} pageIndex={pageIndex} />
 		</Wrapper>
 

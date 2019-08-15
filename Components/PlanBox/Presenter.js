@@ -1,5 +1,5 @@
 import React from "react";
-import { Animated, Dimensions, StyleSheet } from "react-native";
+import { Dimensions } from "react-native";
 import styled from "styled-components";
 import DraggableFlatList from "react-native-draggable-flatlist";
 import MonthTranslator from "../MonthTranslator";
@@ -8,6 +8,13 @@ import InputItemActText from "../InputItemActText";
 import ItemActBox from "../ItemActBox";
 
 const { width } = Dimensions.get("window");
+
+const Wrapper = styled.View`
+	width: ${width};
+	height: 100%;
+	align-items: center;
+	overflow: hidden;
+`;
 
 const PlanBox = styled.SafeAreaView`
 	width: 95%;
@@ -134,13 +141,13 @@ const ControlBarWrapper = styled.View`
 	align-items: center;
 	justify-content: center;
 	width: 50%;
-	height: 50px;
+	height: 30px;
 `;
 const ControlBar = styled.View`
 	width: 50px;
 	height: 6px;
 	border-radius: 3px;
-	background-color: rgba(0, 0, 0, 0.4);
+	background-color: rgba(0, 0, 0, 0.3);
 `;
 
 const AddItem = ({ newKeyword, onAddItem, onFocusItem }) => (
@@ -168,20 +175,13 @@ export default ({
 	items,
 	newKeyword,
 	scrollRef,
-	swiperY,
-	panResponder,
 	// func
 	onAddItem,
 	onRemoveItem,
 	onContentSizeChange,
 	onFocusItem
 }) => (
-	<Animated.View
-		style={[
-			styles.wrapperStyle,
-			{ transform: [{ translateY: swiperY.location.y }] }
-		]}
-	>
+	<Wrapper>
 		<PlanBox>
 			<Header>
 				<TitleWrapper>
@@ -269,18 +269,9 @@ export default ({
 				)}
 			</Body>
 
-			<ControlBarWrapper {...panResponder.panHandlers}>
+			<ControlBarWrapper>
 				<ControlBar />
 			</ControlBarWrapper>
 		</PlanBox>
-	</Animated.View>
+	</Wrapper>
 );
-
-const styles = StyleSheet.create({
-	wrapperStyle: {
-		width,
-		height: "100%",
-		alignItems: "center",
-		overflow: "hidden"
-	}
-});

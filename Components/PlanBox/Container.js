@@ -12,9 +12,7 @@ export default ({
 	isEditing,
 	itemsVisible,
 	scrollEnabled,
-	pageIndex,
-	swiperY,
-	panResponder
+	pageIndex
 }) => {
 	const items = useArray(plan.itemActs);
 	const newKeyword = useInput("");
@@ -65,8 +63,6 @@ export default ({
 			items={items}
 			newKeyword={newKeyword}
 			scrollRef={scrollRef}
-			swiperY={swiperY}
-			panResponder={panResponder}
 			// func
 			onAddItem={onAddItem}
 			onRemoveItem={onRemoveItem}

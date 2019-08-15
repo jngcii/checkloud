@@ -1,19 +1,18 @@
 import React from "react";
 import { Animated, Dimensions, StyleSheet } from "react-native";
-import {
-	getBottomSpace,
-	getStatusBarHeight
-} from "react-native-iphone-x-helper";
+import { getBottomSpace } from "react-native-iphone-x-helper";
 import styled from "styled-components";
 import PlanBox from "../PlanBox";
 import PlanBoxNew from "../PlanBoxNew";
 import NoPlan from "../NoPlan";
+import PlanBoxPreview from "../../Components/PlanBoxPreview";
 
 const { height } = Dimensions.get("window");
 
 const Wrapper = styled.View`
 	width: 100%;
 	height: ${height - getBottomSpace() - 120};
+	justify-content: flex-end;
 	position: absolute;
 `;
 
@@ -26,6 +25,67 @@ const SwiperWrapper = styled.ScrollView.attrs({
 	height: 100%;
 	flex-direction: row;
 `;
+
+const ControlBar = styled.View`
+	width: 50%;
+	height: 30px;
+	align-self: center;
+	bottom: 0;
+	position: absolute;
+`;
+
+const PreviewWrapper = styled.View`
+	width: 100%;
+	height: 230px;
+	position: absolute;
+`;
+const PreviewHeader = styled.View`
+	width: 100%;
+	height: 20px;
+	justify-content: center;
+	padding: 0 30px;
+`;
+const PreviewText = styled.Text`
+	font-size: ${props => props.theme.itemActFontSize};
+	font-weight: ${props => props.theme.itemActFontWeight};
+	color: ${props => props.theme.greyColor};
+`;
+const PreviewBody = styled.View`
+	flex: 1;
+	width: 100%;
+	padding: 0 20px;
+	padding-bottom: 15px;
+`;
+const PreviewContainer = styled.ScrollView.attrs({
+	horizontal: true,
+	showsHorizontalScrollIndicator: false
+})`
+	width: 100%;
+	height: 100%;
+`;
+
+const Preview = ({ plans }) => (
+	<PreviewWrapper>
+		<PreviewHeader>
+			<PreviewText>Preview</PreviewText>
+		</PreviewHeader>
+
+		<PreviewBody>
+			<PreviewContainer
+				contentOffset={{ x: 50 }}
+				contentInset={{ left: 50, right: 50 }}
+			>
+				<PlanBoxPreview />
+
+				{plans.length > 0 ? (
+					plans.map(p => <PlanBoxPreview key={p.id} />)
+				) : (
+					<PlanBoxPreview />
+				)}
+			</PreviewContainer>
+		</PreviewBody>
+	</PreviewWrapper>
+);
 
 export default ({
 	plans,
@@ -43,38 +103,52 @@ export default ({
 	onSwipe
 }) => (
 	<Wrapper>
-		<SwiperWrapper
-			ref={swipeRef}
-			onScroll={e => onSwipe(e)}
-			scrollEventThrottle={16}
-			scrollEnabled={scrollEnabled.value}
-		>
-			<PlanBoxNew
-				swipeRef={swipeRef}
-				addedItem={addedItem}
-				addedItemSgt={addedItemSgt}
-				itemsVisible={itemsVisible}
-				scrollEnabled={scrollEnabled}
-				swiperY={swiperY}
-				panResponder={panResponder}
-			/>
+		<Preview plans={plans} />
 
-			{plans.length > 0 ? (
-				plans.map(p => (
-					<PlanBox
-						key={p.id}
-						plan={p}
-						isEditing={isEditing}
-						itemsVisible={itemsVisible}
-						scrollEnabled={scrollEnabled}
-						pageIndex={pageIndex}
-						swiperY={swiperY}
-						panResponder={panResponder}
-					/>
-				))
-			) : (
-				<NoPlan swiperY={swiperY} panResponder={panResponder} />
-			)}
-		</SwiperWrapper>
+		<Animated.View
+			style={[
+				styles.swiperStyle,
+				{ transform: [{ translateY: swiperY.location.y }] }
+			]}
+		>
+			<SwiperWrapper
+				ref={swipeRef}
+				onScroll={e => onSwipe(e)}
+				scrollEventThrottle={16}
+				scrollEnabled={scrollEnabled.value}
+			>
+				<PlanBoxNew
+					swipeRef={swipeRef}
+					addedItem={addedItem}
+					addedItemSgt={addedItemSgt}
+					itemsVisible={itemsVisible}
+					scrollEnabled={scrollEnabled}
+				/>
+
+				{plans.length > 0 ? (
+					plans.map(p => (
+						<PlanBox
+							key={p.id}
+							plan={p}
+							isEditing={isEditing}
+							itemsVisible={itemsVisible}
+							scrollEnabled={scrollEnabled}
+							pageIndex={pageIndex}
+						/>
+					))
+				) : (
+					<NoPlan swiperY={swiperY} panResponder={panResponder} />
+				)}
+			</SwiperWrapper>
+
+			<ControlBar {...panResponder.panHandlers} />
+		</Animated.View>
 	</Wrapper>
 );
+
+const styles = StyleSheet.create({
+	swiperStyle: {
+		width: "100%",
+		height: "100%"
+	}
+});

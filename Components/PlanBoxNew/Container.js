@@ -14,9 +14,7 @@ export default ({
 	addedItem,
 	addedItemSgt,
 	itemsVisible,
-	scrollEnabled,
-	swiperY,
-	panResponder
+	scrollEnabled
 }) => {
 	const [addItemActsMutation] = useMutation(ADD_ITEM_ACTS);
 	const [addPlanMutation] = useMutation(ADD_PLAN);
@@ -103,8 +101,6 @@ export default ({
 			newTitle={newTitle}
 			newKeyword={newKeyword}
 			scrollRef={scrollRef}
-			swiperY={swiperY}
-			panResponder={panResponder}
 			// func
 			onAddItem={onAddItem}
 			onRemoveItem={onRemoveItem}
