@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { Dimensions, PanResponder } from "react-native";
 import useBoolean from "../../Hooks/useBoolean";
 import locationAnimation from "../../Animations/locationAnimation";
@@ -18,6 +18,9 @@ export default ({
 	swipeRef
 }) => {
 	const scrollEnabled = useBoolean(true);
+	const isScrollingPrv = useBoolean(false);
+
+	const previewRef = useRef(null);
 
 	const swiperY = locationAnimation();
 
@@ -87,8 +90,19 @@ export default ({
 	}, [swipeRef.current]);
 
 	useEffect(() => {
+		previewRef.current.scrollTo({
+			x: pageIndex.value * 140 - (width - 180) / 2
+		});
+	}, [pageIndex]);
+
+	useEffect(() => {
 		if (listVisible.value && scrollEnabled.value)
 			scrollEnabled.setValue(false);
+	}, [listVisible]);
+
+	useEffect(() => {
+		if (!listVisible.value && swiperY.location.y_value != 0)
+			swiperY.changeLocation({ toY: 0 });
 	}, [listVisible]);
 
 	return (
@@ -98,9 +112,12 @@ export default ({
 			addedItem={addedItem}
 			addedItemSgt={addedItemSgt}
 			itemsVisible={itemsVisible}
+			listVisible={listVisible}
 			pageIndex={pageIndex}
 			swipeRef={swipeRef}
+			previewRef={previewRef}
 			scrollEnabled={scrollEnabled}
+			isScrollingPrv={isScrollingPrv}
 			//animation
 			swiperY={swiperY}
 			panResponder={panResponder}

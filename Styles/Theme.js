@@ -23,7 +23,7 @@ export default {
 	itemFontSize: 20,
 	usedItemFontSize: 15,
 	previewPlanTitleFontSize: 14,
-	previewItemFontSize: 13,
+	previewItemFontSize: 12,
 
 	planTitleFontWeight: "700",
 	dateFontWeight: "400",

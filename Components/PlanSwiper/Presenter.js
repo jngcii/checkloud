@@ -6,6 +6,7 @@ import PlanBox from "../PlanBox";
 import PlanBoxNew from "../PlanBoxNew";
 import NoPlan from "../NoPlan";
 import PlanBoxPreview from "../PlanBoxPreview";
+import PlanBoxNewPreview from "../PlanBoxNewPreview";
 
 const { width, height } = Dimensions.get("window");
 
@@ -82,7 +83,14 @@ const PreviewContainer = styled.ScrollView.attrs({
 	height: 100%;
 `;
 
-const Preview = ({ plans }) => (
+const Preview = ({
+	plans,
+	listVisible,
+	pageIndex,
+	swipeRef,
+	previewRef,
+	isScrollingPrv
+}) => (
 	<PreviewWrapper>
 		<PreviewHeader>
 			<PreviewText>Preview</PreviewText>
@@ -90,6 +98,7 @@ const Preview = ({ plans }) => (
 
 		<PreviewBody>
 			<PreviewContainer
+				ref={previewRef}
 				contentOffset={{ x: (width - 180) / 2 }}
 				contentInset={{
 					left: (width - 180) / 2,
@@ -98,11 +107,29 @@ const Preview = ({ plans }) => (
 				snapToInterval={140}
 				decelerationRate={"fast"}
 				snapToAlignment={"center"}
+				onMomentumScrollBegin={() => isScrollingPrv.setValue(true)}
+				onMomentumScrollEnd={() => isScrollingPrv.setValue(false)}
 			>
-				<PlanBoxPreview plan={"new"} />
+				<PlanBoxNewPreview
+					index={0}
+					listVisible={listVisible}
+					pageIndex={pageIndex}
+					swipeRef={swipeRef}
+					isScrollingPrv={isScrollingPrv}
+				/>
 
 				{plans.length > 0 ? (
-					plans.map(p => <PlanBoxPreview key={p.id} plan={p} />)
+					plans.map((p, index) => (
+						<PlanBoxPreview
+							key={p.id}
+							plan={p}
+							index={index + 1}
+							listVisible={listVisible}
+							pageIndex={pageIndex}
+							swipeRef={swipeRef}
+							isScrollingPrv={isScrollingPrv}
+						/>
+					))
 				) : (
 					<PlanBoxPreview plan={"no"} />
 				)}
@@ -120,9 +147,12 @@ export default ({
 	addedItem,
 	addedItemSgt,
 	itemsVisible,
+	listVisible,
 	pageIndex,
 	swipeRef,
+	previewRef,
 	scrollEnabled,
+	isScrollingPrv,
 	//animation
 	swiperY,
 	panResponder,
@@ -130,7 +160,14 @@ export default ({
 	onSwipe
 }) => (
 	<Wrapper>
-		<Preview plans={plans} />
+		<Preview
+			plans={plans}
+			listVisible={listVisible}
+			pageIndex={pageIndex}
+			swipeRef={swipeRef}
+			previewRef={previewRef}
+			isScrollingPrv={isScrollingPrv}
+		/>
 
 		<Animated.View
 			style={[
