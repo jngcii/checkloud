@@ -54,7 +54,7 @@ export default ({
 	<Wrapper isNow={index == pageIndex.value}>
 		<Box
 			disabled={isScrollingPrv.value}
-			onPressOut={() => {
+			onPress={() => {
 				swipeRef.current.scrollTo({ x: index * width });
 				listVisible.setValue(false);
 			}}

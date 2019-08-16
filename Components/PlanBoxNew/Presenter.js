@@ -4,7 +4,7 @@ import styled from "styled-components";
 import DraggableFlatList from "react-native-draggable-flatlist";
 import InputTitleText from "../InputTitleText";
 import InputItemActText from "../InputItemActText";
-import ItemActBox from "../ItemActBox";
+import ItemActMakingBox from "../ItemActMakingBox";
 
 const { width } = Dimensions.get("window");
 
@@ -203,9 +203,9 @@ export default ({
 					keyExtractor={(_, index) => `item - ${index}`}
 					showsVerticalScrollIndicator={false}
 					renderItem={({ index, item, isActive, move, moveEnd }) => (
-						<ItemActBox
+						<ItemActMakingBox
 							item={item}
-							isEditing={true}
+							addedItem={addedItem}
 							isActive={isActive}
 							// func
 							onRemoveItem={() => onRemoveItem(item)}

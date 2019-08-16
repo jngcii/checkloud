@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import ParentItems from "../ParentItems";
 import ChildItem from "../ChildItem";
+import InputItemActText from "../InputItemActText";
 
 const Wrapper = styled.View`
 	width: 100%;
@@ -61,7 +62,8 @@ const ContentSpan = styled.View`
 const KeywordWrapper = styled.View`
 	width: 100%;
 	height: ${props => (props.hasParent ? 32 : 50)};
-	justify-content: center;
+	flex-direction: row;
+	align-items: center;
 `;
 const Keyword = styled.Text.attrs({
 	numberOfLines: 2
@@ -135,9 +137,11 @@ export default ({
 	isEditing,
 	isActive,
 	detailVisible,
+	newKeyword,
 	// func
 	onPressDetail,
 	onCheckItem,
+	onEndEditingKeyword,
 	onRemoveItem,
 	move,
 	moveEnd
@@ -165,9 +169,19 @@ export default ({
 				<KeywordWrapper
 					hasParent={item.parentId && item.parentId != "a"}
 				>
-					<Keyword style={{ textAlignVertical: "center" }}>
-						{item.keyword}
-					</Keyword>
+					{isEditing ? (
+						<InputItemActText
+							{...newKeyword}
+							returnKeyType={"done"}
+							onSubmitEditing={onEndEditingKeyword}
+							onEndEditing={onEndEditingKeyword}
+							blurOnSubmit={true}
+						/>
+					) : (
+						<Keyword style={{ textAlignVertical: "center" }}>
+							{item.keyword}
+						</Keyword>
+					)}
 				</KeywordWrapper>
 
 				{item.parentId && item.parentId != "a" && (

@@ -81,6 +81,12 @@ export const ADD_ITEM_ACT = gql`
 	}
 `;
 
+export const EDIT_ITEM_ACT = gql`
+	mutation editItemAct($id: String!, $keyword: String!) {
+		editItemAct(id: $id, keyword: $keyword) @client
+	}
+`;
+
 export const REMOVE_ITEM_ACT = gql`
 	mutation removeItemAct($id: String!) {
 		removeItemAct(id: $id) @client

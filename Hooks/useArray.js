@@ -48,6 +48,8 @@ export default defaultArray => {
 
 		const idx = array.indexOf(i);
 
+		console.log(n, "n");
+
 		if (idx != -1) {
 			arr[idx] = n;
 			setArray([...arr]);

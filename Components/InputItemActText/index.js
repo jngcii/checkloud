@@ -17,8 +17,11 @@ export default ({
 	placeholder = "",
 	value = "",
 	onChange,
-	onSubmitEditing,
-	onFocus = null
+	returnKeyType = "next",
+	onSubmitEditing = null,
+	onEndEditing = null,
+	onFocus = null,
+	blurOnSubmit = false
 }) => (
 	<InputText
 		ref={ref}
@@ -29,10 +32,11 @@ export default ({
 		required={true}
 		autoCapitalize={"none"}
 		autoCorrect={false}
-		returnKeyType={"next"}
+		returnKeyType={returnKeyType}
 		onSubmitEditing={onSubmitEditing}
+		onEndEditing={onEndEditing}
 		onFocus={onFocus}
-		blurOnSubmit={false}
+		blurOnSubmit={blurOnSubmit}
 		style={{ textAlignVertical: "center" }}
 		// multiline={true}
 		// numberOfLines={3}
