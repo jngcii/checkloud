@@ -16,23 +16,29 @@ const LeftSpan = styled.View`
 	align-items: center;
 	justify-content: center;
 `;
-const CheckBox = styled.TouchableOpacity.attrs({
+const Checker = styled.TouchableOpacity.attrs({
 	activeOpacity: 1
 })`
-	width: 10px;
-	height: 10px;
-	border-radius: 5px;
-	border: 2px solid #ddd;
+	top: 3px;
+	width: 40px;
+	height: 40px;
+	align-items: center;
 `;
-const Checked = styled.TouchableOpacity.attrs({
-	activeOpacity: 1
+const CheckShadow = styled.Image.attrs({
+	source: require("../../assets/icons/checkIcon.png")
 })`
+	position: absolute;
 	width: 20px;
 	height: 20px;
-	border-radius: 10px;
-	background-color: ${props => props.color};
-	box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
-	position: absolute;
+	opacity: 0.1;
+`;
+const CheckIcon = styled.Image.attrs({
+	source: require("../../assets/icons/checkIcon.png")
+})`
+	top: 2px;
+	left: 1px;
+	width: 19px;
+	height: 19px;
 `;
 const RemoveIcon = styled.TouchableOpacity`
 	${props => props.theme.removeIcon};
@@ -143,11 +149,14 @@ export default ({
 					<Minus />
 				</RemoveIcon>
 			) : (
-				<CheckBox onPressOut={onCheckItem} />
-			)}
-
-			{!isEditing && item.isChecked && (
-				<Checked onPressOut={onCheckItem} color={item.color} />
+				<Checker onPressOut={onCheckItem}>
+					<CheckShadow style={{ tintColor: "#777" }} />
+					<CheckIcon
+						style={{
+							tintColor: item.isChecked ? item.color : "#fff"
+						}}
+					/>
+				</Checker>
 			)}
 		</LeftSpan>
 
