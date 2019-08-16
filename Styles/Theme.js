@@ -22,6 +22,8 @@ export default {
 	itemHeaderFontSize: 23,
 	itemFontSize: 20,
 	usedItemFontSize: 15,
+	previewPlanTitleFontSize: 14,
+	previewItemFontSize: 13,
 
 	planTitleFontWeight: "700",
 	dateFontWeight: "400",
@@ -32,6 +34,8 @@ export default {
 	itemHeaderFontWeight: "500",
 	itemFontWeight: "500",
 	usedItemFontWeight: "500",
+	previewPlanTitleFontWeight: "700",
+	previewItemFontWeight: "400",
 
 	navShadow: `
 		box-shadow: 0 0 3px rgba(0,0,0,0.4);

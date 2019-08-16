@@ -99,12 +99,12 @@ const Preview = ({ plans }) => (
 				decelerationRate={"fast"}
 				snapToAlignment={"center"}
 			>
-				<PlanBoxPreview />
+				<PlanBoxPreview plan={"new"} />
 
 				{plans.length > 0 ? (
-					plans.map(p => <PlanBoxPreview key={p.id} />)
+					plans.map(p => <PlanBoxPreview key={p.id} plan={p} />)
 				) : (
-					<PlanBoxPreview />
+					<PlanBoxPreview plan={"no"} />
 				)}
 			</PreviewContainer>
 
