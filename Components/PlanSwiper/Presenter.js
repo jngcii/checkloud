@@ -63,7 +63,7 @@ const ShadowLeft = styled.View`
 	height: 100%;
 	position: absolute;
 	background-color: ${props => props.theme.bgColor};
-	box-shadow: 15px 0 8px rgba(230, 230, 230, 0.5);
+	box-shadow: 13px 0 8px rgba(230, 230, 230, 0.5);
 `;
 const ShadowRight = styled.View`
 	right: 0;
@@ -71,7 +71,7 @@ const ShadowRight = styled.View`
 	height: 100%;
 	position: absolute;
 	background-color: ${props => props.theme.bgColor};
-	box-shadow: -15px 0 8px rgba(230, 230, 230, 0.5);
+	box-shadow: -13px 0 8px rgba(230, 230, 230, 0.5);
 `;
 
 const PreviewContainer = styled.ScrollView.attrs({

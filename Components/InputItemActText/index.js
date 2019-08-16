@@ -4,7 +4,8 @@ import styled from "styled-components";
 const InputText = styled.TextInput.attrs({
 	placeholderTextColor: "#ccc"
 })`
-	width: 100%;
+	flex: 1;
+	height: 100%;
 	justify-content: center;
 	font-size: ${props => props.theme.itemActFontSize};
 	font-weight: ${props => props.theme.itemActFontWeight};

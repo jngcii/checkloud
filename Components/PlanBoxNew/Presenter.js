@@ -98,7 +98,20 @@ const AddIcon = styled.Image.attrs({
 const InputWrapper = styled.View`
 	flex: 1;
 	height: 100%;
+	flex-direction: row;
+	align-items: center;
+`;
+const EnterBtnSpan = styled.TouchableOpacity`
+	width: 50px;
+	height: 100%;
+	align-items: center;
 	justify-content: center;
+`;
+const EnterIcon = styled.Image.attrs({
+	source: require("../../assets/icons/saveIcon.png")
+})`
+	width: 20px;
+	height: 20px;
 `;
 
 const ControlBarWrapper = styled.View`
@@ -130,6 +143,12 @@ const AddItem = ({ newKeyword, onAddItem, onFocusItem }) => (
 				onFocus={onFocusItem}
 				onSubmitEditing={onAddItem}
 			/>
+
+			{newKeyword.value.length > 0 && (
+				<EnterBtnSpan onPressOut={onAddItem}>
+					<EnterIcon style={{ tintColor: "#ccc" }} />
+				</EnterBtnSpan>
+			)}
 		</InputWrapper>
 	</ItemInputBox>
 );
