@@ -90,9 +90,13 @@ export default ({
 	}, [swipeRef.current]);
 
 	useEffect(() => {
-		previewRef.current.scrollTo({
-			x: pageIndex.value * 140 - (width - 180) / 2
-		});
+		setTimeout(
+			() =>
+				previewRef.current.scrollTo({
+					x: pageIndex.value * 140 - (width - 180) / 2
+				}),
+			500
+		);
 	}, [pageIndex]);
 
 	useEffect(() => {
