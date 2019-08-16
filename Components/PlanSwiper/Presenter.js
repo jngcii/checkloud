@@ -198,6 +198,7 @@ export default ({
 							itemsVisible={itemsVisible}
 							scrollEnabled={scrollEnabled}
 							pageIndex={pageIndex}
+							swipeRef={swipeRef}
 						/>
 					))
 				) : (

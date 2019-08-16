@@ -41,7 +41,12 @@ const PlusSpan = styled.TouchableOpacity`
 	align-items: center;
 	justify-content: center;
 `;
-const PlusIcon = styled.Image``;
+const PlusIcon = styled.Image.attrs({
+	source: require("../../assets/icons/plusIcon.png")
+})`
+	width: 18px;
+	height: 18px;
+`;
 const TitleSpan = styled.View`
 	max-width: ${width - 130};
 	height: 100%;
@@ -195,6 +200,7 @@ export default ({
 	scrollEnabled,
 	items,
 	newKeyword,
+	swipeRef,
 	scrollRef,
 	// func
 	onAddItem,
@@ -206,8 +212,10 @@ export default ({
 		<PlanBox>
 			<Header>
 				<TitleWrapper>
-					<PlusSpan>
-						<PlusIcon />
+					<PlusSpan
+						onPressOut={() => swipeRef.current.scrollTo({ x: 0 })}
+					>
+						<PlusIcon style={{ tintColor: "#ccc" }} />
 					</PlusSpan>
 
 					<TitleSpan>

@@ -12,7 +12,8 @@ export default ({
 	isEditing,
 	itemsVisible,
 	scrollEnabled,
-	pageIndex
+	pageIndex,
+	swipeRef
 }) => {
 	const items = useArray(plan.itemActs);
 	const newKeyword = useInput("");
@@ -62,6 +63,7 @@ export default ({
 			scrollEnabled={scrollEnabled}
 			items={items}
 			newKeyword={newKeyword}
+			swipeRef={swipeRef}
 			scrollRef={scrollRef}
 			// func
 			onAddItem={onAddItem}
