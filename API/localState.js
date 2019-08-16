@@ -22,9 +22,15 @@ export const typeDefs = `
 
     type Mutation {
         addItem(keyword: String!, color: String! parentId: String): Boolean
-        addItemActs(itemActs: [ItemAct]): [ItemAct]
+		addItemActs(itemActs: [ItemAct]): [ItemAct]
+		addItemAct(keyword: String!): ItemAct
 		addPlan(title: String!, itemActs: [ItemAct!]!): Boolean!
-		deactivatePlan(id: String!): Boolean
+
+		removeItemAct(id: String!): Boolean!
+
+		editPlan(id: String!, title: String, itemActs:[ItemAct]): Boolean!
+
+		deactivatePlan(id: String!): Boolean!
 		checkItem(id: String!): Boolean!
     }
 
@@ -88,8 +94,6 @@ export const resolvers = {
 
 		parentKeywords: async (_, { id: itemId }, { cache }) => {
 			let parentKeywords = [];
-
-			console.log(itemId, "item");
 
 			let id = cache.config.dataIdFromObject({
 				__typename: "Item",
@@ -209,6 +213,38 @@ export const resolvers = {
 			}
 		},
 
+		addItemAct: async (_, { keyword }, { cache }) => {
+			const newItemAct = {
+				__typename: "ItemAct",
+				id: uuidv1(),
+				keyword,
+				color: "#333",
+				isChecked: false,
+				parentId: null,
+				childIds: [],
+				finishedTime: [],
+				memo: ""
+			};
+
+			const { itemActs } = await cache.readQuery({
+				query: GET_ITEM_ACTS
+			});
+
+			try {
+				await cache.writeData({
+					data: {
+						itemActs: [newItemAct, ...itemActs]
+					}
+				});
+
+				await saveItemActs(cache);
+
+				return newItemAct;
+			} catch {
+				return null;
+			}
+		},
+
 		addPlan: async (_, { title, itemActs }, { cache }) => {
 			const today = new Date();
 			const year = today.getFullYear();
@@ -238,6 +274,68 @@ export const resolvers = {
 				});
 				await savePlans(cache);
 
+				return true;
+			} catch {
+				return false;
+			}
+		},
+
+		removeItemAct: async (_, { id }, { cache }) => {
+			const { itemActs } = cache.readQuery({
+				query: GET_ITEM_ACTS
+			});
+
+			const itemAct = itemActs.filter(i => i.id == id)[0];
+
+			if (!itemAct) return false;
+
+			const idFound = itemActs.indexOf(itemAct);
+
+			itemActs.splice(idFound, 1);
+
+			try {
+				await cache.writeData({
+					data: {
+						itemActs: [...itemActs]
+					}
+				});
+				saveItemActs(cache);
+
+				return true;
+			} catch {
+				return false;
+			}
+		},
+
+		editPlan: async (_, { id, title, itemActs }, { cache }) => {
+			const planId = await cache.config.dataIdFromObject({
+				__typename: "Plan",
+				id
+			});
+
+			const plan = await cache.readFragment({
+				fragment: PLAN_FRAGMENT,
+				id: planId
+			});
+
+			console.log(itemActs);
+
+			const updatedPlan = {
+				...plan,
+				title: title ? title : plan.title,
+				itemActs: itemActs ? itemActs : plan.itemActs
+			};
+
+			console.log(updatedPlan);
+
+			cache.writeFragment({
+				id: planId,
+				fragment: PLAN_FRAGMENT,
+				data: { ...updatedPlan }
+			});
+
+			try {
+				await savePlans(cache);
 				return true;
 			} catch {
 				return false;

@@ -1,4 +1,7 @@
 import React, { useRef, useEffect } from "react";
+import { useMutation } from "react-apollo-hooks";
+import { ADD_ITEM_ACT, REMOVE_ITEM_ACT } from "../../API/queries/itemQueries";
+import { EDIT_PLAN } from "../../API/queries/planQueries";
 import { Dimensions } from "react-native";
 import useArray from "../../Hooks/useArray";
 import useInput from "../../Hooks/useInput";
@@ -15,19 +18,41 @@ export default ({
 	pageIndex,
 	swipeRef
 }) => {
+	const [addItemActMutation] = useMutation(ADD_ITEM_ACT);
+	const [removeItemActMutation] = useMutation(REMOVE_ITEM_ACT);
+	const [editPlanMutation] = useMutation(EDIT_PLAN);
+
 	const items = useArray(plan.itemActs);
 	const newKeyword = useInput("");
 
 	const scrollRef = useRef(null);
 
-	const onAddItem = () => {
-		// func
+	const onAddItem = async () => {
+		if (newKeyword.value == "") return;
+
+		const {
+			data: { addItemAct }
+		} = await addItemActMutation({
+			variables: { keyword: newKeyword.value }
+		});
+
+		const res = await items.add(addItemAct);
+
+		if (res)
+			editPlanMutation({
+				variables: { id: plan.id, itemActs: items.array }
+			});
 
 		newKeyword.onChange("");
 	};
 
 	const onRemoveItem = i => {
 		items.remove(i);
+
+		editPlanMutation({ variables: { id: plan.id, itemActs: items.array } });
+
+		removeItemActMutation({ variables: { id: i.id } });
+
 		easeIO();
 	};
 
@@ -40,6 +65,16 @@ export default ({
 		itemsVisible.setValue(false);
 		scrollRef.current.scroll(height);
 		easeIO();
+	};
+
+	const onMoveEnd = data => {
+		items.setArray(data);
+		scrollEnabled.setValue(true);
+		editPlanMutation({ variables: { id: plan.id, itemActs: data } });
+	};
+
+	const onPressDone = () => {
+		isEditing.setValue(null);
 	};
 
 	useEffect(() => {
@@ -70,6 +105,8 @@ export default ({
 			onRemoveItem={onRemoveItem}
 			onContentSizeChange={onContentSizeChange}
 			onFocusItem={onFocusItem}
+			onMoveEnd={onMoveEnd}
+			onPressDone={onPressDone}
 		/>
 	);
 };

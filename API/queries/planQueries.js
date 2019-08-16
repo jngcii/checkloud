@@ -28,6 +28,12 @@ export const ADD_PLAN = gql`
 	}
 `;
 
+export const EDIT_PLAN = gql`
+	mutation editPlan($id: String!, $title: String, $itemActs: [ItemAct]) {
+		editPlan(id: $id, title: $title, itemActs: $itemActs) @client
+	}
+`;
+
 export const DEACTIVATE_PLAN = gql`
 	mutation deactivatePlan($id: String!) {
 		deactivatePlan(id: $id) @client

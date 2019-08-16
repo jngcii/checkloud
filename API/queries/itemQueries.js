@@ -66,6 +66,27 @@ export const ADD_ITEM_ACTS = gql`
 	}
 `;
 
+export const ADD_ITEM_ACT = gql`
+	mutation addItemAct($keyword: String!) {
+		addItemAct(keyword: $keyword) @client {
+			id
+			keyword
+			color
+			isChecked
+			parentId
+			childIds
+			finishedTime
+			memo
+		}
+	}
+`;
+
+export const REMOVE_ITEM_ACT = gql`
+	mutation removeItemAct($id: String!) {
+		removeItemAct(id: $id) @client
+	}
+`;
+
 export const CHECK_ITEM = gql`
 	mutation checkItem($id: String!) {
 		checkItem(id: $id) @client

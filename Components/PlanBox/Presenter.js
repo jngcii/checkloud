@@ -73,7 +73,7 @@ const EditIcon = styled.Image.attrs({
 const Spacing = styled.View`
 	flex: 1;
 `;
-const DrawSpan = styled.View`
+const DrawSpan = styled.TouchableOpacity`
 	width: 60px;
 	height: 100%;
 	right: 0;
@@ -206,7 +206,9 @@ export default ({
 	onAddItem,
 	onRemoveItem,
 	onContentSizeChange,
-	onFocusItem
+	onFocusItem,
+	onMoveEnd,
+	onPressDone
 }) => (
 	<Wrapper>
 		<PlanBox>
@@ -232,7 +234,7 @@ export default ({
 
 					<Spacing />
 
-					<DrawSpan>
+					<DrawSpan onPressOut={onPressDone}>
 						{isEditing.value && items.count > 0 && (
 							<SubmitBtn color={items.array[0].color}>
 								Done
@@ -278,10 +280,7 @@ export default ({
 						)
 					}
 					onMoveBegin={() => scrollEnabled.setValue(false)}
-					onMoveEnd={({ data }) => {
-						items.setArray(data);
-						scrollEnabled.setValue(true);
-					}}
+					onMoveEnd={({ data }) => onMoveEnd(data)}
 					onMomentumScrollBegin={() => itemsVisible.setValue(false)}
 					onContentSizeChange={onContentSizeChange}
 				/>

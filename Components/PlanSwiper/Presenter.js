@@ -118,21 +118,19 @@ const Preview = ({
 					isScrollingPrv={isScrollingPrv}
 				/>
 
-				{plans.length > 0 ? (
-					plans.map((p, index) => (
-						<PlanBoxPreview
-							key={p.id}
-							plan={p}
-							index={index + 1}
-							listVisible={listVisible}
-							pageIndex={pageIndex}
-							swipeRef={swipeRef}
-							isScrollingPrv={isScrollingPrv}
-						/>
-					))
-				) : (
-					<PlanBoxPreview plan={"no"} />
-				)}
+				{plans.length > 0
+					? plans.map((p, index) => (
+							<PlanBoxPreview
+								key={p.id}
+								plan={p}
+								index={index + 1}
+								listVisible={listVisible}
+								pageIndex={pageIndex}
+								swipeRef={swipeRef}
+								isScrollingPrv={isScrollingPrv}
+							/>
+					  ))
+					: null}
 			</PreviewContainer>
 
 			<ShadowLeft />
