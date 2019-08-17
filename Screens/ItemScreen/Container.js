@@ -32,6 +32,7 @@ export default ({ screen, itemShape, floor = 0, itemId = "a" }) => {
 	const newKeyword = useInput("");
 	const newColor = useString(itemId == "a" ? Colors[0] : item.color);
 	const stack = useObject(null);
+	const swiping = useString(null);
 
 	const stackShape = shapeAnimation();
 	const colorsX = locationAnimation(-width, 0);
@@ -135,10 +136,11 @@ export default ({ screen, itemShape, floor = 0, itemId = "a" }) => {
 			childItems={childItems}
 			newKeyword={newKeyword}
 			newColor={newColor}
-			panResponder={panResponder}
+			swiping={swiping}
 			// animation
 			stackShape={stackShape}
 			colorsX={colorsX}
+			panResponder={panResponder}
 			// func
 			onSaveItem={onSaveItem}
 		/>

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Swipeable from "react-native-swipeable";
 
 const Wrapper = styled.View`
 	width: 100%;
@@ -7,7 +8,9 @@ const Wrapper = styled.View`
 	padding: 5px 10px;
 `;
 
-const Box = styled.TouchableOpacity`
+const Box = styled.TouchableOpacity.attrs({
+	activeOpacity: 1
+})`
 	width: 100%;
 	height: 100%;
 	padding: 0 30px;
@@ -36,14 +39,75 @@ const Count = styled.Text`
 	opacity: 0.5;
 `;
 
-export default ({ item, stack }) => (
-	<Wrapper>
-		<Box color={item.color} onPressOut={() => stack.setValue(item)}>
-			<Keyword>{item.keyword}</Keyword>
+const Option = styled.View`
+	width: 140px;
+	height: 60px;
+	flex-direction: row;
+`;
 
-			<CountSpan>
-				<Count>{item.childIds.length}</Count>
-			</CountSpan>
-		</Box>
-	</Wrapper>
+const OpBtn = styled.View`
+	width: 70px;
+	height: 60px;
+	align-items: center;
+	justify-content: center;
+`;
+
+const DeleteWrapper = styled.TouchableOpacity`
+	width: 60px;
+	height: 50px;
+	border-radius: 20px;
+	align-items: center;
+	justify-content: center;
+	background-color: ${props => props.color};
+`;
+const EditWrapper = styled(DeleteWrapper)`
+	background-color: ${props => props.color};
+`;
+
+const EditIcon = styled.Image.attrs({
+	source: require("../../assets/icons/pencilIcon.png")
+})`
+	width: 20px;
+	height: 20px;
+`;
+const DeleteIcon = styled.Image.attrs({
+	source: require("../../assets/icons/garbageIcon.png")
+})`
+	width: 20px;
+	height: 20px;
+`;
+
+const Op = ({ color }) => (
+	<Option>
+		<OpBtn>
+			<EditWrapper color={color}>
+				<EditIcon style={{ tintColor: "#fff" }} />
+			</EditWrapper>
+		</OpBtn>
+		<OpBtn>
+			<DeleteWrapper color={color}>
+				<DeleteIcon style={{ tintColor: "#fff" }} />
+			</DeleteWrapper>
+		</OpBtn>
+	</Option>
+);
+
+export default ({ item, stack, swiping, swipeRef }) => (
+	<Swipeable
+		ref={swipeRef}
+		onSwipeStart={() => swiping.setValue(item.id)}
+		onSwipeRelease={() => swiping.setValue(null)}
+		rightButtonWidth={140}
+		rightButtons={[<Op color={item.color} />]}
+	>
+		<Wrapper>
+			<Box color={item.color} onPress={() => stack.setValue(item)}>
+				<Keyword>{item.keyword}</Keyword>
+
+				<CountSpan>
+					<Count>{item.childIds.length}</Count>
+				</CountSpan>
+			</Box>
+		</Wrapper>
+	</Swipeable>
 );

@@ -1,6 +1,21 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import Presenter from "./Presenter";
 
-export default ({ item, stack }) => {
-	return <Presenter item={item} stack={stack} />;
+export default ({ item, stack, swiping }) => {
+	const swipeRef = useRef(null);
+
+	useEffect(() => {
+		if (swiping.value != (item.id && null)) swipeRef.current.recenter();
+	}, [swiping]);
+
+	return (
+		<Presenter
+			// props
+			item={item}
+			stack={stack}
+			swiping={swiping}
+			// state
+			swipeRef={swipeRef}
+		/>
+	);
 };

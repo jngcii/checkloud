@@ -145,10 +145,11 @@ export default ({
 	childItems,
 	newKeyword,
 	newColor,
-	panResponder,
+	swiping,
 	// animation
 	stackShape,
 	colorsX,
+	panResponder,
 	// fun
 	onSaveItem
 }) => (
@@ -173,28 +174,16 @@ export default ({
 				<Stack floor={floor} stack={stack} stackShape={stackShape} />
 			) : (
 				<Childs>
-					<DraggableFlatList
-						style={{ flex: 1, width: "100%", marginTop: 5 }}
-						data={childItems}
-						keyExtractor={(_, index) => `item - ${index}`}
-						renderItem={({
-							index,
-							item,
-							isActive,
-							move,
-							moveEnd
-						}) => (
+					<ChildsItems scrollEnabled={swiping.value == null}>
+						{childItems.map(i => (
 							<ItemBox
-								item={item}
+								key={i.id}
+								item={i}
 								stack={stack}
-								isActive={isActive}
-								// func
-								move={move}
-								moveEnd={moveEnd}
+								swiping={swiping}
 							/>
-						)}
-						onMoveEnd={({ data }) => addedItem.setArray(data)}
-					/>
+						))}
+					</ChildsItems>
 
 					{item.id == "a" && (
 						<ColorGroup newColor={newColor} colorsX={colorsX} />
@@ -232,3 +221,22 @@ const styles = StyleSheet.create({
 		justifyContent: "space-evenly"
 	}
 });
+
+// <DraggableFlatList
+// 	style={{ flex: 1, width: "100%", marginTop: 5 }}
+// 	data={childItems}
+// 	keyExtractor={(_, index) => `item - ${index}`}
+// 	scrollEnabled={scrollEnabled.value}
+// 	renderItem={({ index, item, isActive, move, moveEnd }) => (
+// 		<ItemBox
+// 			item={item}
+// 			stack={stack}
+// 			scrollEnabled={scrollEnabled}
+// 			isActive={isActive}
+// 			// func
+// 			move={move}
+// 			moveEnd={moveEnd}
+// 		/>
+// 	)}
+// 	onMoveEnd={({ data }) => addedItem.setArray(data)}
+// />;
