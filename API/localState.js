@@ -30,7 +30,8 @@ export const typeDefs = `
 		removeItem(parentId: String, id: String): Boolean
 
 		editPlan(id: String!, title: String, itemActs:[ItemAct]): Boolean!
-		editItemAct(id: String!, keyword:String!):Boolean!
+		editItemAct(id: String!, keyword :String!):Boolean!
+		editItem(id: String!, keyword: String, color: String)
 
 		deactivatePlan(id: String!): Boolean!
 		checkItem(id: String!): Boolean!
@@ -426,6 +427,37 @@ export const resolvers = {
 				}
 			} catch (error) {
 				console.error(error);
+				return false;
+			}
+		},
+
+		editItem: async (_, { id, keyword, color }, { cache }) => {
+			const itemId = await cache.config.dataIdFromObject({
+				__typename: "Item",
+				id
+			});
+
+			const item = await cache.readFragment({
+				fragment: ITEM_FRAGMENT,
+				id: itemId
+			});
+
+			const updatedItem = {
+				...item,
+				keyword: keyword ? keyword : item.keyword,
+				color: color ? color : item.color
+			};
+
+			try {
+				cache.writeFragment({
+					id: itemId,
+					fragment: ITEM_FRAGMENT,
+					data: { ...updatedItem }
+				});
+
+				await saveItems(cache);
+				return true;
+			} catch {
 				return false;
 			}
 		},

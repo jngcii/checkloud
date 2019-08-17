@@ -4,19 +4,25 @@ import styled from "styled-components";
 const InputText = styled.TextInput.attrs({
 	placeholderTextColor: "#ccc"
 })`
-	width: 100%;
+	flex: 1;
 	height: 100%;
 	justify-content: center;
 	font-size: ${props => props.theme.itemFontSize};
 	font-weight: ${props => props.theme.itemFontWeight};
-	color: ${props => props.theme.blackColor};
+	color: ${props =>
+		props.color == "black"
+			? props.theme.blackColor
+			: props.theme.whiteColor};
 `;
 
 export default ({
 	placeholder = "",
 	value = "",
 	onChange,
-	onSubmitEditing = null
+	onSubmitEditing = null,
+	blurOnSubmit = false,
+	color = "black",
+	autoFocus = false
 }) => (
 	<InputText
 		placeholder={placeholder}
@@ -26,8 +32,10 @@ export default ({
 		autoCapitalize={"none"}
 		autoCorrect={false}
 		returnKeyType={"done"}
-		blurOnSubmit={false}
+		blurOnSubmit={blurOnSubmit}
 		onSubmitEditing={onSubmitEditing}
 		style={{ textAlignVertical: "center" }}
+		color={color}
+		autoFocus={autoFocus}
 	/>
 );

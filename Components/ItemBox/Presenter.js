@@ -1,6 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import InputKeywordText from "../InputKeywordText";
 import Swipeable from "react-native-swipeable";
+import Colors from "../Colors";
+
+const Container = styled.View`
+	width: 100%;
+`;
 
 const Wrapper = styled.View`
 	width: 100%;
@@ -25,7 +31,7 @@ const Keyword = styled.Text`
 	font-size: ${props => props.theme.itemFontSize};
 	font-weight: ${props => props.theme.itemFontWeight};
 	color: ${props => props.theme.whiteColor};
-	margin: 0 10px;
+	margin-right: 10px;
 `;
 
 const CountSpan = styled.View`
@@ -37,6 +43,22 @@ const Count = styled.Text`
 	font-weight: ${props => props.theme.itemFontWeight};
 	color: ${props => props.theme.whiteColor};
 	opacity: 0.5;
+`;
+
+const SubmitSpan = styled.TouchableOpacity`
+	width: 36px;
+	height: 36px;
+	border-radius: 18px;
+	border: 2px solid #fff;
+	right: -20px;
+	align-items: center;
+	justify-content: center;
+`;
+const SubmitIcon = styled.Image.attrs({
+	source: require("../../assets/icons/checkIcon.png")
+})`
+	width: 17px;
+	height: 17px;
 `;
 
 const Option = styled.View`
@@ -77,10 +99,57 @@ const DeleteIcon = styled.Image.attrs({
 	height: 20px;
 `;
 
-const Op = ({ color, onRemoveItem }) => (
+const ColorPicker = styled.View`
+	width: 100%;
+	height: 40px;
+	justify-content: center;
+	align-items: flex-end;
+`;
+
+const ShowColorsBtn = styled.TouchableOpacity`
+	width: 150px;
+	height: 32px;
+	align-items: center;
+`;
+const ShowColors = styled.Text`
+	font-size: ${props => props.theme.percentBarFontSize};
+	font-weight: 400;
+	color: ${props => props.theme.doneBtnColor};
+`;
+
+const ColorList = styled.View`
+	width: 100%;
+	height: 30px;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-evenly;
+`;
+
+const Color = styled.TouchableOpacity`
+	width: ${props => (props.picked ? 26 : 20)};
+	height: ${props => (props.picked ? 26 : 20)};
+	border-radius: ${props => (props.picked ? 13 : 10)};
+	background-color: ${props => props.color};
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+`;
+
+const ColorGroup = ({ newColor }) => (
+	<ColorList>
+		{Colors.map(c => (
+			<Color
+				key={c}
+				color={c}
+				picked={newColor.value == c}
+				onPressOut={() => newColor.setValue(c)}
+			/>
+		))}
+	</ColorList>
+);
+
+const Op = ({ color, onPressEditBtn, onRemoveItem }) => (
 	<Option>
 		<OpBtn>
-			<EditWrapper color={color}>
+			<EditWrapper color={color} onPressOut={onPressEditBtn}>
 				<EditIcon style={{ tintColor: "#fff" }} />
 			</EditWrapper>
 		</OpBtn>
@@ -92,22 +161,80 @@ const Op = ({ color, onRemoveItem }) => (
 	</Option>
 );
 
-export default ({ item, stack, swiping, swipeRef, onRemoveItem }) => (
-	<Swipeable
-		ref={swipeRef}
-		onSwipeStart={() => swiping.setValue(item.id)}
-		onSwipeRelease={() => swiping.setValue(null)}
-		rightButtonWidth={140}
-		rightButtons={[<Op color={item.color} onRemoveItem={onRemoveItem} />]}
-	>
-		<Wrapper>
-			<Box color={item.color} onPress={() => stack.setValue(item)}>
-				<Keyword>{item.keyword}</Keyword>
+export default ({
+	// props
+	item,
+	stack,
+	swiping,
+	editing,
+	// state
+	newKeyword,
+	newColor,
+	colorVisible,
+	swipeRef,
+	// func
+	onRemoveItem,
+	onPressEditBtn,
+	onEndEditing
+}) => (
+	<Container>
+		<Swipeable
+			ref={swipeRef}
+			onSwipeStart={() => swiping.setValue(item.id)}
+			onSwipeRelease={() => swiping.setValue(null)}
+			rightButtonWidth={140}
+			rightButtons={[
+				<Op
+					color={item.color}
+					onPressEditBtn={onPressEditBtn}
+					onRemoveItem={onRemoveItem}
+				/>
+			]}
+		>
+			<Wrapper>
+				<Box
+					color={newColor.value}
+					disabled={editing.value == item.id}
+					onPress={() => {
+						editing.setValue(null);
+						stack.setValue(item);
+					}}
+				>
+					{editing.value == item.id ? (
+						<InputKeywordText
+							{...newKeyword}
+							onSubmitEditing={onEndEditing}
+							blurOnSubmit={true}
+							color={"white"}
+							autoFocus={true}
+						/>
+					) : (
+						<Keyword>{item.keyword}</Keyword>
+					)}
 
-				<CountSpan>
-					<Count>{item.childIds.length}</Count>
-				</CountSpan>
-			</Box>
-		</Wrapper>
-	</Swipeable>
+					{editing.value == item.id ? (
+						<SubmitSpan onPress={onEndEditing}>
+							<SubmitIcon style={{ tintColor: "#fff" }} />
+						</SubmitSpan>
+					) : (
+						<CountSpan>
+							<Count>{item.childIds.length}</Count>
+						</CountSpan>
+					)}
+				</Box>
+			</Wrapper>
+		</Swipeable>
+
+		{editing.value == item.id && (
+			<ColorPicker>
+				{colorVisible.value ? (
+					<ColorGroup newColor={newColor} />
+				) : (
+					<ShowColorsBtn onPress={() => colorVisible.setValue(true)}>
+						<ShowColors>change color...</ShowColors>
+					</ShowColorsBtn>
+				)}
+			</ColorPicker>
+		)}
+	</Container>
 );

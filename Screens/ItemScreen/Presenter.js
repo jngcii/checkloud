@@ -146,6 +146,7 @@ export default ({
 	newKeyword,
 	newColor,
 	swiping,
+	editing,
 	// animation
 	stackShape,
 	colorsX,
@@ -182,6 +183,7 @@ export default ({
 								item={i}
 								stack={stack}
 								swiping={swiping}
+								editing={editing}
 								// func
 								onRemoveItem={() =>
 									onRemoveItem({

@@ -8,7 +8,8 @@ import { useQuery, useMutation } from "react-apollo-hooks";
 import {
 	GET_ITEMS,
 	ADD_ITEM,
-	REMOVE_ITEM
+	REMOVE_ITEM,
+	EDIT_ITEM
 } from "../../API/queries/itemQueries";
 import useInput from "../../Hooks/useInput";
 import useString from "../../Hooks/useString";
@@ -29,6 +30,7 @@ export default ({ screen, itemShape, floor = 0, itemId = "a" }) => {
 
 	const [addItemMutation] = useMutation(ADD_ITEM);
 	const [removeItemMutation] = useMutation(REMOVE_ITEM);
+	const [editItemMutation] = useMutation(EDIT_ITEM);
 
 	const item = items.filter(i => i.id == itemId)[0];
 
@@ -38,6 +40,7 @@ export default ({ screen, itemShape, floor = 0, itemId = "a" }) => {
 	const newColor = useString(itemId == "a" ? Colors[0] : item.color);
 	const stack = useObject(null);
 	const swiping = useString(null);
+	const editing = useString(null);
 
 	const stackShape = shapeAnimation();
 	const colorsX = locationAnimation(-width, 0);
@@ -134,6 +137,18 @@ export default ({ screen, itemShape, floor = 0, itemId = "a" }) => {
 		}
 	}, [stack]);
 
+	useEffect(() => {
+		if (item.id != "a") {
+			childItems.forEach(i => {
+				if (i.color != item.color) {
+					editItemMutation({
+						variables: { id: i.id, color: item.color }
+					});
+				}
+			});
+		}
+	}, [items]);
+
 	if (loadingItems) return null;
 
 	return (
@@ -147,6 +162,7 @@ export default ({ screen, itemShape, floor = 0, itemId = "a" }) => {
 			newKeyword={newKeyword}
 			newColor={newColor}
 			swiping={swiping}
+			editing={editing}
 			// animation
 			stackShape={stackShape}
 			colorsX={colorsX}
