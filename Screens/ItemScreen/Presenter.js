@@ -151,7 +151,8 @@ export default ({
 	colorsX,
 	panResponder,
 	// fun
-	onSaveItem
+	onSaveItem,
+	onRemoveItem
 }) => (
 	<Wrapper
 		behavior="padding"
@@ -181,6 +182,13 @@ export default ({
 								item={i}
 								stack={stack}
 								swiping={swiping}
+								// func
+								onRemoveItem={() =>
+									onRemoveItem({
+										parentId: item.id,
+										id: i.id
+									})
+								}
 							/>
 						))}
 					</ChildsItems>

@@ -93,6 +93,12 @@ export const REMOVE_ITEM_ACT = gql`
 	}
 `;
 
+export const REMOVE_ITEM = gql`
+	mutation removeItem($parentId: String!, $id: String!) {
+		removeItem(parentId: $parentId, id: $id) @client
+	}
+`;
+
 export const CHECK_ITEM = gql`
 	mutation checkItem($id: String!) {
 		checkItem(id: $id) @client

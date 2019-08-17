@@ -5,7 +5,11 @@ import {
 	getStatusBarHeight
 } from "react-native-iphone-x-helper";
 import { useQuery, useMutation } from "react-apollo-hooks";
-import { GET_ITEMS, ADD_ITEM } from "../../API/queries/itemQueries";
+import {
+	GET_ITEMS,
+	ADD_ITEM,
+	REMOVE_ITEM
+} from "../../API/queries/itemQueries";
 import useInput from "../../Hooks/useInput";
 import useString from "../../Hooks/useString";
 import useObject from "../../Hooks/useObject";
@@ -24,6 +28,7 @@ export default ({ screen, itemShape, floor = 0, itemId = "a" }) => {
 	} = useQuery(GET_ITEMS);
 
 	const [addItemMutation] = useMutation(ADD_ITEM);
+	const [removeItemMutation] = useMutation(REMOVE_ITEM);
 
 	const item = items.filter(i => i.id == itemId)[0];
 
@@ -98,6 +103,11 @@ export default ({ screen, itemShape, floor = 0, itemId = "a" }) => {
 		}
 	};
 
+	const onRemoveItem = async ({ parentId, id }) => {
+		removeItemMutation({ variables: { parentId, id } });
+		easeIO();
+	};
+
 	useEffect(() => {
 		if (stack.value && newKeyword.value != "") newKeyword.onChange("");
 	}, [stack]);
@@ -143,6 +153,7 @@ export default ({ screen, itemShape, floor = 0, itemId = "a" }) => {
 			panResponder={panResponder}
 			// func
 			onSaveItem={onSaveItem}
+			onRemoveItem={onRemoveItem}
 		/>
 	);
 };

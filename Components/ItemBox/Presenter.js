@@ -77,7 +77,7 @@ const DeleteIcon = styled.Image.attrs({
 	height: 20px;
 `;
 
-const Op = ({ color }) => (
+const Op = ({ color, onRemoveItem }) => (
 	<Option>
 		<OpBtn>
 			<EditWrapper color={color}>
@@ -85,20 +85,20 @@ const Op = ({ color }) => (
 			</EditWrapper>
 		</OpBtn>
 		<OpBtn>
-			<DeleteWrapper color={color}>
+			<DeleteWrapper color={color} onPressOut={onRemoveItem}>
 				<DeleteIcon style={{ tintColor: "#fff" }} />
 			</DeleteWrapper>
 		</OpBtn>
 	</Option>
 );
 
-export default ({ item, stack, swiping, swipeRef }) => (
+export default ({ item, stack, swiping, swipeRef, onRemoveItem }) => (
 	<Swipeable
 		ref={swipeRef}
 		onSwipeStart={() => swiping.setValue(item.id)}
 		onSwipeRelease={() => swiping.setValue(null)}
 		rightButtonWidth={140}
-		rightButtons={[<Op color={item.color} />]}
+		rightButtons={[<Op color={item.color} onRemoveItem={onRemoveItem} />]}
 	>
 		<Wrapper>
 			<Box color={item.color} onPress={() => stack.setValue(item)}>

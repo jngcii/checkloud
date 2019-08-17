@@ -27,6 +27,7 @@ export const typeDefs = `
 		addPlan(title: String!, itemActs: [ItemAct!]!): Boolean!
 
 		removeItemAct(id: String!): Boolean!
+		removeItem(parentId: String, id: String): Boolean
 
 		editPlan(id: String!, title: String, itemActs:[ItemAct]): Boolean!
 		editItemAct(id: String!, keyword:String!):Boolean!
@@ -166,7 +167,7 @@ export const resolvers = {
 			try {
 				await cache.writeData({
 					data: {
-						items: [newItem, ...items]
+						items: [...items, newItem]
 					}
 				});
 				await saveItems(cache);
@@ -308,6 +309,62 @@ export const resolvers = {
 			}
 		},
 
+		removeItem: async (_, { parentId, id }, { cache }) => {
+			const pId = cache.config.dataIdFromObject({
+				__typename: "Item",
+				id: parentId
+			});
+
+			const parentItem = cache.readFragment({
+				fragment: ITEM_FRAGMENT,
+				id: pId
+			});
+
+			const newChildIds = parentItem.childIds;
+
+			const { items } = cache.readQuery({
+				query: GET_ITEMS
+			});
+
+			const item = items.filter(i => i.id == id)[0];
+
+			if (!item) return false;
+
+			const pIdFound = newChildIds.indexOf(item.id);
+
+			const idFound = items.indexOf(item);
+
+			if (pIdFound == -1 || idFound == -1) return false;
+
+			newChildIds.splice(pIdFound, 1);
+
+			items.splice(idFound, 1);
+
+			const newParentItem = {
+				...parentItem,
+				chlidIds: newChildIds
+			};
+
+			await cache.writeFragment({
+				id: pId,
+				fragment: ITEM_FRAGMENT,
+				data: { ...newParentItem }
+			});
+
+			try {
+				await cache.writeData({
+					data: {
+						items: [...items]
+					}
+				});
+				saveItems(cache);
+
+				return true;
+			} catch {
+				return false;
+			}
+		},
+
 		editPlan: async (_, { id, title, itemActs }, { cache }) => {
 			const planId = await cache.config.dataIdFromObject({
 				__typename: "Plan",
@@ -319,15 +376,11 @@ export const resolvers = {
 				id: planId
 			});
 
-			console.log(itemActs);
-
 			const updatedPlan = {
 				...plan,
 				title: title ? title : plan.title,
 				itemActs: itemActs ? itemActs : plan.itemActs
 			};
-
-			console.log(updatedPlan);
 
 			cache.writeFragment({
 				id: planId,

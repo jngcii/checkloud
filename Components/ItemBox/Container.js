@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import Presenter from "./Presenter";
 
-export default ({ item, stack, swiping }) => {
+export default ({ item, stack, swiping, onRemoveItem }) => {
 	const swipeRef = useRef(null);
 
 	useEffect(() => {
@@ -16,6 +16,8 @@ export default ({ item, stack, swiping }) => {
 			swiping={swiping}
 			// state
 			swipeRef={swipeRef}
+			// func
+			onRemoveItem={onRemoveItem}
 		/>
 	);
 };
