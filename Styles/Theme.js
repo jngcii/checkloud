@@ -24,6 +24,9 @@ export default {
 	usedItemFontSize: 15,
 	previewPlanTitleFontSize: 14,
 	previewItemFontSize: 12,
+	monthFontSize: 20,
+	dayTitleFontSize: 13,
+	calendarDateFontSize: 15,
 
 	planTitleFontWeight: "700",
 	dateFontWeight: "400",
@@ -36,6 +39,9 @@ export default {
 	usedItemFontWeight: "500",
 	previewPlanTitleFontWeight: "700",
 	previewItemFontWeight: "400",
+	monthFontWeight: "600",
+	dayTitleFontWeight: "400",
+	calendarDateFontWeight: "600",
 
 	navShadow: `
 		box-shadow: 0 0 3px rgba(0,0,0,0.4);
