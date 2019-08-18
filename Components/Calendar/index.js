@@ -43,10 +43,16 @@ const DayTitle = styled.Text`
 
 const DateBody = styled.View`
 	width: 100%;
-	flex-direction: row;
-	flex-wrap: wrap;
 	justify-content: space-evenly;
 	align-items: center;
+`;
+
+const Row = styled.View`
+	width: 100%;
+`;
+const DateDiv = styled.View`
+	width: 100%;
+	flex-direction: row;
 `;
 
 const DateSpan = styled.TouchableOpacity.attrs({
@@ -65,9 +71,17 @@ const DateText = styled.Text`
 		props.isWeekend ? props.theme.redColor : props.theme.blackColor};
 `;
 
-export default () => {
+const PreviewDiv = styled.View`
+	width: 100%;
+	flex-direction: row;
+`;
+
+const DetailDiv = styled.View`
+	width: 100%;
+`;
+
+export default ({ calendar }) => {
 	const WEEK = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-	const DAYS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
 	return (
 		<Wrapper>
@@ -85,10 +99,20 @@ export default () => {
 				</DateHeader>
 
 				<DateBody>
-					{DAYS.map(d => (
-						<DateSpan key={d}>
-							<DateText>{d}</DateText>
-						</DateSpan>
+					{calendar.map((row, rowId) => (
+						<Row key={rowId}>
+							<DateDiv>
+								{row.map((d, dateId) => (
+									<DateSpan key={dateId}>
+										<DateText>{d.date}</DateText>
+									</DateSpan>
+								))}
+							</DateDiv>
+
+							{false && <PreviewDiv />}
+
+							{false && <DetailDiv />}
+						</Row>
 					))}
 				</DateBody>
 			</Body>
