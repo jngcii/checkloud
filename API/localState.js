@@ -1,8 +1,14 @@
 import uuidv1 from "uuid/v1";
-import { ITEM_FRAGMENT, ITEM_ACT_FRAGMENT, PLAN_FRAGMENT } from "./fragments";
-import { GET_ITEMS, GET_ITEM_ACTS } from "./queries/itemQueries";
+import {
+	ITEM_FRAGMENT,
+	ITEM_ACT_FRAGMENT,
+	PLAN_FRAGMENT,
+	HISTORY_FRAGMENT
+} from "./fragments";
+import { GET_HISTORIES } from "./queries/historyQueries";
 import { GET_PLANS } from "./queries/planQueries";
-import { saveItems, saveItemActs, savePlans } from "./offline";
+import { GET_ITEMS, GET_ITEM_ACTS } from "./queries/itemQueries";
+import { saveItems, saveItemActs, savePlans, saveHistories } from "./offline";
 
 export const typeDefs = `
     type Query {
@@ -268,6 +274,62 @@ export const resolvers = {
 			const { plans } = await cache.readQuery({
 				query: GET_PLANS
 			});
+
+			const { histories: allHistories } = await cache.readQuery({
+				query: GET_HISTORIES
+			});
+
+			const histories = allHistories.filter(
+				d => d.year == year && d.month == month && d.date == date
+			);
+
+			if (histories.length == 0) {
+				const newHistory = {
+					__typename: "History",
+					id: uuidv1(),
+					year,
+					month,
+					date,
+					day,
+					plans: [newPlan]
+				};
+
+				try {
+					await cache.writeData({
+						data: {
+							days: [newHistory, ...allHistories]
+						}
+					});
+					await saveHistories(cache);
+				} catch {
+					return false;
+				}
+			} else {
+				const historyId = await cache.config.dataIdFromObject({
+					__typename: "Hisotry",
+					id: histories[0].id
+				});
+
+				const history = cache.readFragment({
+					fragment: DAY_FRAGMENT,
+					id: historyId
+				});
+
+				history.plans.unshift(newPlan);
+
+				try {
+					await cache.writeFragment({
+						fragment: HISTORY_FRAGMENT,
+						id: historyId,
+						data: {
+							...history
+						}
+					});
+					await saveHistories(cache);
+				} catch {
+					return false;
+				}
+			}
 
 			try {
 				await cache.writeData({

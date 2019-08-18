@@ -45,3 +45,30 @@ export const PLAN_FRAGMENT = gql`
 		isMain
 	}
 `;
+
+export const HISTORY_FRAGMENT = gql`
+	fragment HistoryParts on History {
+		id
+		year
+		month
+		date
+		day
+		plans {
+			id
+			title
+			startAt
+			itemActs {
+				id
+				keyword
+				color
+				isChecked
+				parentId
+				childIds
+				finishedTime
+				memo
+			}
+			isActive
+			isMain
+		}
+	}
+`;
