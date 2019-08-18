@@ -1,29 +1,106 @@
 import React from "react";
+import { Animated } from "react-native";
 import styled from "styled-components";
+import FeedScreen from "../FeedScreen";
+import CalendarScreen from "../CalendarScreen";
 
 const Wrapper = styled.View`
 	width: 100%;
 	height: 100%;
 	border-radius: 20px;
-	overflow: hidden;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+	background-color: ${props => props.theme.planBoxColor};
 `;
+
+const ControlBarWrapper = styled.View`
+	width: 100%;
+	height: 30px;
+	align-items: center;
+	justify-content: center;
+`;
+const ControlBar = styled.View`
+	width: 50px;
+	height: 6px;
+	border-radius: 3px;
+	background-color: #555;
+	opacity: 0.3;
+`;
+
 const Header = styled.View`
 	width: 100%;
-	height: 45px;
-	padding: 0 25px;
-	justify-content: flex-end;
+	height: 36px;
+	flex-direction: row;
 `;
 
-const Title = styled.Text`
-	font-size: ${props => props.theme.itemHeaderFontSize};
-	font-weight: ${props => props.theme.itemHeaderFontWeight};
-	color: ${props => props.theme.blackColor};
+const NavBtn = styled.TouchableOpacity`
+	width: 50%;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
+`;
+const FeedIcon = styled.Image.attrs({
+	source: require("../../assets/icons/feedIcon.png")
+})`
+	width: 30px;
+	height: 30px;
+`;
+const CalendarIcon = styled.Image.attrs({
+	source: require("../../assets/icons/calendarIcon.png")
+})`
+	width: 33px;
+	height: 33px;
 `;
 
-export default ({ panResponder }) => (
+const Bar = styled.View`
+	width: 100%;
+	height: 100%;
+	background-color: ${props => props.theme.doneBtnColor};
+`;
+
+const Body = styled.View`
+	flex: 1;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+	overflow: hidden;
+`;
+
+export default ({ mode, barX, panResponder }) => (
 	<Wrapper>
-		<Header {...panResponder.panHandlers}>
-			<Title>History</Title>
+		<ControlBarWrapper {...panResponder.panHandlers}>
+			<ControlBar />
+		</ControlBarWrapper>
+
+		<Header>
+			<NavBtn onPressOut={() => mode.setValue("feed")}>
+				<FeedIcon
+					style={{
+						tintColor: mode.value == "feed" ? "#333" : "#ccc"
+					}}
+				/>
+			</NavBtn>
+
+			<NavBtn onPressOut={() => mode.setValue("calendar")}>
+				<CalendarIcon
+					style={{
+						tintColor: mode.value == "calendar" ? "#333" : "#ccc"
+					}}
+				/>
+			</NavBtn>
 		</Header>
+
+		<Animated.View
+			style={{
+				width: "50%",
+				height: 15,
+				padding: 5,
+				transform: [{ translateX: barX.location.x }]
+			}}
+		>
+			<Bar />
+		</Animated.View>
+
+		<Body>
+			{mode.value == "feed" ? <FeedScreen /> : <CalendarScreen />}
+		</Body>
 	</Wrapper>
 );
