@@ -2,27 +2,29 @@ import gql from "graphql-tag";
 
 export const GET_HISTORIES = gql`
 	{
-		id
-		year
-		month
-		date
-		day
-		plans @client {
+		histories @client {
 			id
-			title
-			startAt
-			itemActs @client {
+			year
+			month
+			date
+			day
+			plans @client {
 				id
-				keyword
-				color
-				isChecked
-				parentId
-				childIds
-				finishedTime
-				memo
+				title
+				startAt
+				itemActs @client {
+					id
+					keyword
+					color
+					isChecked
+					parentId
+					childIds
+					finishedTime
+					memo
+				}
+				isActive
+				isMain
 			}
-			isActive
-			isMain
 		}
 	}
 `;

@@ -283,6 +283,8 @@ export const resolvers = {
 				d => d.year == year && d.month == month && d.date == date
 			);
 
+			console.log(histories);
+
 			if (histories.length == 0) {
 				const newHistory = {
 					__typename: "History",
@@ -297,7 +299,7 @@ export const resolvers = {
 				try {
 					await cache.writeData({
 						data: {
-							days: [newHistory, ...allHistories]
+							histories: [newHistory, ...allHistories]
 						}
 					});
 					await saveHistories(cache);
@@ -305,24 +307,19 @@ export const resolvers = {
 					return false;
 				}
 			} else {
-				const historyId = await cache.config.dataIdFromObject({
-					__typename: "Hisotry",
+				const historyId = cache.config.dataIdFromObject({
+					__typename: "History",
 					id: histories[0].id
 				});
 
-				const history = cache.readFragment({
-					fragment: DAY_FRAGMENT,
-					id: historyId
-				});
-
-				history.plans.unshift(newPlan);
+				histories[0].plans.unshift(newPlan);
 
 				try {
 					await cache.writeFragment({
 						fragment: HISTORY_FRAGMENT,
 						id: historyId,
 						data: {
-							...history
+							...histories[0]
 						}
 					});
 					await saveHistories(cache);
