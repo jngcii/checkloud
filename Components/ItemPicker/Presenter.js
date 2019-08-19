@@ -99,7 +99,9 @@ const ChildsWrapper = styled.ScrollView`
 	flex: 1;
 	width: 100%;
 `;
-const ChildRow = styled.TouchableOpacity`
+const ChildRow = styled.TouchableOpacity.attrs({
+	activeOpacity: 1
+})`
 	width: 100%;
 	height: 40px;
 	flex-direction: row;
@@ -148,8 +150,8 @@ const UsedItem = ({ usedItems, onPressUsedItem }) => (
 	</UsedItemsWrapper>
 );
 
-const ChildItem = ({ item, onPressItem, onSelectItem }) => (
-	<ChildRow onPressOut={() => onPressItem(item)}>
+const ChildItem = ({ item, isScrolling, onPressItem, onSelectItem }) => (
+	<ChildRow disabled={isScrolling.value} onPress={() => onPressItem(item)}>
 		<Point color={item.color} />
 		<Keyword>{item.keyword}</Keyword>
 		<SelectBtn onPressOut={() => onSelectItem(item)}>
@@ -160,6 +162,7 @@ const ChildItem = ({ item, onPressItem, onSelectItem }) => (
 
 export default ({
 	// state
+	isScrolling,
 	usingItem,
 	usedItems,
 	childItems,
@@ -212,11 +215,15 @@ export default ({
 						/>
 					)}
 
-					<ChildsWrapper>
+					<ChildsWrapper
+						onMomentumScrollBegin={() => isScrolling.setValue(true)}
+						onMomentumScrollEnd={() => isScrolling.setValue(false)}
+					>
 						{childItems.map(i => (
 							<ChildItem
 								key={i.id}
 								item={i}
+								isScrolling={isScrolling}
 								// func
 								onPressItem={onPressItem}
 								onSelectItem={onSelectItem}

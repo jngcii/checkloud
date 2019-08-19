@@ -13,6 +13,7 @@ export default ({ itemsVisible, addedItem }) => {
 		data: { items }
 	} = useQuery(GET_ITEMS);
 
+	const isScrolling = useBoolean(false);
 	const usingId = useString("a");
 	const usedItems = useArray([]);
 	const usingItem = items.filter(i => i.id == usingId.value)[0];
@@ -72,6 +73,7 @@ export default ({ itemsVisible, addedItem }) => {
 	return (
 		<Presenter
 			// state
+			isScrolling={isScrolling}
 			usingItem={usingItem}
 			usedItems={usedItems}
 			childItems={childItems}
