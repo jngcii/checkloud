@@ -204,6 +204,7 @@ export default ({
 							<InputKeywordText
 								{...newKeyword}
 								placeholder={"새로운 키워드를 입력하세요."}
+								onSubmitEditing={onSaveItem}
 							/>
 						</InputSpan>
 
