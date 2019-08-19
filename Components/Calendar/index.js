@@ -6,15 +6,10 @@ const Wrapper = styled.View`
 `;
 
 const Header = styled.View`
-	width: 100%;
-	height: 45px;
-	align-items: center;
-	justify-content: center;
+	${props => props.theme.monthHeader};
 `;
 const MonthText = styled.Text`
-	font-size: ${props => props.theme.monthFontSize};
-	font-weight: ${props => props.theme.monthFontWeight};
-	color: ${props => props.theme.blackColor};
+	${props => props.theme.monthText};
 `;
 
 const Body = styled.View`
