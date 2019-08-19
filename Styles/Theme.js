@@ -1,3 +1,6 @@
+const MONTH_FONT_SIZE = 20;
+const MONTH_FONT_WEIGHT = "600";
+
 export default {
 	blackColor: "#333",
 	greyColor: "#777",
@@ -9,6 +12,7 @@ export default {
 	borderColor: "#efefef",
 	memoColor: "#eaeaea",
 	submitBtnColor: "#ccc",
+	feedItemBorderColor: "#ddd",
 
 	redColor: "#f54278",
 	doneBtnColor: "#4285d6",
@@ -24,9 +28,10 @@ export default {
 	usedItemFontSize: 15,
 	previewPlanTitleFontSize: 14,
 	previewItemFontSize: 12,
-	monthFontSize: 20,
+	monthFontSize: MONTH_FONT_SIZE,
 	dayTitleFontSize: 13,
 	calendarDateFontSize: 15,
+	completeFontSize: 11,
 
 	planTitleFontWeight: "700",
 	dateFontWeight: "400",
@@ -39,9 +44,10 @@ export default {
 	usedItemFontWeight: "500",
 	previewPlanTitleFontWeight: "700",
 	previewItemFontWeight: "400",
-	monthFontWeight: "600",
+	monthFontWeight: MONTH_FONT_WEIGHT,
 	dayTitleFontWeight: "400",
 	calendarDateFontWeight: "600",
+	completeFontWeight: "600",
 
 	navShadow: `
 		box-shadow: 0 0 3px rgba(0,0,0,0.4);
@@ -72,5 +78,17 @@ export default {
 	dragTriggerIcon: `
 		width: 22px;
 		height: 22px;
+	`,
+
+	monthHeader: `
+		width: 100%;
+		height: 45px;
+		padding: 0 25px;
+		justify-content: center;
+	`,
+	monthText: `
+		font-size: ${MONTH_FONT_SIZE};
+		font-weight: ${MONTH_FONT_WEIGHT};
+		color: #333;
 	`
 };
