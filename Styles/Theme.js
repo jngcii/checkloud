@@ -45,7 +45,7 @@ export default {
 	previewPlanTitleFontWeight: "700",
 	previewItemFontWeight: "400",
 	monthFontWeight: MONTH_FONT_WEIGHT,
-	dayTitleFontWeight: "400",
+	dayTitleFontWeight: "500",
 	calendarDateFontWeight: "600",
 	completeFontWeight: "600",
 

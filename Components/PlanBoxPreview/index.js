@@ -94,53 +94,48 @@ export default ({
 	listVisible,
 	pageIndex,
 	swipeRef,
-	isScrollingPrv
+	isScrollingPrv,
+	isNow
 }) => (
-	<Wrapper isNow={index == pageIndex.value}>
-		{plan == "no" && (
-			<Box color="#f6f6f6">
-				<Container />
-			</Box>
-		)}
-
-		{plan != "new" && plan != "no" && (
-			<Box
-				color={plan.itemActs[0].color}
-				disabled={isScrollingPrv.value}
-				onPress={() => {
+	<Wrapper isNow={isNow || (pageIndex && index == pageIndex.value)}>
+		<Box
+			color={plan.itemActs[0].color}
+			disabled={isScrollingPrv.value}
+			onPress={() => {
+				if (swipeRef && index && listVisible) {
 					swipeRef.current.scrollTo({ x: index * width });
 					listVisible.setValue(false);
-				}}
-			>
-				<Container>
-					<Header>
-						<Title>{plan.title}</Title>
+				}
+			}}
+		>
+			<Container>
+				<Header>
+					<Title>{plan.title}</Title>
 
-						<Percentage>
-							{Math.round(
-								(plan.itemActs.filter(i => i.isChecked).length /
-									plan.itemActs.length) *
-									100
-							)}
-							%
-						</Percentage>
-					</Header>
-
-					<Divider />
-
-					<Body>
-						{plan.itemActs.slice(0, 4).map(i => (
-							<ItemRow key={i.id}>
-								<ItemText>∙ {i.keyword}</ItemText>
-							</ItemRow>
-						))}
-
-						{plan.itemActs.length > 4 && (
-							<More style={{ tintColor: "#fff" }} />
+					<Percentage>
+						{Math.round(
+							(plan.itemActs.filter(i => i.isChecked).length /
+								plan.itemActs.length) *
+								100
 						)}
-					</Body>
-				</Container>
-			</Box>
-		)}
+						%
+					</Percentage>
+				</Header>
+
+				<Divider />
+
+				<Body>
+					{plan.itemActs.slice(0, 4).map(i => (
+						<ItemRow key={i.id}>
+							<ItemText>∙ {i.keyword}</ItemText>
+						</ItemRow>
+					))}
+
+					{plan.itemActs.length > 4 && (
+						<More style={{ tintColor: "#fff" }} />
+					)}
+				</Body>
+			</Container>
+		</Box>
 	</Wrapper>
 );

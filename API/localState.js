@@ -13,6 +13,7 @@ import { saveItems, saveItemActs, savePlans, saveHistories } from "./offline";
 export const typeDefs = `
     type Query {
 		histories: [History]
+		filteredHistories(month: Int!): [History]
 		
 		feed(to: Int): [Plan]
         
@@ -89,6 +90,14 @@ export const typeDefs = `
 
 export const resolvers = {
 	Query: {
+		filteredHistories: async (_, { month }, { cache }) => {
+			const histories = cache
+				.readQuery({ query: GET_HISTORIES })
+				.histories.filter(h => h.month == month);
+
+			return histories;
+		},
+
 		feed: async (_, { to }, { cache }) => {
 			const plans = cache
 				.readQuery({ query: GET_PLANS })

@@ -27,9 +27,12 @@ const ControlBar = styled.View`
 `;
 
 const Header = styled.View`
-	width: 100%;
+	width: 95%;
 	height: 36px;
+	align-self: center;
 	flex-direction: row;
+	border-color: ${props => props.theme.borderColor};
+	border-bottom-width: 1px;
 `;
 
 const NavBtn = styled.TouchableOpacity`
@@ -91,9 +94,9 @@ export default ({ stickyIndex, feeds, loading, mode, barX, panResponder }) => (
 		<Animated.View
 			style={{
 				width: "50%",
-				height: 15,
-				padding: 5,
-				transform: [{ translateX: barX.location.x }]
+				height: 3,
+				paddingHorizontal: 5,
+				transform: [{ translateX: barX.location.x }, { translateY: -3 }]
 			}}
 		>
 			<Bar />
