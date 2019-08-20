@@ -22,6 +22,28 @@ export const GET_PLANS = gql`
 	}
 `;
 
+export const GET_FEED = gql`
+	query feed($to: Int!) {
+		feed(to: $to) @client {
+			id
+			title
+			startAt
+			itemActs @client {
+				id
+				keyword
+				color
+				isChecked
+				parentId
+				childIds
+				finishedTime
+				memo
+			}
+			isActive
+			isMain
+		}
+	}
+`;
+
 export const ADD_PLAN = gql`
 	mutation addPlan($title: String!, $itemActs: [ItemAct!]!) {
 		addPlan(title: $title, itemActs: $itemActs) @client

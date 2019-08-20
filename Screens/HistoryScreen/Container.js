@@ -1,37 +1,30 @@
 import React, { useEffect } from "react";
 import { Dimensions, PanResponder } from "react-native";
 import { useQuery } from "react-apollo-hooks";
-import { GET_HISTORIES } from "../../API/queries/historyQueries";
+import { GET_FEED } from "../../API/queries/planQueries";
 import {
 	getBottomSpace,
 	getStatusBarHeight
 } from "react-native-iphone-x-helper";
 import useString from "../../Hooks/useString";
+import useArray from "../../Hooks/useArray";
+import useBoolean from "../../Hooks/useBoolean";
 import locationAnimation from "../../Animations/locationAnimation";
 import Presenter from "./Presenter";
 
 const { width, height } = Dimensions.get("window");
 
 export default ({ screen, historyShape }) => {
-	const today = new Date();
+	const to = useString(20);
 
-	// history 불러는 것은 feed screen, calendar screen 에서 각각 다른 방식으로 가져오게 하기
+	const { data } = useQuery(GET_FEED, {
+		variables: { to: to.value }
+	});
 
-	// feed     : plan 10개 단위로 잘라서 가져와서 object state에 추가하는 방식으로,
-	//			  history screen 에서 query를 가져와서 유지한다.
-
-	// calendar : plan을 한달 단위로 가져오기
-
-	const {
-		data: { histories },
-		loading: loadingHisories
-	} = useQuery(GET_HISTORIES);
-
-	const history = histories.filter(
-		h => h.year == today.getFullYear() && h.month == today.getMonth()
-	);
-
+	const stickyIndex = useArray([]);
+	const feeds = useArray([]);
 	const mode = useString("feed");
+	const loading = useBoolean(true);
 
 	const barX = locationAnimation();
 
@@ -86,11 +79,26 @@ export default ({ screen, historyShape }) => {
 			barX.changeLocation({ toX: (width - 40) / 2, duration: 150 });
 	}, [mode]);
 
-	if (loadingHisories) return null;
+	useEffect(() => {
+		if (data) {
+			const { feed } = data;
+			feeds.concat(feed);
+
+			feed.forEach((f, index) => {
+				if (f.id == "date") {
+					stickyIndex.add(index + to.value - 20);
+				}
+			});
+
+			setTimeout(() => loading.setValue(false), 500);
+		}
+	}, [data]);
 
 	return (
 		<Presenter
-			history={history}
+			stickyIndex={stickyIndex}
+			feeds={feeds}
+			loading={loading}
 			mode={mode}
 			// animation
 			barX={barX}

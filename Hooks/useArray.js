@@ -48,8 +48,6 @@ export default defaultArray => {
 
 		const idx = array.indexOf(i);
 
-		console.log(n, "n");
-
 		if (idx != -1) {
 			arr[idx] = n;
 			setArray([...arr]);
@@ -60,8 +58,15 @@ export default defaultArray => {
 		return false;
 	};
 
+	const concat = arr => {
+		setArray([...array, ...arr]);
+
+		return true;
+	};
+
 	return {
 		array,
+		setArray,
 		count,
 		add,
 		remove,
@@ -69,6 +74,6 @@ export default defaultArray => {
 		removeLast,
 		removeAll,
 		replace,
-		setArray
+		concat
 	};
 };

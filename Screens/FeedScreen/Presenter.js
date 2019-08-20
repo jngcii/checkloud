@@ -71,29 +71,29 @@ const PlanContainer = styled.View`
 	padding-bottom: 15px;
 `;
 
-export default ({ stickyIndex, renderItems }) => (
+export default ({ stickyIndex, feeds }) => (
 	<Wrapper>
 		<MonthHeader>
-			<MonthText>{MonthTranslator(renderItems.array[0].month)}</MonthText>
+			<MonthText>{MonthTranslator(feeds.array[1].startAt[1])}</MonthText>
 		</MonthHeader>
 
 		<Body>
 			<VerticalLine />
 
 			<Content stickyHeaderIndices={stickyIndex.array}>
-				{renderItems.array.map((i, index) =>
-					i.date ? (
+				{feeds.array.map((f, index) =>
+					f.id == "date" ? (
 						<Sticky key={index}>
 							<BigDate>
-								<BigDateText>{i.date}</BigDateText>
+								<BigDateText>{f.startAt[2]}</BigDateText>
 								<DayText>
-									{WeekTranslator(i.day).slice(0, 3)}
+									{WeekTranslator(f.startAt[3]).slice(0, 3)}
 								</DayText>
 							</BigDate>
 						</Sticky>
 					) : (
 						<PlanContainer key={index}>
-							<PlanBoxFeed plan={i} />
+							<PlanBoxFeed plan={f} />
 						</PlanContainer>
 					)
 				)}

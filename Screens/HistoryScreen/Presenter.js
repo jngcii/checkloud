@@ -64,7 +64,7 @@ const Body = styled.View`
 	overflow: hidden;
 `;
 
-export default ({ history, mode, barX, panResponder }) => (
+export default ({ stickyIndex, feeds, loading, mode, barX, panResponder }) => (
 	<Wrapper>
 		<ControlBarWrapper {...panResponder.panHandlers}>
 			<ControlBar />
@@ -101,9 +101,13 @@ export default ({ history, mode, barX, panResponder }) => (
 
 		<Body>
 			{mode.value == "feed" ? (
-				<FeedScreen history={history} />
+				<FeedScreen
+					stickyIndex={stickyIndex}
+					feeds={feeds}
+					loading={loading}
+				/>
 			) : (
-				<CalendarScreen history={history} />
+				<CalendarScreen />
 			)}
 		</Body>
 	</Wrapper>

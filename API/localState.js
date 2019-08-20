@@ -12,7 +12,9 @@ import { saveItems, saveItemActs, savePlans, saveHistories } from "./offline";
 
 export const typeDefs = `
     type Query {
-        histories: [History]
+		histories: [History]
+		
+		feed(to: Int): [Plan]
         
         plans: [Plan]
         plan(id: String!): Plan
@@ -87,6 +89,37 @@ export const typeDefs = `
 
 export const resolvers = {
 	Query: {
+		feed: async (_, { to }, { cache }) => {
+			const plans = cache
+				.readQuery({ query: GET_PLANS })
+				.plans.slice(to - 20, to);
+
+			const newPlans = [];
+
+			plans.forEach(p => {
+				const date = {
+					__typename: "Plan",
+					id: "date",
+					title: "date",
+					startAt: p.startAt,
+					itemActs: [],
+					isActive: false,
+					isMain: false
+				};
+
+				if (
+					newPlans.length == 0 ||
+					newPlan[newPlans.length - 1].startAt != p.startAt
+				) {
+					newPlans.push(date);
+				}
+
+				newPlans.push(p);
+			});
+
+			return newPlans;
+		},
+
 		item: async (_, { id }, { cache }) => {
 			const itemId = cache.config.dataIdFromObject({
 				__typename: "Item",
@@ -282,8 +315,6 @@ export const resolvers = {
 			const histories = allHistories.filter(
 				d => d.year == year && d.month == month && d.date == date
 			);
-
-			console.log(histories);
 
 			if (histories.length == 0) {
 				const newHistory = {
