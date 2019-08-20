@@ -103,7 +103,7 @@ export const resolvers = {
 				.readQuery({ query: GET_PLANS })
 				.plans.slice(to - 20, to);
 
-			const newPlans = [];
+			let newPlans = [];
 
 			plans.forEach(p => {
 				const date = {
@@ -116,9 +116,21 @@ export const resolvers = {
 					isMain: false
 				};
 
+				if (newPlans.length == 0) {
+					newPlans.push(date);
+				}
+
 				if (
-					newPlans.length == 0 ||
-					newPlan[newPlans.length - 1].startAt != p.startAt
+					newPlans.length > 0 &&
+					!(
+						newPlans[newPlans.length - 1].startAt[0] ==
+							p.startAt[0] &&
+						newPlans[newPlans.length - 1].startAt[1] ==
+							p.startAt[1] &&
+						newPlans[newPlans.length - 1].startAt[2] ==
+							p.startAt[2] &&
+						newPlans[newPlans.length - 1].startAt[3] == p.startAt[3]
+					)
 				) {
 					newPlans.push(date);
 				}

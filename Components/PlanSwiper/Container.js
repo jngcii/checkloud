@@ -84,19 +84,21 @@ export default ({
 	};
 
 	useEffect(() => {
-		setTimeout(() =>
-			swipeRef.current.scrollTo({ x: width, animated: true })
-		);
+		if (swipeRef.current)
+			setTimeout(() =>
+				swipeRef.current.scrollTo({ x: width, animated: true })
+			);
 	}, [swipeRef.current]);
 
 	useEffect(() => {
-		setTimeout(
-			() =>
-				previewRef.current.scrollTo({
-					x: pageIndex.value * 140 - (width - 180) / 2
-				}),
-			500
-		);
+		if (previewRef.current)
+			setTimeout(
+				() =>
+					previewRef.current.scrollTo({
+						x: pageIndex.value * 140 - (width - 180) / 2
+					}),
+				500
+			);
 	}, [pageIndex]);
 
 	useEffect(() => {

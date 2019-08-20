@@ -165,7 +165,7 @@ const ItemAct = ({ item }) => (
 				{item.keyword}
 			</Keyword>
 
-			{item.parentId && (
+			{item.parentId && item.parentId != "a" && (
 				<Parents>
 					<ParentItems id={item.parentId} />
 				</Parents>
