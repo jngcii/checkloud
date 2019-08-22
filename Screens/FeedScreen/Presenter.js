@@ -1,4 +1,5 @@
 import React from "react";
+import { RefreshControl } from "react-native";
 import styled from "styled-components";
 import MonthTranslator from "../../Components/MonthTranslator";
 import WeekTranslator from "../../Components/WeekTranslator";
@@ -71,7 +72,7 @@ const PlanContainer = styled.View`
 	padding-bottom: 15px;
 `;
 
-export default ({ stickyIndex, feeds }) => (
+export default ({ stickyIndex, feeds, refetch }) => (
 	<Wrapper>
 		<MonthHeader>
 			<MonthText>{MonthTranslator(feeds.array[1].startAt[1])}</MonthText>
@@ -80,7 +81,16 @@ export default ({ stickyIndex, feeds }) => (
 		<Body>
 			<VerticalLine />
 
-			<Content stickyHeaderIndices={stickyIndex.array}>
+			<Content
+				stickyHeaderIndices={stickyIndex.array}
+				refreshControl={
+					<RefreshControl
+						refreshing={false}
+						onRefresh={refetch}
+						tintColor={"black"}
+					/>
+				}
+			>
 				{feeds.array.map((f, index) =>
 					f.id == "date" ? (
 						<Sticky key={index}>

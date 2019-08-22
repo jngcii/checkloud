@@ -67,7 +67,15 @@ const Body = styled.View`
 	overflow: hidden;
 `;
 
-export default ({ stickyIndex, feeds, loading, mode, barX, panResponder }) => (
+export default ({
+	stickyIndex,
+	feeds,
+	loading,
+	mode,
+	barX,
+	panResponder,
+	refetch
+}) => (
 	<Wrapper>
 		<ControlBarWrapper {...panResponder.panHandlers}>
 			<ControlBar />
@@ -108,6 +116,7 @@ export default ({ stickyIndex, feeds, loading, mode, barX, panResponder }) => (
 					stickyIndex={stickyIndex}
 					feeds={feeds}
 					loading={loading}
+					refetch={refetch}
 				/>
 			) : (
 				<CalendarScreen />

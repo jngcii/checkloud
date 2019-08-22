@@ -17,7 +17,7 @@ const { width, height } = Dimensions.get("window");
 export default ({ screen, historyShape }) => {
 	const to = useString(20);
 
-	const { data } = useQuery(GET_FEED, {
+	const { data, refetch } = useQuery(GET_FEED, {
 		variables: { to: to.value }
 	});
 
@@ -103,6 +103,8 @@ export default ({ screen, historyShape }) => {
 			// animation
 			barX={barX}
 			panResponder={panResponder}
+			// func
+			refetch={refetch}
 		/>
 	);
 };

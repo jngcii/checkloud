@@ -99,9 +99,11 @@ export const resolvers = {
 		},
 
 		feed: async (_, { to }, { cache }) => {
-			const plans = cache
-				.readQuery({ query: GET_PLANS })
-				.plans.slice(to - 20, to);
+			const { plans: ps } = cache.readQuery({ query: GET_PLANS });
+
+			const plans = ps.slice(to - 20, to);
+
+			console.log(plans);
 
 			let newPlans = [];
 
