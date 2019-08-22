@@ -69,6 +69,23 @@ export default ({ screen, historyShape }) => {
 		}
 	});
 
+	const onRefresh = () => {
+		refetch();
+		if (data) {
+			const { feed } = data;
+			stickyIndex.setArray([]);
+			feeds.setArray(feed);
+
+			feed.forEach((f, index) => {
+				if (f.id == "date") {
+					stickyIndex.add(index + to.value - 20);
+				}
+			});
+
+			setTimeout(() => loading.setValue(false), 500);
+		}
+	};
+
 	useEffect(() => {
 		if (mode.value == "feed" && barX.location.x._value != 0)
 			barX.changeLocation({ toX: 0, duration: 150 });
@@ -104,7 +121,7 @@ export default ({ screen, historyShape }) => {
 			barX={barX}
 			panResponder={panResponder}
 			// func
-			refetch={refetch}
+			refetch={onRefresh}
 		/>
 	);
 };

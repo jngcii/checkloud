@@ -103,8 +103,6 @@ export const resolvers = {
 
 			const plans = ps.slice(to - 20, to);
 
-			console.log(plans);
-
 			let newPlans = [];
 
 			plans.forEach(p => {
