@@ -92,7 +92,7 @@ export default ({ stickyIndex, feeds, refetch }) => (
 				}
 			>
 				{feeds.array.map((f, index) =>
-					f.id == "date" ? (
+					f.itemActs.length <= 0 ? (
 						<Sticky key={index}>
 							<BigDate>
 								<BigDateText>{f.startAt[2]}</BigDateText>

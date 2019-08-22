@@ -103,12 +103,12 @@ export const resolvers = {
 
 			const plans = ps.slice(to - 20, to);
 
-			let newPlans = [];
+			const newPlans = [];
 
 			plans.forEach(p => {
 				const date = {
 					__typename: "Plan",
-					id: "date",
+					id: uuidv1(),
 					title: "date",
 					startAt: p.startAt,
 					itemActs: [],

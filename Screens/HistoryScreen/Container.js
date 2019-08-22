@@ -101,8 +101,10 @@ export default ({ screen, historyShape }) => {
 			const { feed } = data;
 			feeds.concat(feed);
 
+			console.log(feed);
+
 			feed.forEach((f, index) => {
-				if (f.id == "date") {
+				if (f.itemActs.length <= 0) {
 					stickyIndex.add(index + to.value - 20);
 				}
 			});
