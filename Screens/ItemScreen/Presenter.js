@@ -146,6 +146,7 @@ export default ({
 	newKeyword,
 	newColor,
 	swiping,
+	isSwiping,
 	editing,
 	// animation
 	stackShape,
@@ -176,13 +177,14 @@ export default ({
 				<Stack floor={floor} stack={stack} stackShape={stackShape} />
 			) : (
 				<Childs>
-					<ChildsItems scrollEnabled={swiping.value == null}>
+					<ChildsItems scrollEnabled={!isSwiping.value}>
 						{childItems.map(i => (
 							<ItemBox
 								key={i.id}
 								item={i}
 								stack={stack}
 								swiping={swiping}
+								isSwiping={isSwiping}
 								editing={editing}
 								// func
 								onRemoveItem={() =>

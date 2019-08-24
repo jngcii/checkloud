@@ -166,6 +166,7 @@ export default ({
 	item,
 	stack,
 	swiping,
+	isSwiping,
 	editing,
 	// state
 	newKeyword,
@@ -180,8 +181,11 @@ export default ({
 	<Container>
 		<Swipeable
 			ref={swipeRef}
-			onSwipeStart={() => swiping.setValue(item.id)}
-			onSwipeRelease={() => swiping.setValue(null)}
+			onSwipeStart={() => {
+				swiping.setValue(item.id);
+				isSwiping.setValue(true);
+			}}
+			onSwipeRelease={() => isSwiping.setValue(false)}
 			rightButtonWidth={140}
 			rightButtons={[
 				<Op

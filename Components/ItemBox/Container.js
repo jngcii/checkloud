@@ -7,7 +7,7 @@ import useBoolean from "../../Hooks/useBoolean";
 import { easeIO } from "../../Animations/layoutAnimations";
 import Presenter from "./Presenter";
 
-export default ({ item, stack, swiping, editing, onRemoveItem }) => {
+export default ({ item, stack, swiping, isSwiping, editing, onRemoveItem }) => {
 	const [editItemMutation] = useMutation(EDIT_ITEM);
 
 	const newKeyword = useInput(item.keyword);
@@ -36,7 +36,8 @@ export default ({ item, stack, swiping, editing, onRemoveItem }) => {
 	};
 
 	useEffect(() => {
-		if (swiping.value != (item.id && null)) swipeRef.current.recenter();
+		if (swiping.value != null && swiping.value != item.id)
+			swipeRef.current.recenter();
 	}, [swiping]);
 
 	useEffect(() => {
@@ -50,6 +51,7 @@ export default ({ item, stack, swiping, editing, onRemoveItem }) => {
 			item={item}
 			stack={stack}
 			swiping={swiping}
+			isSwiping={isSwiping}
 			editing={editing}
 			// state
 			newKeyword={newKeyword}

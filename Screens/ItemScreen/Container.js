@@ -14,6 +14,7 @@ import {
 import useInput from "../../Hooks/useInput";
 import useString from "../../Hooks/useString";
 import useObject from "../../Hooks/useObject";
+import useBoolean from "../../Hooks/useBoolean";
 import shapeAnimation from "../../Animations/shapeAnimation";
 import locationAnimation from "../../Animations/locationAnimation";
 import { easeIO } from "../../Animations/layoutAnimations";
@@ -40,6 +41,7 @@ export default ({ screen, itemShape, floor = 0, itemId = "a" }) => {
 	const newColor = useString(itemId == "a" ? Colors[0] : item.color);
 	const stack = useObject(null);
 	const swiping = useString(null);
+	const isSwiping = useBoolean(false);
 	const editing = useString(null);
 
 	const stackShape = shapeAnimation();
@@ -162,6 +164,7 @@ export default ({ screen, itemShape, floor = 0, itemId = "a" }) => {
 			newKeyword={newKeyword}
 			newColor={newColor}
 			swiping={swiping}
+			isSwiping={isSwiping}
 			editing={editing}
 			// animation
 			stackShape={stackShape}
