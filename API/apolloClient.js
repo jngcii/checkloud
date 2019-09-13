@@ -5,7 +5,8 @@ import { HttpLink } from "apollo-link-http";
 import { resolvers, typeDefs } from "./localState";
 
 const link = new HttpLink({
-	uri: "https://ec2-52-79-191-3.ap-northeast-2.compute.amazonaws.com"
+	// uri: "https://ec2-52-79-191-3.ap-northeast-2.compute.amazonaws.com"
+	uri: "http://localhost:4000"
 });
 
 const cache = new InMemoryCache();
@@ -17,7 +18,7 @@ const client = new ApolloClient({
 	resolvers
 });
 
-AsyncStorage.clear();
+// AsyncStorage.clear();
 
 AsyncStorage.getItem("histories", (_, result) => {
 	if (result) {

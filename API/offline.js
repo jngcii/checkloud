@@ -8,7 +8,7 @@ import { GET_ITEMS, GET_ITEM_ACTS } from "./queries/itemQueries";
 // save Item offline
 
 export const saveToken = async token => {
-	AsyncStorage.setItem("token", token);
+	AsyncStorage.setItem("token", JSON.stringify(token));
 };
 
 export const deleteToken = async token => {

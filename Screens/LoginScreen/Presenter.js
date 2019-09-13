@@ -51,7 +51,6 @@ const SubmitBtn = styled.TouchableOpacity`
 	background-color: ${props => props.theme.doneBtnColor};
 	align-items: center;
 	justify-content: center;
-	margin: 10px auto;
 `;
 const LogInText = styled.Text`
 	font-size: 18px;

@@ -51,7 +51,6 @@ const SubmitBtn = styled.TouchableOpacity`
 	background-color: ${props => props.theme.doneBtnColor};
 	align-items: center;
 	justify-content: center;
-	margin: 10px auto;
 `;
 const LogInText = styled.Text`
 	font-size: 18px;
@@ -59,13 +58,21 @@ const LogInText = styled.Text`
 	color: ${props => props.theme.whiteColor};
 `;
 
-export default ({ type, username, password }) => (
+export default ({ type, username, name, password, password2, onSubmit }) => (
 	<Wrapper>
 		<InputContainer>
 			<InputBox>
 				<InputUserText
 					{...username}
 					placeholder={"username"}
+					secureTextEntry={false}
+				/>
+			</InputBox>
+
+            <InputBox>
+				<InputUserText
+					{...name}
+					placeholder={"name"}
 					secureTextEntry={false}
 				/>
 			</InputBox>
@@ -80,7 +87,7 @@ export default ({ type, username, password }) => (
 
 			<InputBox>
 				<InputUserText
-					{...password}
+					{...password2}
 					placeholder={"password confirm"}
 					secureTextEntry={true}
 				/>
@@ -92,7 +99,7 @@ export default ({ type, username, password }) => (
 		</InputContainer>
 
 		<Footer>
-			<SubmitBtn>
+			<SubmitBtn onPress={onSubmit}>
 				<LogInText>Sign Up</LogInText>
 			</SubmitBtn>
 		</Footer>

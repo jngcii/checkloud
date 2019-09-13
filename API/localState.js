@@ -41,6 +41,9 @@ export const typeDefs = `
     }
 
     type Mutation {
+		userLogIn(token: String!): Boolean
+		userLogOut: Boolean
+
         addItem(keyword: String!, color: String! parentId: String): Boolean
 		addItemActs(itemActs: [ItemAct]): [ItemAct]
 		addItemAct(keyword: String!): ItemAct
@@ -213,23 +216,32 @@ export const resolvers = {
 
 	Mutation: {
 		userLogIn: (_, { token }, { cache }) => {
-			saveToken(token);
-			cache.writeData({
-				data: {
-					isLoggedIn: true
-				}
-			});
-			return null;
+			try {
+				console.log(token)
+				saveToken(token);
+				cache.writeData({
+					data: {
+						isLoggedIn: true
+					}
+				});
+				return true;
+			} catch {
+				return false;
+			}
 		},
 
 		userLogOut: (_, __, { cache }) => {
-			deleteToken(token);
-			cache.writeData({
-				data: {
-					isLoggedIn: false
-				}
-			});
-			return null;
+			try {
+				AsyncStorage.clear();
+				cache.writeData({
+					data: {
+						isLoggedIn: false
+					}
+				});
+				return true;
+			} catch {
+				return false;
+			}
 		},
 		// add Mutation
 		// ******************************************************************
