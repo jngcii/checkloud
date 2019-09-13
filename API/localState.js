@@ -19,12 +19,10 @@ import {
 	saveHistories
 } from "./offline";
 
-export const defaults = {
-	isLoggedIn: AsyncStorage.getItem("token") || false
-};
-
 export const typeDefs = `
     type Query {
+		isLoggedIn: Boolean
+
 		histories: [History]
 		filteredHistories(month: Int!): [History]
 		
@@ -103,6 +101,17 @@ export const typeDefs = `
 
 export const resolvers = {
 	Query: {
+		isLoggedIn: async (_, __, { cache }) => {
+			const res = await AsyncStorage.getItem("token");
+
+			if (res)
+				cache.writeData({
+					data: { token: null }
+				});
+
+			return res;
+		},
+
 		filteredHistories: async (_, { month }, { cache }) => {
 			const histories = cache
 				.readQuery({ query: GET_HISTORIES })
