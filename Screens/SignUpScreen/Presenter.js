@@ -78,14 +78,22 @@ export default ({ type, username, password }) => (
 				/>
 			</InputBox>
 
-			<Swap onPress={() => type.setValue("up")}>
-				<SwapText>Doesn't have username?</SwapText>
+			<InputBox>
+				<InputUserText
+					{...password}
+					placeholder={"password confirm"}
+					secureTextEntry={true}
+				/>
+			</InputBox>
+
+			<Swap onPress={() => type.setValue("in")}>
+				<SwapText>Have username?</SwapText>
 			</Swap>
 		</InputContainer>
 
 		<Footer>
 			<SubmitBtn>
-				<LogInText>Sign In</LogInText>
+				<LogInText>Sign Up</LogInText>
 			</SubmitBtn>
 		</Footer>
 	</Wrapper>

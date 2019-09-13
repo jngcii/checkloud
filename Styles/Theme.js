@@ -17,6 +17,7 @@ export default {
 	redColor: "#f54278",
 	doneBtnColor: "#4285d6",
 
+	userInputFontSize: 17,
 	planTitleFontSize: 23,
 	dateFontSize: 11,
 	itemActFontSize: 17,
@@ -33,6 +34,7 @@ export default {
 	calendarDateFontSize: 15,
 	completeFontSize: 11,
 
+	userInputFontWeight: "500",
 	planTitleFontWeight: "700",
 	dateFontWeight: "400",
 	itemActFontWeight: "500",

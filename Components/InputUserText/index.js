@@ -15,7 +15,7 @@ export default ({
 	placeholder = "",
 	value = "",
 	onChange,
-	type = "text",
+	secureTextEntry=false,
 	onSubmitEditing = null,
 	onFocus = null
 }) => (
@@ -23,12 +23,13 @@ export default ({
 		placeholder={placeholder}
 		value={value}
 		onChangeText={onChange}
-		type={type}
+		type={"text"}
 		require={true}
 		autoCapitalize={"none"}
 		autoCorrect={false}
 		returnKeyType={"done"}
 		onSubmitEditing={onSubmitEditing}
 		onFocus={onFocus}
+		secureTextEntry={secureTextEntry}
 	/>
 );
