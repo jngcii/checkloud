@@ -1,3 +1,5 @@
+import AsyncStorage from "@react-native-community/async-storage";
+// import { AsyncStorage } from "react-native";
 import uuidv1 from "uuid/v1";
 import {
 	ITEM_FRAGMENT,
@@ -8,7 +10,18 @@ import {
 import { GET_HISTORIES } from "./queries/historyQueries";
 import { GET_PLANS } from "./queries/planQueries";
 import { GET_ITEMS, GET_ITEM_ACTS } from "./queries/itemQueries";
-import { saveItems, saveItemActs, savePlans, saveHistories } from "./offline";
+import {
+	saveToken,
+	deleteToken,
+	saveItems,
+	saveItemActs,
+	savePlans,
+	saveHistories
+} from "./offline";
+
+export const defaults = {
+	isLoggedIn: AsyncStorage.getItem("token") || false
+};
 
 export const typeDefs = `
     type Query {
@@ -190,6 +203,25 @@ export const resolvers = {
 	},
 
 	Mutation: {
+		userLogIn: (_, { token }, { cache }) => {
+			saveToken(token);
+			cache.writeData({
+				data: {
+					isLoggedIn: true
+				}
+			});
+			return null;
+		},
+
+		userLogOut: (_, __, { cache }) => {
+			deleteToken(token);
+			cache.writeData({
+				data: {
+					isLoggedIn: false
+				}
+			});
+			return null;
+		},
 		// add Mutation
 		// ******************************************************************
 

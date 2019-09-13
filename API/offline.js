@@ -7,6 +7,14 @@ import { GET_ITEMS, GET_ITEM_ACTS } from "./queries/itemQueries";
 // ************************************************************
 // save Item offline
 
+export const saveToken = async token => {
+	AsyncStorage.setItem("token", token);
+};
+
+export const deleteToken = async token => {
+	AsyncStorage.removeItem("token");
+};
+
 export const saveHistories = async cache => {
 	const { histories } = cache.readQuery({ query: GET_HISTORIES });
 	const jsonHistories = JSON.stringify(histories);
