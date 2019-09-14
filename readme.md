@@ -12,5 +12,5 @@ re-usable checklist cloud with react-native, graphql, apollo
 * styled-components
 
 ## screenshots
-![](ss/ezgif.com-video-to-gif.gif)
+![](ss/ezgif.com-video-to-gif.gif)  
 ![](ss/ezgif.com-crop.gif)
