@@ -30,6 +30,15 @@ export default defaultValue => {
 
 			day += 1;
 
+			console.log(
+				"arr:",
+				arr,
+				"lastDay:",
+				lastDay.getDate(),
+				arr.length,
+				lastDay.getDate() + 6 - lastDay.getDay()
+			);
+
 			if (arr.length === lastDay.getDate() + (6 - lastDay.getDay())) {
 				const arr1 = [];
 				for (let j = 0; j < firstDay.getDay(); j++) {
@@ -39,11 +48,14 @@ export default defaultValue => {
 							arr1.push(arr.shift());
 						}
 					}
+					console.log("arr1", arr1);
 					if (arr1.length === 7) {
 						calendar.push(arr1);
 					}
 				}
 			}
+
+			console.log("b", calendar);
 
 			if (calendar.length === 1) {
 				while (arr.length !== 0) {
@@ -55,6 +67,8 @@ export default defaultValue => {
 						if (arr1.length === 7) {
 							calendar.push(arr1);
 						}
+
+						console.log("c", calendar);
 
 						if (arr.length == 0) return calendar;
 					}
